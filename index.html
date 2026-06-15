@@ -1,0 +1,1891 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DIPCOIN - Perpetuals</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          bg1: '#1C1F26',
+          bg2: '#2A2E37',
+          text1: '#FAFAFA',
+          text2: '#858A93',
+          text3: '#4C5057',
+          line1: '#3B3E45',
+          'com-green': '#2FBC8A',
+          'com-red': '#DC4C4C',
+          'com-brown': '#F69F1E',
+        },
+      },
+    },
+  };
+</script>
+<style>
+  html, body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+  ::-webkit-scrollbar { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track { background: #2A2E37; }
+  ::-webkit-scrollbar-thumb { background: #3B3E45; border-radius: 2px; }
+  ::-webkit-scrollbar-thumb:hover { background: #4C5057; }
+  .scrollbar-none::-webkit-scrollbar { display: none; }
+  .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
+  :where(p, span, li, h1, h2, h3, h4, h5, h6, a, button, label, td, th) { overflow-wrap: anywhere; word-break: break-word; }
+</style>
+</head>
+<body class="flex flex-col h-screen bg-bg2 overflow-hidden">
+
+<!-- ══════════════════════════ TOP NAV ══════════════════════════ -->
+<nav class="flex items-center justify-between px-4 h-16 bg-bg1 border-b border-line1 flex-shrink-0">
+  <div class="flex items-center gap-8">
+    <svg width="126" height="40" viewBox="0 0 126 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-10 w-auto select-none flex-shrink-0" aria-label="DIPCOIN">
+<g clip-path="url(#clip0_1610_2856)">
+<path d="M13.1581 2.67505C14.5825 1.09528 17.0901 1.12123 18.4794 2.7522L21.0624 5.78638C23.5714 8.73479 26.2554 11.894 27.3778 13.2336L27.6435 13.552L27.6806 13.5959V13.5969L27.7792 13.718V13.719C29.8243 16.2701 31.0448 19.4891 31.0448 22.9885C31.0448 31.2675 24.2133 37.9817 15.7841 37.9817C7.35497 37.9815 0.524336 31.2674 0.524323 22.9885L0.538971 22.3254C0.684964 19.0286 1.91453 16.008 3.88663 13.5989L3.8876 13.5969L3.92569 13.551L3.93057 13.5442L3.9296 13.5432C5.13564 12.0924 9.96172 6.42232 13.0878 2.75317L13.0888 2.75415L13.1571 2.67407L13.1581 2.67505Z" fill="black" stroke="white" stroke-width="0.5"/>
+<path d="M17.405 12.9384L15.5354 21.4394H11.7762L13.7196 12.9384H17.405Z" fill="url(#paint0_linear_1610_2856)"/>
+<path d="M15.971 22.8346L19.7244 22.8347L18.1302 31.7478H14.1726L15.971 22.8346Z" fill="url(#paint1_linear_1610_2856)"/>
+<path d="M15.7353 19.9779C15.7353 22.9856 13.2839 25.4239 10.26 25.4239C7.23607 25.4239 4.7847 22.9856 4.7847 19.9779C4.7847 16.9702 7.23607 14.532 10.26 14.532C13.2839 14.532 15.7353 16.9702 15.7353 19.9779ZM8.45821 19.9779C8.45821 20.9677 9.26489 21.77 10.26 21.77C11.2551 21.77 12.0618 20.9677 12.0618 19.9779C12.0618 18.9882 11.2551 18.1858 10.26 18.1858C9.26489 18.1858 8.45821 18.9882 8.45821 19.9779Z" fill="#FFE700"/>
+<mask id="mask0_1610_2856" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="4" y="14" width="12" height="12">
+<path d="M15.7341 19.9747C15.7341 22.9824 13.2827 25.4207 10.2588 25.4207C7.23485 25.4207 4.78348 22.9824 4.78348 19.9747C4.78348 16.967 7.23485 14.5288 10.2588 14.5288C13.2827 14.5288 15.7341 16.967 15.7341 19.9747ZM8.45699 19.9747C8.45699 20.9645 9.26367 21.7669 10.2588 21.7669C11.2539 21.7669 12.0606 20.9645 12.0606 19.9747C12.0606 18.985 11.2539 18.1826 10.2588 18.1826C9.26367 18.1826 8.45699 18.985 8.45699 19.9747Z" fill="url(#paint2_linear_1610_2856)"/>
+</mask>
+<g mask="url(#mask0_1610_2856)">
+<g filter="url(#filter0_f_1610_2856)">
+<path d="M12.4098 20.2043L17.7657 23.5363L19.5773 25.0683L16.682 27.2837L12.4098 20.2043Z" fill="black" fill-opacity="0.15"/>
+</g>
+</g>
+<path d="M26.7853 23.9637C26.7853 26.9715 24.3338 29.4098 21.31 29.4098C18.2861 29.4098 15.8347 26.9715 15.8347 23.9637C15.8347 20.956 18.2861 18.5178 21.31 18.5178C24.3338 18.5178 26.7853 20.956 26.7853 23.9637ZM19.5397 23.9637C19.5397 24.9362 20.3323 25.7245 21.31 25.7245C22.2877 25.7245 23.0802 24.9362 23.0802 23.9637C23.0802 22.9913 22.2877 22.203 21.31 22.203C20.3323 22.203 19.5397 22.9913 19.5397 23.9637Z" fill="#4AECBE"/>
+<mask id="mask1_1610_2856" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="15" y="18" width="12" height="12">
+<path d="M26.785 23.9661C26.785 26.9738 24.3336 29.4121 21.3097 29.4121C18.2858 29.4121 15.8345 26.9738 15.8345 23.9661C15.8345 20.9583 18.2858 18.5201 21.3097 18.5201C24.3336 18.5201 26.785 20.9583 26.785 23.9661ZM19.5395 23.9661C19.5395 24.9385 20.3321 25.7268 21.3097 25.7268C22.2874 25.7268 23.08 24.9385 23.08 23.9661C23.08 22.9936 22.2874 22.2053 21.3097 22.2053C20.3321 22.2053 19.5395 22.9936 19.5395 23.9661Z" fill="url(#paint3_linear_1610_2856)"/>
+</mask>
+<g mask="url(#mask1_1610_2856)">
+<g filter="url(#filter1_f_1610_2856)">
+<path d="M19.253 24.0496L15.0087 22.27L13.2269 20.7039L16.164 18.5438L19.253 24.0496Z" fill="black" fill-opacity="0.15"/>
+</g>
+</g>
+<path d="M16.027 12.129C17.0556 12.129 17.8895 11.2996 17.8895 10.2765C17.8895 9.25336 17.0556 8.42395 16.027 8.42395C14.9984 8.42395 14.1645 9.25336 14.1645 10.2765C14.1645 11.2996 14.9984 12.129 16.027 12.129Z" fill="#FFE701"/>
+<path d="M11.9658 19.3511L15.1577 17.5052L19.76 24.8885L16.8647 27.1039L11.9658 19.3511Z" fill="url(#paint4_linear_1610_2856)"/>
+<path d="M45.629 13.2301C47.5775 13.2301 49.1196 13.8819 50.2551 15.1854C51.4036 16.489 51.9778 18.4377 51.9778 21.0319C51.9778 23.5744 51.4165 25.491 50.2938 26.7816C49.1712 28.0593 47.5646 28.6982 45.4741 28.6982H39.1253V13.2301H45.629ZM44.6225 25.5813C45.8483 25.5813 46.8033 25.2136 47.4872 24.4778C48.184 23.7293 48.5324 22.5806 48.5324 21.0319C48.5324 19.509 48.1775 18.3409 47.4678 17.5279C46.771 16.7018 45.8226 16.2889 44.6225 16.2889H42.4545V25.5813H44.6225Z" fill="white"/>
+<path d="M57.6982 28.6979H54.4658V12.9781H57.6982V28.6979Z" fill="white"/>
+<path d="M68.0725 13.1907C69.2082 13.1907 70.1179 13.3584 70.8018 13.6941C71.4857 14.0296 71.9825 14.5781 72.2922 15.3396C72.6148 16.0882 72.7762 17.1012 72.7762 18.379C72.7762 20.2504 72.4019 21.5991 71.6535 22.425C70.918 23.2511 69.7307 23.6641 68.092 23.6641H64.2013V28.6976H60.7559V13.1907H68.0725ZM67.2789 20.5666C68.0145 20.5666 68.5371 20.4117 68.8468 20.102C69.1565 19.7922 69.3113 19.2179 69.3113 18.379C69.3113 17.7724 69.2469 17.3207 69.1177 17.0239C68.9887 16.7141 68.7823 16.5076 68.4984 16.4043C68.2145 16.3011 67.8016 16.2494 67.2595 16.2494H64.2013V20.5666H67.2789Z" fill="white"/>
+<path d="M88.3015 23.1017C88.0047 24.9602 87.2821 26.3863 86.1335 27.3801C84.998 28.3739 83.5204 28.8708 81.701 28.8708C80.2557 28.8708 78.9911 28.5482 77.9071 27.9029C76.836 27.2446 76.0037 26.3218 75.4102 25.1344C74.8295 23.9341 74.5392 22.5403 74.5392 20.9528C74.5392 19.3783 74.8295 18.0037 75.4102 16.8293C76.0037 15.6548 76.836 14.7449 77.9071 14.0996C78.9911 13.4543 80.2557 13.1317 81.701 13.1317C83.3785 13.1317 84.785 13.5963 85.9206 14.5255C87.0562 15.4419 87.7918 16.7131 88.1272 18.3393L84.9721 19.0362C84.8044 18.0683 84.4302 17.3327 83.8495 16.8293C83.2818 16.313 82.5655 16.0549 81.701 16.0549C80.5396 16.0549 79.6233 16.4937 78.9524 17.3714C78.2813 18.2489 77.9459 19.4428 77.9459 20.9528C77.9459 21.882 78.1071 22.7146 78.4297 23.4502C78.7523 24.1729 79.1976 24.7408 79.7653 25.1538C80.3331 25.5539 80.9783 25.754 81.701 25.754C82.6559 25.754 83.4043 25.5023 83.9462 24.9989C84.5011 24.4827 84.8754 23.6502 85.0689 22.5016L88.3015 23.1017Z" fill="white"/>
+<path d="M104.527 20.9922C104.527 23.0185 104.301 24.5995 103.849 25.7352C103.397 26.8709 102.662 27.6841 101.642 28.1745C100.636 28.6521 99.2488 28.8908 97.4809 28.8908C95.7001 28.8908 94.3001 28.6262 93.2806 28.0971C92.2612 27.555 91.532 26.7161 91.0934 25.5803C90.6675 24.4317 90.4545 22.9023 90.4545 20.9922C90.4545 18.9917 90.6675 17.4172 91.0934 16.2685C91.532 15.1069 92.2547 14.2616 93.2612 13.7324C94.2806 13.2032 95.6872 12.9387 97.4809 12.9387C99.1584 12.9387 100.507 13.2032 101.526 13.7324C102.546 14.2616 103.301 15.1134 103.791 16.2879C104.281 17.4623 104.527 19.0305 104.527 20.9922ZM101.042 20.9922C101.042 19.7145 100.92 18.7272 100.675 18.0302C100.442 17.3204 100.068 16.8235 99.5521 16.5396C99.0487 16.2426 98.3584 16.0942 97.4809 16.0942C96.5776 16.0942 95.8744 16.2233 95.3711 16.4815C94.8678 16.7395 94.4935 17.2236 94.2484 17.9335C94.0161 18.6304 93.9 19.6499 93.9 20.9922C93.9 22.2054 94.0097 23.154 94.229 23.838C94.4613 24.522 94.8355 25.0125 95.3517 25.3094C95.8679 25.6062 96.5776 25.7546 97.4809 25.7546C98.4229 25.7546 99.1455 25.619 99.6487 25.3481C100.152 25.0641 100.507 24.5866 100.713 23.9155C100.933 23.2314 101.042 22.257 101.042 20.9922Z" fill="white"/>
+<path d="M110.36 28.6979H107.128V12.9781H110.36V28.6979Z" fill="white"/>
+<path d="M122.187 28.0397C121.296 26.5426 119.464 23.5225 116.69 18.9796V28.6786H113.438V13.2104H115.799C116.16 13.2104 116.406 13.2363 116.534 13.2879C116.677 13.3395 116.812 13.4621 116.942 13.6557L122.632 22.7933V13.2104H126V28.6786H123.329C122.981 28.6786 122.748 28.6463 122.632 28.5818C122.516 28.5044 122.368 28.3236 122.187 28.0397Z" fill="white"/>
+</g>
+<defs>
+<filter id="filter0_f_1610_2856" x="11.5459" y="19.3404" width="8.89528" height="8.80721" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="0.431966" result="effect1_foregroundBlur_1610_2856"/>
+</filter>
+<filter id="filter1_f_1610_2856" x="12.3629" y="17.6799" width="7.75399" height="7.2336" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="0.431966" result="effect1_foregroundBlur_1610_2856"/>
+</filter>
+<linearGradient id="paint0_linear_1610_2856" x1="14.5907" y1="12.9384" x2="14.5249" y2="17.2163" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FFE700"/>
+<stop offset="1" stop-color="#FFD621"/>
+</linearGradient>
+<linearGradient id="paint1_linear_1610_2856" x1="16.9485" y1="22.8346" x2="16.8753" y2="29.577" gradientUnits="userSpaceOnUse">
+<stop stop-color="#0A946D"/>
+<stop offset="1" stop-color="#4AECBE"/>
+</linearGradient>
+<linearGradient id="paint2_linear_1610_2856" x1="12.5337" y1="19.5428" x2="12.6039" y2="28.0617" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FFE700"/>
+<stop offset="1" stop-color="#17B852"/>
+</linearGradient>
+<linearGradient id="paint3_linear_1610_2856" x1="19.9508" y1="24.9672" x2="19.7304" y2="18.4698" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FFE700"/>
+<stop offset="1" stop-color="#FFAA00"/>
+</linearGradient>
+<linearGradient id="paint4_linear_1610_2856" x1="18.2227" y1="25.5566" x2="13.929" y2="18.0022" gradientUnits="userSpaceOnUse">
+<stop stop-color="#4AECBE"/>
+<stop offset="1" stop-color="#FFE701"/>
+</linearGradient>
+<clipPath id="clip0_1610_2856">
+<rect width="126" height="40" fill="white"/>
+</clipPath>
+</defs>
+</svg>
+    <div class="hidden lg:flex items-center gap-1">
+      <button class="flex items-center gap-1 px-3 h-10 rounded-xl text-sm font-medium transition-colors text-text1">Perpetual</button>
+      <button class="flex items-center gap-1 px-3 h-10 rounded-xl text-sm font-medium transition-colors text-text2 hover:text-text1">Vaults</button>
+      <button class="flex items-center gap-1 px-3 h-10 rounded-xl text-sm font-medium transition-colors text-text2 hover:text-text1">Referral</button>
+      <button class="flex items-center gap-1 px-3 h-10 rounded-xl text-sm font-medium transition-colors text-text2 hover:text-text1">Points</button>
+      <button class="flex items-center gap-1 px-3 h-10 rounded-xl text-sm font-medium transition-colors text-text2 hover:text-text1">
+        Tools
+        <svg class="w-3.5 h-2.5 text-text2" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.7189 0.416148C12.2304 -0.138707 13.0717 -0.138725 13.5832 0.416148L13.6284 0.4651C14.1238 1.003 14.1239 1.8627 13.6284 2.40057L7.93263 8.58355C7.4211 9.13882 6.57897 9.13881 6.06744 8.58355L0.371635 2.40057C-0.123885 1.86267 -0.123871 1.00301 0.371635 0.4651L0.416868 0.416148C0.928362 -0.138665 1.76974 -0.13876 2.28117 0.416148L6.99959 5.53819L11.7189 0.416148Z" fill="currentColor"/></svg>
+      </button>
+      <button class="flex items-center gap-1 px-3 h-10 rounded-xl text-sm font-medium transition-colors text-text2 hover:text-text1">
+        Bridge
+        <svg class="w-3.5 h-2.5 text-text2" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.7189 0.416148C12.2304 -0.138707 13.0717 -0.138725 13.5832 0.416148L13.6284 0.4651C14.1238 1.003 14.1239 1.8627 13.6284 2.40057L7.93263 8.58355C7.4211 9.13882 6.57897 9.13881 6.06744 8.58355L0.371635 2.40057C-0.123885 1.86267 -0.123871 1.00301 0.371635 0.4651L0.416868 0.416148C0.928362 -0.138665 1.76974 -0.13876 2.28117 0.416148L6.99959 5.53819L11.7189 0.416148Z" fill="currentColor"/></svg>
+      </button>
+      <button class="flex items-center gap-1 px-3 h-10 rounded-xl text-sm font-medium transition-colors text-text2 hover:text-text1">
+        More
+        <svg class="w-3.5 h-2.5 text-text2" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.7189 0.416148C12.2304 -0.138707 13.0717 -0.138725 13.5832 0.416148L13.6284 0.4651C14.1238 1.003 14.1239 1.8627 13.6284 2.40057L7.93263 8.58355C7.4211 9.13882 6.57897 9.13881 6.06744 8.58355L0.371635 2.40057C-0.123885 1.86267 -0.123871 1.00301 0.371635 0.4651L0.416868 0.416148C0.928362 -0.138665 1.76974 -0.13876 2.28117 0.416148L6.99959 5.53819L11.7189 0.416148Z" fill="currentColor"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="flex items-center gap-3">
+    <button class="hidden sm:flex items-center gap-1 px-4 h-10 rounded-full bg-bg2 text-text1 text-sm font-medium hover:bg-bg2/80 transition-colors">
+      <svg class="w-3 h-3 rotate-180" viewBox="0 0 11.4999 11.4999" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.90597 0.336437C5.37584 -0.112129 6.12474 -0.112163 6.59461 0.336437L11.2496 4.78213C11.5834 5.10122 11.5833 5.62755 11.2496 5.94666C10.9277 6.25407 10.4144 6.25398 10.0923 5.94666L6.59054 2.60282V10.6755C6.59054 11.1289 6.21586 11.4995 5.7507 11.4999C5.28526 11.4999 4.91004 11.1291 4.91004 10.6755V2.60201L4.76925 2.7371L1.40825 5.94666C1.08626 6.25416 0.572201 6.25416 0.250207 5.94666C-0.0833879 5.62759 -0.0834168 5.10119 0.250207 4.78213L4.90597 0.336437Z" fill="currentColor"/></svg>
+      Deposit
+    </button>
+    <div class="flex items-center gap-2">
+      <button class="flex items-center gap-2 px-3 h-10 rounded-full bg-bg2 text-text1 text-sm font-medium hover:bg-bg2/80 transition-colors">
+        <div class="w-6 h-6 rounded-full bg-black flex items-center justify-center overflow-hidden">
+          <svg class="w-3.5 h-3" width="14" height="11" viewBox="0 0 13.7812 10.8001" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2.239 8.24295C2.32216 8.15979 2.4365 8.11129 2.55777 8.11129H13.5553C13.7562 8.11129 13.8567 8.35383 13.7147 8.49589L11.5422 10.6684C11.459 10.7515 11.3447 10.8 11.2234 10.8H0.225915C0.0249525 10.8 -0.0755287 10.5575 0.066531 10.4154L2.239 8.24295Z" fill="url(#sol_top_a)"/>
+            <path d="M2.239 0.13169C2.32563 0.048533 2.43997 2.47955e-05 2.55777 2.47955e-05H13.5553C13.7562 2.47955e-05 13.8567 0.242566 13.7147 0.384625L11.5422 2.5571C11.459 2.64026 11.3447 2.68876 11.2234 2.68876H0.225915C0.0249525 2.68876 -0.0755287 2.44622 0.066531 2.30416L2.239 0.13169Z" fill="url(#sol_top_b)"/>
+            <path d="M11.5422 4.16133C11.459 4.07818 11.3447 4.02967 11.2234 4.02967H0.225915C0.0249525 4.02967 -0.0755287 4.27221 0.066531 4.41427L2.239 6.58674C2.32216 6.6699 2.4365 6.71841 2.55777 6.71841H13.5553C13.7562 6.71841 13.8567 6.47587 13.7147 6.33381L11.5422 4.16133Z" fill="url(#sol_top_c)"/>
+            <defs>
+              <linearGradient id="sol_top_a" x1="-24.8563" y1="-2.04023" x2="-25.1489" y2="12.6836" gradientUnits="userSpaceOnUse"><stop stop-color="#00FFA3"/><stop offset="1" stop-color="#DC1FFF"/></linearGradient>
+              <linearGradient id="sol_top_b" x1="-28.1843" y1="-3.77773" x2="-28.4769" y2="10.9461" gradientUnits="userSpaceOnUse"><stop stop-color="#00FFA3"/><stop offset="1" stop-color="#DC1FFF"/></linearGradient>
+              <linearGradient id="sol_top_c" x1="-26.5309" y1="-2.91451" x2="-26.8235" y2="11.8093" gradientUnits="userSpaceOnUse"><stop stop-color="#00FFA3"/><stop offset="1" stop-color="#DC1FFF"/></linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <svg class="w-3 h-2 text-text1" viewBox="0 0 11.6667 7.5" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.76574 0.34679C10.192 -0.115589 10.8931 -0.115604 11.3193 0.34679L11.357 0.387583C11.7699 0.835836 11.7699 1.55225 11.357 2.00048L6.61052 7.15296C6.18425 7.61569 5.48248 7.61567 5.0562 7.15296L0.309696 2.00048C-0.103238 1.55223 -0.103226 0.835844 0.309696 0.387583L0.34739 0.34679C0.773635 -0.115554 1.47478 -0.115633 1.90098 0.34679L5.83299 4.61516L9.76574 0.34679Z" fill="currentColor"/></svg>
+      </button>
+      <button class="flex items-center gap-2 px-4 h-10 rounded-full bg-bg2 text-text1 text-sm font-medium hover:bg-bg2/80 transition-colors">0xc493...33aB</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════════════════════ TITLE BAR ══════════════════════════ -->
+<div class="flex items-center justify-between px-4 h-14 bg-bg1 border-b border-line1 flex-shrink-0 min-w-0">
+  <!-- Left: Pair info + Price -->
+  <div class="flex items-center gap-4 sm:gap-6 flex-shrink-0">
+    <div class="relative">
+      <button id="symbol-menu-btn" onclick="toggleSymbolMenu()" class="flex items-center gap-3 rounded-lg hover:bg-bg2/60 transition-colors px-1 -mx-1 py-1">
+        <div id="tb-symbol-icon"></div>
+        <div class="flex flex-col items-start">
+          <div class="flex items-center gap-1.5">
+            <span id="tb-ticker" class="text-text1 font-bold text-lg leading-tight">XAU-PERP</span>
+            <svg id="symbol-menu-chevron" class="w-3.5 h-3.5 text-text2 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+          <div class="flex items-center gap-2">
+            <span id="tb-name" class="text-text2 text-xs">Gold</span>
+            <div class="flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-bg2">
+              <span class="text-text2 text-[10px]">Off-hours</span>
+              <div class="flex items-center gap-0.5">
+                <div class="w-1 h-3 rounded-sm bg-com-brown"></div>
+                <div class="w-1 h-3 rounded-sm bg-com-brown"></div>
+                <div class="w-1 h-3 rounded-sm bg-com-brown opacity-40"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </button>
+
+      <!-- Symbol dropdown -->
+      <div id="symbol-menu-overlay" class="fixed inset-0 z-30 hidden" onclick="toggleSymbolMenu()"></div>
+      <div id="symbol-menu" class="absolute left-0 top-full mt-2 w-64 bg-bg1 border border-line1 rounded-xl shadow-2xl z-40 p-1.5 hidden">
+        <div class="px-2 py-1.5 text-text2 text-[10px] uppercase tracking-wide">Markets</div>
+        <button onclick="selectSymbol('XAU')" data-sym-row="XAU" class="w-full flex items-center gap-2.5 px-2 py-2 rounded-lg transition-colors bg-bg2">
+          <div class="w-6 h-6 rounded-full bg-[#D59B02] flex items-center justify-center flex-shrink-0">
+            <svg width="13" height="9" viewBox="0 0 18 12" fill="none"><path d="M6.17 6.63C6.59 6.63 6.97 6.88 7.13 7.26L8.40 10.27C8.69 10.96 8.19 11.72 7.44 11.72H1.05C0.30 11.72 -0.20 10.97 0.08 10.28L1.30 7.28C1.46 6.88 1.84 6.63 2.27 6.63H6.17ZM15.65 6.63C16.07 6.63 16.45 6.88 16.62 7.26L17.89 10.27C18.18 10.96 17.67 11.72 16.92 11.72H10.53C9.79 11.72 9.28 10.97 9.56 10.28L10.78 7.28C10.94 6.88 11.33 6.63 11.75 6.63H15.65ZM10.69 0C11.11 0 11.49 0.25 11.66 0.64L12.93 3.64C13.22 4.33 12.71 5.09 11.96 5.09H5.57C4.83 5.09 4.32 4.34 4.60 3.65L5.82 0.65C5.98 0.26 6.37 0 6.79 0H10.69Z" fill="white"/></svg>
+          </div>
+          <div class="flex flex-col items-start min-w-0">
+            <span class="text-text1 text-sm font-medium">XAU-PERP</span>
+            <span class="text-text2 text-[11px]">Gold</span>
+          </div>
+          <div class="ml-auto flex flex-col items-end">
+            <span class="text-text1 text-xs font-medium">96,789.08</span>
+            <span class="text-[11px] text-com-green">+3.14%</span>
+          </div>
+        </button>
+        <button onclick="selectSymbol('TSLA')" data-sym-row="TSLA" class="w-full flex items-center gap-2.5 px-2 py-2 rounded-lg transition-colors hover:bg-bg2/60">
+          <div class="w-6 h-6 rounded-full bg-com-red flex items-center justify-center flex-shrink-0">
+            <span class="text-white font-bold text-xs">T</span>
+          </div>
+          <div class="flex flex-col items-start min-w-0">
+            <span class="text-text1 text-sm font-medium">TSLA-PERP</span>
+            <span class="text-text2 text-[11px]">Stock Tesla</span>
+          </div>
+          <div class="ml-auto flex flex-col items-end">
+            <span class="text-text1 text-xs font-medium">248.50</span>
+            <span class="text-[11px] text-com-green">+2.61%</span>
+          </div>
+        </button>
+      </div>
+    </div>
+    <div class="flex flex-col">
+      <span id="tb-price" class="font-bold text-lg leading-tight text-com-green">96,789.08</span>
+      <div class="flex items-center gap-1">
+        <span id="tb-change" class="text-xs text-com-green">+1205.12</span>
+        <span id="tb-changepct" class="text-xs text-com-green">(+3.14%)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Center: Stats -->
+  <div class="hidden xl:flex items-center overflow-x-auto">
+    <div class="flex flex-col px-4 py-0.5 flex-shrink-0 border-r border-line1">
+      <span class="text-text2 text-[11px] leading-tight">Oracle Price</span>
+      <span class="text-[11px] font-medium leading-tight text-text1">36,643.6</span>
+    </div>
+    <div class="flex flex-col px-4 py-0.5 flex-shrink-0 border-r border-line1">
+      <span class="text-text2 text-[11px] leading-tight">Last Price</span>
+      <span class="text-[11px] font-medium leading-tight text-text1">36,643.6</span>
+    </div>
+    <div class="flex flex-col px-4 py-0.5 flex-shrink-0 border-r border-line1">
+      <span class="text-text2 text-[11px] border-b border-dashed border-text3 pb-0.5 leading-tight">Funding(8h)/Countdown</span>
+      <span class="text-[11px] font-medium leading-tight text-com-brown">0.01%/06:35</span>
+    </div>
+    <div class="flex flex-col px-4 py-0.5 flex-shrink-0 border-r border-line1">
+      <span class="text-text2 text-[11px] leading-tight">24h High</span>
+      <span class="text-[11px] font-medium leading-tight text-text1">36,643.6</span>
+    </div>
+    <div class="flex flex-col px-4 py-0.5 flex-shrink-0 border-r border-line1">
+      <span class="text-text2 text-[11px] leading-tight">24h Low</span>
+      <span class="text-[11px] font-medium leading-tight text-text1">36,643.6</span>
+    </div>
+    <div class="flex flex-col px-4 py-0.5 flex-shrink-0 border-r border-line1">
+      <span class="text-text2 text-[11px] leading-tight">24h Change</span>
+      <span class="text-[11px] font-medium leading-tight text-com-green">+2979.5/+3.53%</span>
+    </div>
+    <div class="flex flex-col px-4 py-0.5 flex-shrink-0">
+      <span class="text-text2 text-[11px] leading-tight">Open Interest(USDC)</span>
+      <span class="text-[11px] font-medium leading-tight text-text1">87.68 M</span>
+    </div>
+  </div>
+
+  <!-- Right: Fast trade + Layout + Event + Refresh -->
+  <div class="flex items-center gap-4 flex-shrink-0">
+    <button id="fast-trade-btn" onclick="toggleFastTrade()" class="flex items-center gap-1 h-8 px-3 rounded-full border border-line1 bg-bg2 text-xs transition-colors">
+      <svg id="fast-trade-icon" class="w-[15px] h-[15px] text-text2" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7.5 0C11.6419 0 15 3.35802 15 7.5C15 11.6419 11.6419 15 7.5 15C3.35802 15 0 11.6419 0 7.5C0 3.35802 3.35802 0 7.5 0ZM7.5 2.01972C4.47317 2.01972 2.01972 4.47317 2.01972 7.5C2.01972 10.5268 4.47317 12.9803 7.5 12.9803C10.5268 12.9803 12.9803 10.5268 12.9803 7.5C12.9803 4.47317 10.5268 2.01972 7.5 2.01972Z" fill="currentColor"/>
+        <path d="M11.25 7.5C11.25 9.57107 9.57107 11.25 7.5 11.25C5.42893 11.25 3.75 9.57107 3.75 7.5C3.75 5.42893 5.42893 3.75 7.5 3.75C9.57107 3.75 11.25 5.42893 11.25 7.5Z" fill="currentColor"/>
+      </svg>
+      <span class="text-text1 border-b border-dashed border-text2 leading-tight">Fast trade</span>
+    </button>
+    <button class="text-text2 hover:text-text1 transition-colors">
+      <svg class="w-[15px] h-[15px]" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.0535 7.28169C14.5696 7.28169 15.0169 7.7054 14.963 8.24879C14.5871 12.0395 11.3895 15 7.5 15C5.26753 15 3.26613 14.0225 1.89296 12.4763V12.9613C1.89296 13.4841 1.46928 13.9077 0.946478 13.9077C0.423674 13.9077 0 13.4841 0 12.9613V10.0486C0 9.52579 0.423674 9.10211 0.946478 9.10211H3.85915C4.38196 9.10211 4.80563 9.52579 4.80563 10.0486C4.80563 10.5714 4.38196 10.9951 3.85915 10.9951H3.11961C4.1477 12.2819 5.72693 13.107 7.5 13.107C10.3595 13.107 12.7193 10.9659 13.0637 8.19972C13.1249 7.70876 13.5246 7.28169 14.0535 7.28169ZM7.5 0C9.73211 0 11.7339 0.976559 13.107 2.52228V2.03873C13.107 1.51593 13.5307 1.09225 14.0535 1.09225C14.5763 1.09225 15 1.51593 15 2.03873V4.95141C15 5.47421 14.5763 5.89789 14.0535 5.89789H11.1408C10.618 5.89789 10.1944 5.47421 10.1944 4.95141C10.1944 4.4286 10.618 4.00493 11.1408 4.00493H11.8797C10.8516 2.71829 9.27294 1.89296 7.5 1.89296C4.64049 1.89296 2.28066 4.03411 1.93633 6.80027C1.87513 7.29124 1.47545 7.71831 0.946478 7.71831C0.430417 7.71831 -0.0168488 7.2946 0.0369773 6.75121C0.412901 2.9605 3.61048 0 7.5 0Z" fill="currentColor"/></svg>
+    </button>
+    <button onclick="openCalendar()" class="text-text2 hover:text-text1 transition-colors" title="Calendar">
+      <svg class="w-[18px] h-[18px]" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15.8333 15.8333H4.16667V6.66658H15.8333M13.3333 0.833252V2.49992H6.66667V0.833252H5V2.49992H4.16667C3.24167 2.49992 2.5 3.24159 2.5 4.16659V15.8333C2.5 16.2753 2.67559 16.6992 2.98816 17.0118C3.30072 17.3243 3.72464 17.4999 4.16667 17.4999H15.8333C16.2754 17.4999 16.6993 17.3243 17.0118 17.0118C17.3244 16.6992 17.5 16.2753 17.5 15.8333V4.16659C17.5 3.72456 17.3244 3.30063 17.0118 2.98807C16.6993 2.67551 16.2754 2.49992 15.8333 2.49992H15V0.833252M14.1667 9.99992H10V14.1666H14.1667V9.99992Z" fill="currentColor"/></svg>
+    </button>
+    <button class="text-text2 hover:text-text1 transition-colors">
+      <i data-lucide="refresh-cw" class="w-[18px] h-[18px]"></i>
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════════════════ MAIN CONTENT ══════════════════════════ -->
+<div class="flex flex-1 min-h-0 overflow-hidden">
+  <!-- Chart + Order Book -->
+  <div class="flex flex-1 min-w-0 min-h-0">
+    <!-- Chart column -->
+    <div class="flex flex-col flex-1 min-w-0 min-h-0 border-r border-line1">
+      <!-- Chart + Order Book side by side -->
+      <div class="flex flex-1 min-h-0">
+        <div class="flex-1 flex flex-col min-h-0 min-w-0">
+          <!-- ══════════════ Chart Area ══════════════ -->
+          <div class="flex flex-col flex-1 bg-bg1 min-h-0">
+            <!-- Chart Tabs -->
+            <div class="flex items-end justify-between px-4 border-b border-line1 bg-bg1 flex-shrink-0" style="height: 40px">
+              <div class="flex items-end gap-4">
+                <button onclick="switchChartTab('chart')" data-chart-tab="chart" class="flex flex-col items-start gap-1.5 pb-0 h-10 justify-end text-text1 text-sm font-medium transition-colors">
+                  <span>Chart</span>
+                  <div class="tab-underline w-full h-0.5 bg-text1 rounded-full"></div>
+                </button>
+                <button onclick="switchChartTab('contract-info')" data-chart-tab="contract-info" class="flex flex-col items-start gap-1.5 pb-0 h-10 justify-end text-text2 hover:text-text1 text-sm font-medium transition-colors">
+                  <span>Contract Info</span>
+                  <div class="tab-underline w-full h-0.5 bg-text1 rounded-full hidden"></div>
+                </button>
+                <button onclick="switchChartTab('asset-info')" data-chart-tab="asset-info" class="flex flex-col items-start gap-1.5 pb-0 h-10 justify-end text-text2 hover:text-text1 text-sm font-medium transition-colors">
+                  <span>Asset Info</span>
+                  <div class="tab-underline w-full h-0.5 bg-text1 rounded-full hidden"></div>
+                </button>
+              </div>
+              <div class="pb-2">
+                <button class="text-text3 hover:text-text2 transition-colors">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M13.0563 12.1868C13.6143 12.1869 14 12.6279 14.0002 13.0931V13.0964L13.9958 13.1777V13.1803C13.9515 13.6112 13.5795 14 13.0563 14H8.27813C7.75488 14 7.38288 13.6112 7.33856 13.1803V13.1777L7.33422 13.0964L7.3335 13.0931C7.33371 12.6279 7.72007 12.1869 8.27813 12.1868H13.0563Z" fill="#4E5157"/>
+                    <path d="M13.0563 7.09375C13.6143 7.09378 14.0002 7.53455 14.0002 8V8.00326L13.9958 8.08464V8.08724C13.9515 8.51823 13.5793 8.90622 13.0563 8.90625H8.27813C7.75511 8.90623 7.3829 8.51823 7.33856 8.08724V8.08464L7.33422 8.00326L7.3335 8C7.3335 7.53455 7.72004 7.09378 8.27813 7.09375H13.0563Z" fill="#4E5157"/>
+                    <path d="M13.0563 2C13.6146 2.00003 14.0002 2.4417 14.0002 2.9069C14 3.37207 13.6143 3.81312 13.0563 3.81315H8.27813C7.72007 3.81312 7.33443 3.37207 7.33422 2.9069C7.33422 2.4417 7.71979 2.00003 8.27813 2H13.0563Z" fill="#4E5157"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Tab: Chart -->
+            <div id="chart-tab-chart" class="flex flex-col flex-1 min-h-0">
+              <!-- Chart Toolbar -->
+              <div class="flex items-center justify-between px-2 h-10 border-b border-line1 bg-bg1 flex-shrink-0">
+                <div class="flex items-center gap-3">
+                  <div class="flex items-center gap-3">
+                    <button onclick="selectInterval(this,'1m')" data-interval class="text-sm font-medium transition-colors text-text1">1m</button>
+                    <button onclick="selectInterval(this,'5m')" data-interval class="text-sm font-medium transition-colors text-text2 hover:text-text1">5m</button>
+                    <button onclick="selectInterval(this,'15m')" data-interval class="text-sm font-medium transition-colors text-text2 hover:text-text1">15m</button>
+                    <button onclick="selectInterval(this,'1h')" data-interval class="text-sm font-medium transition-colors text-text2 hover:text-text1">1h</button>
+                    <button onclick="selectInterval(this,'4h')" data-interval class="text-sm font-medium transition-colors text-text2 hover:text-text1">4h</button>
+                    <button onclick="selectInterval(this,'D')" data-interval class="text-sm font-medium transition-colors text-text2 hover:text-text1">D</button>
+                    <button onclick="selectInterval(this,'W')" data-interval class="text-sm font-medium transition-colors text-text2 hover:text-text1">W</button>
+                  </div>
+                  <div class="w-px h-4 bg-line1"></div>
+                  <div class="flex items-center">
+                    <button class="w-8 h-8 flex items-center justify-center text-text2 hover:text-text1 transition-colors"><i data-lucide="bar-chart-2" class="w-4 h-4"></i></button>
+                    <button class="w-8 h-8 flex items-center justify-center text-text2 hover:text-text1 transition-colors"><i data-lucide="settings" class="w-4 h-4"></i></button>
+                    <button class="w-8 h-8 flex items-center justify-center text-text2 hover:text-text1 transition-colors"><i data-lucide="refresh-cw" class="w-4 h-4"></i></button>
+                  </div>
+                </div>
+                <div class="flex items-center">
+                  <button class="w-8 h-8 flex items-center justify-center text-text2 hover:text-text1 transition-colors"><i data-lucide="settings" class="w-4 h-4"></i></button>
+                  <button class="w-8 h-8 flex items-center justify-center text-text2 hover:text-text1 transition-colors"><i data-lucide="maximize-2" class="w-4 h-4"></i></button>
+                </div>
+              </div>
+
+              <!-- Chart placeholder -->
+              <div class="flex-1 relative bg-bg1 overflow-hidden min-h-0">
+                <!-- Fake candlestick chart background -->
+                <div id="candle-bars" class="absolute inset-0 flex items-end justify-around px-4 pb-8 opacity-30"></div>
+
+                <!-- Grid lines -->
+                <div class="absolute inset-0 flex flex-col justify-between py-6 pointer-events-none">
+                  <div class="flex items-center gap-2">
+                    <div class="flex-1 h-px border-t border-line1/30"></div>
+                    <span class="text-text3 text-[10px] w-14 text-right">96,789</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <div class="flex-1 h-px border-t border-line1/30"></div>
+                    <span class="text-text3 text-[10px] w-14 text-right">95,589</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <div class="flex-1 h-px border-t border-line1/30"></div>
+                    <span class="text-text3 text-[10px] w-14 text-right">94,389</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <div class="flex-1 h-px border-t border-line1/30"></div>
+                    <span class="text-text3 text-[10px] w-14 text-right">93,189</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <div class="flex-1 h-px border-t border-line1/30"></div>
+                    <span class="text-text3 text-[10px] w-14 text-right">91,989</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <div class="flex-1 h-px border-t border-line1/30"></div>
+                    <span class="text-text3 text-[10px] w-14 text-right">90,789</span>
+                  </div>
+                </div>
+
+                <!-- Price label -->
+                <div class="absolute top-4 left-4 flex flex-col gap-0.5">
+                  <div class="flex items-center gap-2">
+                    <span class="text-text2 text-xs">O <span class="text-com-green">96,543.5</span></span>
+                    <span class="text-text2 text-xs">H <span class="text-com-green">97,120.0</span></span>
+                    <span class="text-text2 text-xs">L <span class="text-com-red">96,102.3</span></span>
+                    <span class="text-text2 text-xs">C <span class="text-com-green">96,789.1</span></span>
+                  </div>
+                </div>
+
+                <!-- Drawing toolbar (left side) -->
+                <div class="absolute left-0 top-0 bottom-0 w-13 bg-bg1 border-r border-line1 flex flex-col items-center py-1.5 gap-0.5 overflow-y-auto">
+                  <button class="w-9 h-9 flex-shrink-0 flex items-center justify-center rounded hover:bg-bg2 transition-colors text-text2 hover:text-text1">
+                    <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><path d="M18 15H26V14H18V15ZM14 18V26H15V18H14ZM14 3V11H15V3H14ZM3 15H11V14H3V15Z" fill="#F69B1D"/></svg>
+                  </button>
+                  <button class="w-9 h-9 flex-shrink-0 flex items-center justify-center rounded hover:bg-bg2 transition-colors text-text2 hover:text-text1">
+                    <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><path d="M7.35 21.35L21.35 7.35L20.65 6.65L6.65 20.65L7.35 21.35Z" fill="#F9F9F9"/><circle cx="22.5" cy="5.5" r="2.5" stroke="#F9F9F9"/><circle cx="5.5" cy="22.5" r="2.5" stroke="#F9F9F9"/></svg>
+                  </button>
+                  <button class="w-9 h-9 flex-shrink-0 flex items-center justify-center rounded hover:bg-bg2 transition-colors text-text2 hover:text-text1">
+                    <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><path d="M6 21L20 7" stroke="#F9F9F9" stroke-width="1"/><path d="M8 24L22 10" stroke="#F9F9F9" stroke-width="1"/><circle cx="20" cy="7" r="2" stroke="#F9F9F9"/><circle cx="6" cy="21" r="2" stroke="#F9F9F9"/></svg>
+                  </button>
+                  <button class="w-9 h-9 flex-shrink-0 flex items-center justify-center rounded hover:bg-bg2 transition-colors text-text2 hover:text-text1"><i data-lucide="waypoints" class="w-[18px] h-[18px]"></i></button>
+                  <button class="w-9 h-9 flex-shrink-0 flex items-center justify-center rounded hover:bg-bg2 transition-colors text-text2 hover:text-text1"><i data-lucide="paintbrush" class="w-[18px] h-[18px]"></i></button>
+                  <button class="w-9 h-9 flex-shrink-0 flex items-center justify-center rounded hover:bg-bg2 transition-colors text-text2 hover:text-text1">
+                    <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><path d="M8 6.5C8 6.22 8.22 6 8.5 6H14V22H12V23H17V22H15V6H20.5C20.78 6 21 6.22 21 6.5V9H22V6.5C22 5.67 21.33 5 20.5 5H8.5C7.67 5 7 5.67 7 6.5V9H8V6.5Z" fill="#F9F9F9"/></svg>
+                  </button>
+                  <button class="w-9 h-9 flex-shrink-0 flex items-center justify-center rounded hover:bg-bg2 transition-colors text-text2 hover:text-text1"><i data-lucide="smile" class="w-[18px] h-[18px]"></i></button>
+                  <button class="w-9 h-9 flex-shrink-0 flex items-center justify-center rounded hover:bg-bg2 transition-colors text-text2 hover:text-text1"><i data-lucide="ruler" class="w-[18px] h-[18px]"></i></button>
+                  <button class="w-9 h-9 flex-shrink-0 flex items-center justify-center rounded hover:bg-bg2 transition-colors text-text2 hover:text-text1"><i data-lucide="zoom-in" class="w-[18px] h-[18px]"></i></button>
+                  <button class="w-9 h-9 flex-shrink-0 flex items-center justify-center rounded hover:bg-bg2 transition-colors text-text2 hover:text-text1"><i data-lucide="magnet" class="w-[18px] h-[18px]"></i></button>
+                  <button class="w-9 h-9 flex-shrink-0 flex items-center justify-center rounded hover:bg-bg2 transition-colors text-text2 hover:text-text1"><i data-lucide="lock" class="w-[18px] h-[18px]"></i></button>
+                  <div class="w-8 h-px bg-line1 my-1 flex-shrink-0"></div>
+                  <button class="w-9 h-9 flex-shrink-0 flex items-center justify-center rounded hover:bg-bg2 transition-colors text-text2 hover:text-text1"><i data-lucide="settings" class="w-4 h-4"></i></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tab: Contract Info -->
+            <div id="chart-tab-contract-info" class="hidden flex-1 overflow-y-auto min-h-0 px-4 py-4">
+              <!-- Trading Rules -->
+              <h3 class="text-text1 text-base font-semibold mb-3">Trading Rules</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 mb-8">
+                <div>
+                  <div class="flex items-center justify-between h-8 px-3">
+                    <span class="text-text2 text-xs">Symbol</span>
+                    <span class="text-text1 text-xs font-medium">BTC-PERP</span>
+                  </div>
+                  <div class="flex items-center justify-between h-8 px-3">
+                    <span class="text-text2 text-xs">Margin Asset</span>
+                    <span class="text-text1 text-xs font-medium">USDC</span>
+                  </div>
+                  <div class="flex items-center justify-between h-8 px-3">
+                    <span class="text-text2 text-xs">Tick Size</span>
+                    <span class="text-text1 text-xs font-medium">0.1 USDC</span>
+                  </div>
+                  <div class="flex items-center justify-between h-8 px-3">
+                    <span class="text-text2 text-xs">Max Leverage</span>
+                    <span class="text-text1 text-xs font-medium">150X</span>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex items-center justify-between h-8 px-3">
+                    <span class="text-text2 text-xs">IMR</span>
+                    <span class="text-text1 text-xs font-medium">4.5%</span>
+                  </div>
+                  <div class="flex items-center justify-between h-8 px-3">
+                    <span class="text-text2 text-xs">MMR</span>
+                    <span class="text-text1 text-xs font-medium">1.45%</span>
+                  </div>
+                  <div class="flex items-center justify-between h-8 px-3">
+                    <span class="text-text2 text-xs">Step Size / Min Order Qty</span>
+                    <span class="text-text1 text-xs font-medium">0.001/100 BTC</span>
+                  </div>
+                  <div class="flex items-center justify-between h-8 px-3">
+                    <span class="text-text2 text-xs">Max Market/Limit Order Qty</span>
+                    <span class="text-text1 text-xs font-medium">10/100 BTC</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Open Interest Limits -->
+              <h3 class="text-text1 text-base font-semibold mb-3">Open Interest Limits</h3>
+              <div class="flex items-center gap-2 h-8 px-3 rounded-lg bg-com-brown/10 text-text2 text-xs mb-1">
+                <i data-lucide="info" class="w-3.5 h-3.5 text-com-brown flex-shrink-0"></i>
+                <span>During non-regular trading hours, the OI limit differs from regular hours. Please manage risk accordingly. <button class="text-com-brown hover:underline">Learn More</button></span>
+              </div>
+              <div>
+                <div class="grid grid-cols-3 h-8 px-3 text-text2 text-xs">
+                  <div class="flex items-center">Tier</div>
+                  <div class="flex items-center justify-center">Leverage</div>
+                  <div class="flex items-center justify-end">Max Position Value(USDC)</div>
+                </div>
+                <div class="grid grid-cols-3 h-10 px-3 text-text1 text-xs rounded-lg hover:bg-bg2 transition-colors">
+                  <div class="flex items-center">1</div>
+                  <div class="flex items-center justify-center">20X</div>
+                  <div class="flex items-center justify-end">1M</div>
+                </div>
+                <div class="grid grid-cols-3 h-10 px-3 text-text1 text-xs rounded-lg hover:bg-bg2 transition-colors">
+                  <div class="flex items-center">2</div>
+                  <div class="flex items-center justify-center">10X</div>
+                  <div class="flex items-center justify-end">2.5M</div>
+                </div>
+                <div class="grid grid-cols-3 h-10 px-3 text-text1 text-xs rounded-lg hover:bg-bg2 transition-colors">
+                  <div class="flex items-center">3</div>
+                  <div class="flex items-center justify-center">5X</div>
+                  <div class="flex items-center justify-end">5M</div>
+                </div>
+                <div class="grid grid-cols-3 h-10 px-3 text-text1 text-xs rounded-lg hover:bg-bg2 transition-colors">
+                  <div class="flex items-center">4</div>
+                  <div class="flex items-center justify-center">3X</div>
+                  <div class="flex items-center justify-end">5M</div>
+                </div>
+                <div class="grid grid-cols-3 h-10 px-3 text-text1 text-xs rounded-lg hover:bg-bg2 transition-colors">
+                  <div class="flex items-center">5</div>
+                  <div class="flex items-center justify-center">1X</div>
+                  <div class="flex items-center justify-end">5M</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tab: Asset Info -->
+            <div id="chart-tab-asset-info" class="hidden flex-1 overflow-y-auto min-h-0 px-4 py-4">
+              <div id="asset-info-content"></div>
+            </div>
+          </div>
+        </div>
+        <div class="hidden lg:flex flex-shrink-0 border-l border-line1">
+          <!-- ══════════════ Order Book ══════════════ -->
+          <div class="relative flex flex-col bg-bg1 h-full min-h-0" style="width:300px">
+            <!-- Header -->
+            <div class="flex items-end justify-between h-10 pl-4 pr-1 pt-2.5 pb-px border-b border-line1 flex-shrink-0">
+              <span class="text-text1 text-sm font-medium leading-[1.4]">Order Book</span>
+              <div class="flex items-center gap-1 pt-0.5">
+                <button class="text-text2 hover:text-text1 transition-colors">
+                  <svg viewBox="0 0 2.66667 9.6" fill="none" class="w-4 h-4" xmlns="http://www.w3.org/2000/svg"><path d="M1.33333 7.22596C2.06713 7.22596 2.66667 7.75971 2.66667 8.41298C2.66667 9.06625 2.06713 9.6 1.33333 9.6C0.59954 9.6 0 9.06625 0 8.41298C0 7.75971 0.59954 7.22596 1.33333 7.22596ZM1.33333 3.61298C2.06713 3.61298 2.66667 4.14673 2.66667 4.8C2.66667 5.45327 2.06713 5.98702 1.33333 5.98702C0.59954 5.98702 0 5.45327 0 4.8C0 4.14673 0.59954 3.61298 1.33333 3.61298ZM1.33333 0C2.06713 0 2.66667 0.53375 2.66667 1.18702C2.66667 1.84029 2.06713 2.37404 1.33333 2.37404C0.59954 2.37404 0 1.84029 0 1.18702C0 0.53375 0.59954 0 1.33333 0Z" fill="currentColor"/></svg>
+                </button>
+                <button class="text-text2 hover:text-text1 transition-colors">
+                  <svg viewBox="0 0 6.66667 12" fill="none" class="w-4 h-4" xmlns="http://www.w3.org/2000/svg"><path d="M5.72276 10.1868C6.28081 10.1869 6.66646 10.6279 6.66667 11.0931V11.0964L6.66233 11.1777V11.1803C6.618 11.6112 6.24601 12 5.72276 12H0.944631C0.421382 12 0.0493859 11.6112 0.00506311 11.1803V11.1777L0.000723301 11.0964L0 11.0931C0.000209918 10.6279 0.386575 10.1869 0.944631 10.1868H5.72276Z" fill="currentColor"/><path d="M5.72276 5.09375C6.28085 5.09378 6.66667 5.53455 6.66667 6V6.00326L6.66233 6.08464V6.08724C6.61799 6.51823 6.24578 6.90622 5.72276 6.90625H0.944631C0.421612 6.90622 0.0494029 6.51823 0.00506311 6.08464V6.08464L0.000723301 6.00326L0 6C9.88918e-08 5.53455 0.386544 5.09378 0.944631 5.09375H5.72276Z" fill="currentColor"/><path d="M5.72276 0C6.2811 2.7303e-05 6.66667 0.441704 6.66667 0.906901C6.66646 1.37207 6.28081 1.81312 5.72276 1.81315H0.944631C0.386575 1.81312 0.000933021 1.37207 0.000723301 0.906901C0.000723301 0.441704 0.386293 2.69278e-05 0.944631 0H5.72276Z" fill="currentColor"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- View mode + precision selector -->
+            <div class="flex items-center justify-between h-8 px-4 py-2 flex-shrink-0">
+              <div class="flex items-center gap-1">
+                <div class="w-5 h-5 rounded bg-bg2 flex items-center justify-center text-text3 flex-shrink-0">
+                  <svg viewBox="0 0 20 20" fill="none" class="w-3 h-3" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="4" y="4" width="5" height="5" rx="1" class="fill-com-red"/>
+                    <rect x="4" y="11" width="5" height="5" rx="1" class="fill-com-green"/>
+                    <rect x="11" y="4" width="5" height="3" rx="1" fill="currentColor"/>
+                    <rect x="11" y="8.5" width="5" height="3" rx="1" fill="currentColor"/>
+                    <rect x="11" y="13" width="5" height="3" rx="1" fill="currentColor"/>
+                  </svg>
+                </div>
+                <div class="w-5 h-5 rounded bg-bg2 flex items-center justify-center text-text3 flex-shrink-0 opacity-40">
+                  <svg viewBox="0 0 20 20" fill="none" class="w-3 h-3" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="4" y="4" width="5" height="12" rx="1" class="fill-com-green"/>
+                    <rect x="11" y="4" width="5" height="3" rx="1" fill="currentColor"/>
+                    <rect x="11" y="8.5" width="5" height="3" rx="1" fill="currentColor"/>
+                    <rect x="11" y="13" width="5" height="3" rx="1" fill="currentColor"/>
+                  </svg>
+                </div>
+                <div class="w-5 h-5 rounded bg-bg2 flex items-center justify-center text-text3 flex-shrink-0 opacity-40">
+                  <svg viewBox="0 0 20 20" fill="none" class="w-3 h-3" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="4" y="4" width="5" height="12" rx="1" class="fill-com-red"/>
+                    <rect x="11" y="4" width="5" height="3" rx="1" fill="currentColor"/>
+                    <rect x="11" y="8.5" width="5" height="3" rx="1" fill="currentColor"/>
+                    <rect x="11" y="13" width="5" height="3" rx="1" fill="currentColor"/>
+                  </svg>
+                </div>
+              </div>
+              <button class="flex items-center gap-1 pl-3 pr-2 py-1 rounded-full bg-bg2 text-text1 text-xs">
+                0.1
+                <svg viewBox="0 0 14 12" fill="none" class="w-2.5 h-2 text-text2" xmlns="http://www.w3.org/2000/svg"><path d="M5.48088 11.0943L0.370845 3.30296C-0.487857 1.99341 0.240096 0 1.57715 0H12.4229C13.7599 0 14.4879 1.99491 13.6291 3.30296L8.51911 11.0943C7.72683 12.3019 6.27316 12.3019 5.48088 11.0943Z" fill="currentColor"/></svg>
+              </button>
+            </div>
+
+            <!-- Column headers -->
+            <div class="flex items-center justify-between h-7 px-4 text-text2 text-xs flex-shrink-0">
+              <span>Price</span>
+              <span>Quantity(BTC)</span>
+              <span>Total(BTC)</span>
+            </div>
+
+            <!-- Asks -->
+            <div class="flex flex-col gap-px px-4 flex-shrink-0">
+              <div class="relative h-5 flex items-center justify-between text-xs">
+                <div class="absolute right-0 top-0 bottom-0 bg-com-red/20 rounded-sm" style="width:25%"></div>
+                <span class="text-com-red relative z-10">96,800.0</span>
+                <span class="text-text1 relative z-10">2.100</span>
+                <span class="text-text1 relative z-10">203,280</span>
+              </div>
+              <div class="relative h-5 flex items-center justify-between text-xs">
+                <div class="absolute right-0 top-0 bottom-0 bg-com-red/20 rounded-sm" style="width:32%"></div>
+                <span class="text-com-red relative z-10">96,795.5</span>
+                <span class="text-text1 relative z-10">1.205</span>
+                <span class="text-text1 relative z-10">116,581</span>
+              </div>
+              <div class="relative h-5 flex items-center justify-between text-xs">
+                <div class="absolute right-0 top-0 bottom-0 bg-com-red/20 rounded-sm" style="width:45%"></div>
+                <span class="text-com-red relative z-10">96,793.0</span>
+                <span class="text-text1 relative z-10">0.563</span>
+                <span class="text-text1 relative z-10">54,489</span>
+              </div>
+              <div class="relative h-5 flex items-center justify-between text-xs">
+                <div class="absolute right-0 top-0 bottom-0 bg-com-red/20 rounded-sm" style="width:55%"></div>
+                <span class="text-com-red relative z-10">96,791.5</span>
+                <span class="text-text1 relative z-10">0.320</span>
+                <span class="text-text1 relative z-10">30,974</span>
+              </div>
+              <div class="relative h-5 flex items-center justify-between text-xs">
+                <div class="absolute right-0 top-0 bottom-0 bg-com-red/20 rounded-sm" style="width:70%"></div>
+                <span class="text-com-red relative z-10">96,790.0</span>
+                <span class="text-text1 relative z-10">0.815</span>
+                <span class="text-text1 relative z-10">78,885</span>
+              </div>
+              <div class="relative h-5 flex items-center justify-between text-xs">
+                <div class="absolute right-0 top-0 bottom-0 bg-com-red/20 rounded-sm" style="width:88%"></div>
+                <span class="text-com-red relative z-10">96,789.5</span>
+                <span class="text-text1 relative z-10">1.430</span>
+                <span class="text-text1 relative z-10">138,411</span>
+              </div>
+            </div>
+
+            <!-- Spread -->
+            <div class="flex items-center h-7 px-4 flex-shrink-0">
+              <div class="flex items-center gap-1 w-[110px]">
+                <span class="text-com-green text-xl font-bold leading-tight">96,789.0</span>
+                <svg viewBox="0 0 9.33333 9.33333" fill="none" class="w-4 h-4 text-com-green" xmlns="http://www.w3.org/2000/svg"><path d="M3.94514 0.287642C4.3468 -0.0958968 4.98645 -0.0958648 5.38814 0.287642L9.11221 3.84419C9.40704 4.12578 9.40704 4.5912 9.11221 4.87279C8.82892 5.14335 8.37779 5.14323 8.09442 4.87279L5.40575 2.30504V8.6076C5.40575 9.00833 5.07486 9.3332 4.66693 9.33333C4.25889 9.33333 3.92811 9.00841 3.92811 8.6076V2.30446L1.23944 4.87279C0.956083 5.14341 0.504419 5.14341 0.22106 4.87279C-0.0736905 4.59122 -0.0736828 4.12577 0.22106 3.84419L3.94514 0.287642Z" fill="currentColor"/></svg>
+              </div>
+              <div class="flex items-center justify-between flex-1">
+                <span class="text-text2 text-xs border-b border-dashed border-text2 leading-tight">96,789.0</span>
+                <svg viewBox="0 0 9.86525 8.54988" fill="none" class="w-4 h-4 text-text2" xmlns="http://www.w3.org/2000/svg"><path d="M9.40573 5.28544C9.79625 5.28578 9.986 5.68892 9.78269 5.95148L9.73321 6.00628L7.22539 8.35602C6.9495 8.61452 6.4987 8.61449 6.22279 8.35602C5.95219 8.10236 5.95218 7.69508 6.22279 7.44143L7.12904 6.59078L0.780733 6.59143C0.385996 6.59145 0.0744505 6.29452 0.0743523 5.93844C0.0744369 5.58244 0.385969 5.28547 0.780733 5.28544H9.40573ZM2.61276 0.193904C2.88861 -0.0646386 3.33948 -0.0646311 3.61537 0.193904C3.88589 0.447598 3.88604 0.854966 3.61537 1.10849L2.83086 1.84237L2.70782 1.95784L9.05742 1.95849C9.45197 1.95856 9.76354 2.25494 9.7638 2.61083C9.7638 2.96698 9.4521 3.26442 9.05742 3.26448L2.45 3.26383L1.07305 3.26513L0.481253 3.26383C0.265246 3.26393 0.105725 3.14336 0.0372429 2.9905C-0.0309043 2.83816 -0.0102963 2.65209 0.138805 2.51233L2.61276 0.193904Z" fill="currentColor"/></svg>
+              </div>
+            </div>
+
+            <!-- Bids -->
+            <div class="flex flex-col gap-px px-4 flex-shrink-0">
+              <div class="relative h-5 flex items-center justify-between text-xs">
+                <div class="absolute right-0 top-0 bottom-0 bg-com-green/20 rounded-sm" style="width:88%"></div>
+                <span class="text-com-green relative z-10">96,789.0</span>
+                <span class="text-text1 relative z-10">1.250</span>
+                <span class="text-text1 relative z-10">120,986</span>
+              </div>
+              <div class="relative h-5 flex items-center justify-between text-xs">
+                <div class="absolute right-0 top-0 bottom-0 bg-com-green/20 rounded-sm" style="width:70%"></div>
+                <span class="text-com-green relative z-10">96,787.5</span>
+                <span class="text-text1 relative z-10">0.780</span>
+                <span class="text-text1 relative z-10">75,492</span>
+              </div>
+              <div class="relative h-5 flex items-center justify-between text-xs">
+                <div class="absolute right-0 top-0 bottom-0 bg-com-green/20 rounded-sm" style="width:55%"></div>
+                <span class="text-com-green relative z-10">96,785.0</span>
+                <span class="text-text1 relative z-10">2.340</span>
+                <span class="text-text1 relative z-10">226,465</span>
+              </div>
+              <div class="relative h-5 flex items-center justify-between text-xs">
+                <div class="absolute right-0 top-0 bottom-0 bg-com-green/20 rounded-sm" style="width:45%"></div>
+                <span class="text-com-green relative z-10">96,782.0</span>
+                <span class="text-text1 relative z-10">0.920</span>
+                <span class="text-text1 relative z-10">89,029</span>
+              </div>
+              <div class="relative h-5 flex items-center justify-between text-xs">
+                <div class="absolute right-0 top-0 bottom-0 bg-com-green/20 rounded-sm" style="width:32%"></div>
+                <span class="text-com-green relative z-10">96,778.0</span>
+                <span class="text-text1 relative z-10">1.640</span>
+                <span class="text-text1 relative z-10">158,686</span>
+              </div>
+              <div class="relative h-5 flex items-center justify-between text-xs">
+                <div class="absolute right-0 top-0 bottom-0 bg-com-green/20 rounded-sm" style="width:25%"></div>
+                <span class="text-com-green relative z-10">96,774.0</span>
+                <span class="text-text1 relative z-10">0.435</span>
+                <span class="text-text1 relative z-10">42,086</span>
+              </div>
+            </div>
+
+            <!-- Trades -->
+            <div class="flex items-center justify-between h-10 px-4 border-t border-b border-line1 flex-shrink-0">
+              <span class="text-text1 text-sm font-medium leading-[1.4]">Trades</span>
+              <svg viewBox="0 0 18 17" fill="none" class="w-4 h-4 text-text2" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M10.484 0C12.4247 0 14.0424 1.42408 14.4069 3.31327C14.4114 3.33698 14.4154 3.36085 14.4196 3.38471C14.4297 3.44264 14.4382 3.50103 14.4459 3.55978C14.4491 3.58353 14.452 3.60733 14.4547 3.63121C14.4613 3.68857 14.467 3.74622 14.4713 3.80427C14.4731 3.82871 14.4748 3.85317 14.4762 3.87772C14.4808 3.9583 14.484 4.03945 14.484 4.12121C14.484 4.39243 14.4583 4.65748 14.4098 4.91406C14.3956 4.98888 14.38 5.06311 14.3619 5.13642C13.923 6.9216 12.3531 8.24242 10.484 8.24242C8.6149 8.24242 7.045 6.9216 6.60609 5.13642C6.58803 5.06311 6.57242 4.98888 6.55823 4.91406C6.5097 4.65748 6.48402 4.39243 6.48402 4.12121C6.48402 4.03947 6.4863 3.95829 6.49085 3.87772C6.49224 3.85318 6.49393 3.8287 6.49573 3.80427C6.50002 3.74623 6.50574 3.68856 6.51234 3.63121C6.51509 3.60729 6.51896 3.58357 6.5221 3.55978C6.52987 3.50103 6.53832 3.44264 6.54847 3.38471C6.55264 3.36091 6.55563 3.33692 6.56019 3.31327C6.92462 1.42398 8.54323 0 10.484 0Z" fill="currentColor"/>
+                <path d="M5.7887 3.09091C5.72047 3.42295 5.68421 3.76722 5.68421 4.12021L5.69007 4.37476C5.71305 4.84164 5.79994 5.29106 5.94007 5.71496H1.27344C0.570134 5.71495 0 5.12755 0 4.40294C1.55261e-05 3.67833 0.570144 3.09093 1.27344 3.09091H5.7887Z" fill="currentColor"/>
+                <path d="M16.7266 3.09091C17.4299 3.09092 18 3.67833 18 4.40294C18 5.12755 17.4299 5.71495 16.7266 5.71496H15.028C15.1681 5.29106 15.255 4.84164 15.278 4.37476L15.2838 4.12021C15.2838 3.76722 15.2476 3.42295 15.1793 3.09091H16.7266Z" fill="currentColor"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M7.51598 8.75758C5.57527 8.75758 3.95764 10.1816 3.59313 12.0708C3.58856 12.0946 3.58461 12.1184 3.58044 12.1423C3.57029 12.2002 3.56184 12.2586 3.55407 12.3174C3.55093 12.3411 3.54803 12.3649 3.54528 12.3888C3.53868 12.4461 3.53297 12.5038 3.52868 12.5618C3.52688 12.5863 3.52518 12.6107 3.5238 12.6353C3.51924 12.7159 3.51598 12.797 3.51598 12.8788C3.51598 13.15 3.54167 13.4151 3.5902 13.6716C3.60439 13.7465 3.62 13.8207 3.63805 13.894C4.07697 15.6792 5.64687 17 7.51598 17C9.3851 17 10.955 15.6792 11.3939 13.894C11.412 13.8207 11.4276 13.7465 11.4418 13.6716C11.4903 13.4151 11.516 13.15 11.516 12.8788C11.516 12.797 11.5137 12.7159 11.5091 12.6353C11.5078 12.6108 11.5061 12.5863 11.5043 12.5618C11.5 12.5038 11.4943 12.4461 11.4877 12.3888C11.4849 12.3649 11.481 12.3411 11.4779 12.3174C11.4701 12.2586 11.4617 12.2002 11.4515 12.1423C11.4474 12.1185 11.4444 12.0945 11.4398 12.0708C11.0754 10.1816 9.45677 8.75758 7.51598 8.75758Z" fill="currentColor"/>
+                <path d="M12.2113 11.8485C12.2795 12.1805 12.3158 12.5248 12.3158 12.8778L12.3099 13.1323C12.287 13.5992 12.2001 14.0486 12.0599 14.4725H16.7266C17.4299 14.4725 18 13.8851 18 13.1605C18 12.4359 17.4299 11.8485 16.7266 11.8485H12.2113Z" fill="currentColor"/>
+                <path d="M1.27344 11.8485C0.570143 11.8485 1.55261e-05 12.4359 0 13.1605C0 13.8851 0.570134 14.4725 1.27344 14.4725H2.97204C2.83191 14.0486 2.74502 13.5992 2.72204 13.1323L2.71618 12.8778C2.71618 12.5248 2.75244 12.1805 2.82067 11.8485H1.27344Z" fill="currentColor"/>
+              </svg>
+            </div>
+
+            <div class="flex items-center justify-between h-7 px-4 text-text2 text-xs flex-shrink-0">
+              <span>Price</span>
+              <span>Quantity(BTC)</span>
+              <span>Time</span>
+            </div>
+
+            <div class="flex flex-col text-xs flex-1 overflow-y-auto min-h-0">
+              <div class="flex items-center justify-between h-5 px-4 flex-shrink-0">
+                <span class="text-com-green">96,789.09</span><span class="text-text1">0.00052</span><span class="text-text1">09:55:10</span>
+              </div>
+              <div class="flex items-center justify-between h-5 px-4 flex-shrink-0">
+                <span class="text-com-red">96,788.50</span><span class="text-text1">0.00120</span><span class="text-text1">09:55:08</span>
+              </div>
+              <div class="flex items-center justify-between h-5 px-4 flex-shrink-0">
+                <span class="text-com-green">96,789.09</span><span class="text-text1">0.00310</span><span class="text-text1">09:55:05</span>
+              </div>
+              <div class="flex items-center justify-between h-5 px-4 flex-shrink-0">
+                <span class="text-com-red">96,787.20</span><span class="text-text1">0.00045</span><span class="text-text1">09:55:02</span>
+              </div>
+              <div class="flex items-center justify-between h-5 px-4 flex-shrink-0">
+                <span class="text-com-green">96,789.09</span><span class="text-text1">0.00088</span><span class="text-text1">09:54:59</span>
+              </div>
+              <div class="flex items-center justify-between h-5 px-4 flex-shrink-0">
+                <span class="text-com-red">96,786.80</span><span class="text-text1">0.00200</span><span class="text-text1">09:54:55</span>
+              </div>
+            </div>
+
+            <button class="absolute right-1.5 bottom-1.5 text-text3 hover:text-text1 transition-colors">
+              <svg viewBox="0 0 16 16" fill="none" class="w-4 h-4" xmlns="http://www.w3.org/2000/svg"><path d="M12 4V11C12 11.5523 11.5523 12 11 12H4.00003" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Positions table -->
+      <!-- ══════════════ Positions Table ══════════════ -->
+      <div class="flex flex-col bg-bg1 border-t border-line1 min-h-0" style="min-height:200px">
+        <!-- Tabs -->
+        <div class="flex items-center justify-between border-b border-line1 px-4 h-10 flex-shrink-0">
+          <div class="flex items-center gap-6">
+            <button onclick="selectPosTab(this)" class="pb-2 text-sm font-medium border-b-2 transition-colors text-text1 border-text1">Positions(3)</button>
+            <button onclick="selectPosTab(this)" class="pb-2 text-sm font-medium border-b-2 transition-colors text-text2 border-transparent hover:text-text1">Pending Orders</button>
+            <button onclick="selectPosTab(this)" class="pb-2 text-sm font-medium border-b-2 transition-colors text-text2 border-transparent hover:text-text1">Filled Orders</button>
+            <button onclick="selectPosTab(this)" class="pb-2 text-sm font-medium border-b-2 transition-colors text-text2 border-transparent hover:text-text1">Funding History</button>
+          </div>
+          <div class="flex items-center gap-3 pb-2">
+            <label class="flex items-center gap-1.5 cursor-pointer">
+              <button id="hide-others-btn" onclick="toggleHideOthers()" class="w-4 h-4 rounded border flex items-center justify-center transition-colors border-line1 bg-bg2">
+                <svg id="hide-others-check" class="hidden" width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#202328" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <span class="text-text2 text-sm">Hide Other Symbols</span>
+            </label>
+            <button class="text-text2 hover:text-text1 transition-colors">
+              <svg viewBox="0 0 6.6 12" fill="none" class="w-4 h-4" xmlns="http://www.w3.org/2000/svg"><path d="M5.66553 10.1868C6.21801 10.1869 6.59979 10.6279 6.6 11.0931V11.0964L6.5957 11.1777V11.1803C6.55182 11.6112 6.18355 12 5.66553 12H0.935185C0.417168 12 0.0488921 11.6112 0.00501248 11.1803V11.1777L0.000716068 11.0964L0 11.0931C0.000207818 10.6279 0.382709 10.1869 0.935185 10.1868H5.66553Z" fill="currentColor"/><path d="M5.66553 5.09375C6.21804 5.09378 6.6 5.53455 6.6 6V6.00326L6.5957 6.08464V6.08724C6.55181 6.51823 6.18332 6.90622 5.66553 6.90625H0.935185C0.417395 6.90623 0.0489088 6.51823 0.00501248 6.08724V6.08464L0.000716068 6.00326L0 6C9.79029e-08 5.53455 0.382678 5.09378 0.935185 5.09375H5.66553Z" fill="currentColor"/><path d="M5.66553 0C6.21828 2.7303e-05 6.6 0.441704 6.6 0.906901C6.59979 1.37207 6.21801 1.81312 5.66553 1.81315H0.935185C0.382709 1.81312 0.000923691 1.37207 0.000716068 0.906901C0.000716068 0.441704 0.38243 2.69278e-05 0.935185 0H5.66553Z" fill="currentColor"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="overflow-x-auto flex-1">
+          <div class="min-w-[1100px]">
+            <!-- Header -->
+            <div class="flex items-center border-b border-line1 h-10">
+              <div class="flex items-center text-text2 text-xs w-[148px] px-4">Symbol</div>
+              <div class="flex items-center text-text2 text-xs flex-1 px-4">Quantity</div>
+              <div class="flex items-center text-text2 text-xs flex-1 px-4">Avg. Open</div>
+              <div class="flex items-center text-text2 text-xs flex-1 px-4">Margin</div>
+              <div class="flex items-center text-text2 text-xs flex-1 px-4">Oracle Price</div>
+              <div class="flex items-center text-text2 text-xs w-[150px] px-4">Unrealized P&amp;L(ROE)</div>
+              <div class="flex items-center text-text2 text-xs w-[100px] px-4">Liq. Price</div>
+              <div class="flex items-center text-text2 text-xs w-[140px] px-4">TP/SL</div>
+              <div class="flex items-center text-text2 text-xs w-[85px] px-4">24h PnL</div>
+              <div class="flex items-center text-text2 text-xs w-[100px] px-4 justify-end">Action</div>
+            </div>
+
+            <!-- Row 0: BTC-PERP Short -->
+            <div class="flex items-center h-12 transition-colors">
+              <div class="flex items-center gap-2 w-[148px] px-4 flex-shrink-0">
+                <div class="w-1 h-7 rounded-sm flex-shrink-0 bg-com-red"></div>
+                <div class="flex flex-col leading-tight">
+                  <span class="text-text1 text-[13px] font-medium">BTC-PERP</span>
+                  <span class="text-xs text-com-red">10X</span>
+                </div>
+              </div>
+              <div class="flex-1 px-4"><span class="text-xs font-medium text-com-red">0.01 BTC</span></div>
+              <div class="flex-1 px-4"><span class="text-text1 text-xs font-medium">39,038.5</span></div>
+              <div class="flex-1 px-4 flex items-center gap-1">
+                <span class="text-text1 text-xs font-medium">50</span>
+                <button class="text-text2 hover:text-text1 transition-colors">
+                  <svg viewBox="0 0 8.5 9" fill="none" class="w-3 h-3" xmlns="http://www.w3.org/2000/svg"><path d="M8.02778 8.05263C8.28858 8.05263 8.5 8.26471 8.5 8.52632C8.5 8.78792 8.28858 9 8.02778 9H0.472222C0.211421 9 0 8.78792 0 8.52632C0 8.26471 0.211421 8.05263 0.472222 8.05263H8.02778Z" fill="currentColor"/><path d="M6.30066 0.382034C6.17993 0.260882 6.03658 0.164784 5.8788 0.0992318C5.72102 0.0336799 5.55191 -3.99567e-05 5.38113 3.55318e-08C5.21035 4.00278e-05 5.04125 0.0338391 4.8835 0.0994648C4.72575 0.165091 4.58244 0.261256 4.46177 0.382464L0.379972 4.48194C0.136762 4.72643 0.000120969 5.05767 0 5.40303V6.7823C0 6.96058 0.14426 7.10526 0.32201 7.10526H1.70579C2.05056 7.10526 2.38116 6.96747 2.6246 6.72331L6.70339 2.62986C6.94669 2.38525 7.08333 2.05385 7.08333 1.70834C7.08333 1.36282 6.94669 1.03142 6.70339 0.786814L6.30066 0.382034Z" fill="currentColor"/></svg>
+                </button>
+              </div>
+              <div class="flex-1 px-4"><span class="text-text1 text-xs font-medium">44,125.1</span></div>
+              <div class="w-[150px] px-4 flex items-center gap-1 flex-shrink-0">
+                <div class="flex flex-col leading-tight text-xs font-medium text-com-green">
+                  <span>+66.46</span><span>(+130.88%)</span>
+                </div>
+                <button class="text-text2 hover:text-text1 transition-colors">
+                  <svg viewBox="0 0 7.5 9" fill="none" class="w-3 h-3" xmlns="http://www.w3.org/2000/svg"><path d="M1.47736 3.00029C1.24202 3.00027 1.01008 3.05734 0.800855 3.16676C0.591632 3.27617 0.411182 3.43475 0.274533 3.6293C0.137884 3.82385 0.0489906 4.04874 0.0152559 4.28522C-0.0184789 4.52171 0.00392131 4.76296 0.0805911 4.98888C0.157261 5.2148 0.285981 5.41886 0.456032 5.58405C0.626084 5.74924 0.832544 5.87078 1.05822 5.93857C1.28389 6.00635 1.52225 6.0184 1.75345 5.97373C1.98464 5.92905 2.20197 5.82894 2.38735 5.68173L2.41826 5.70665L4.56824 7.23521C4.50441 7.59647 4.57325 7.96895 4.76173 8.28213C4.9502 8.59532 5.24523 8.82747 5.59095 8.93464C5.93667 9.0418 6.30909 9.01654 6.6377 8.86364C6.96631 8.71074 7.22831 8.44082 7.37409 8.10496C7.51986 7.76911 7.5393 7.39064 7.42873 7.04121C7.31815 6.69178 7.08523 6.39564 6.77406 6.20886C6.4629 6.02208 6.09509 5.95763 5.74026 6.0277C5.38544 6.09777 5.06823 6.2975 4.84869 6.58908L2.8128 5.14221C2.90371 4.94791 2.95462 4.73007 2.95462 4.50023C2.95462 4.27039 2.90371 4.05256 2.8128 3.85825L4.84915 2.41092C5.06868 2.7025 5.38589 2.90223 5.74072 2.9723C6.09554 3.04237 6.46335 2.97792 6.77452 2.79114C7.08568 2.60436 7.3186 2.30822 7.42918 1.95879C7.53976 1.60936 7.52032 1.23089 7.37454 0.895039C7.22877 0.559184 6.96677 0.289255 6.63816 0.136356C6.30954 -0.0165438 5.93712 -0.0418013 5.5914 0.0653649C5.24568 0.172531 4.95066 0.404683 4.76218 0.717869C4.57371 1.03105 4.50487 1.40354 4.56869 1.76479L2.41826 3.29428L2.38735 3.31874C2.12771 3.11209 1.80726 2.99995 1.47736 3.00029Z" fill="currentColor"/></svg>
+                </button>
+              </div>
+              <div class="w-[100px] px-4 flex-shrink-0"><span class="text-com-brown text-xs font-medium">31,176.5</span></div>
+              <div class="w-[140px] px-4 flex items-center gap-1 flex-shrink-0">
+                <div class="flex flex-col leading-tight text-xs font-medium">
+                  <span class="text-com-green">39,100.5</span>
+                  <span class="text-com-red">38,900.5</span>
+                </div>
+                <span class="text-text2 text-sm">(3)</span>
+                <button class="text-text2 hover:text-text1 transition-colors">
+                  <svg viewBox="0 0 8.5 9" fill="none" class="w-3 h-3" xmlns="http://www.w3.org/2000/svg"><path d="M8.02778 8.05263C8.28858 8.05263 8.5 8.26471 8.5 8.52632C8.5 8.78792 8.28858 9 8.02778 9H0.472222C0.211421 9 0 8.78792 0 8.52632C0 8.26471 0.211421 8.05263 0.472222 8.05263H8.02778Z" fill="currentColor"/><path d="M6.30066 0.382034C6.17993 0.260882 6.03658 0.164784 5.8788 0.0992318C5.72102 0.0336799 5.55191 -3.99567e-05 5.38113 3.55318e-08C5.21035 4.00278e-05 5.04125 0.0338391 4.8835 0.0994648C4.72575 0.165091 4.58244 0.261256 4.46177 0.382464L0.379972 4.48194C0.136762 4.72643 0.000120969 5.05767 0 5.40303V6.7823C0 6.96058 0.14426 7.10526 0.32201 7.10526H1.70579C2.05056 7.10526 2.38116 6.96747 2.6246 6.72331L6.70339 2.62986C6.94669 2.38525 7.08333 2.05385 7.08333 1.70834C7.08333 1.36282 6.94669 1.03142 6.70339 0.786814L6.30066 0.382034Z" fill="currentColor"/></svg>
+                </button>
+              </div>
+              <div class="w-[85px] px-4 flex-shrink-0"><span class="text-com-green text-xs font-medium">+2.34</span></div>
+              <div class="w-[100px] px-4 flex items-center justify-end flex-shrink-0">
+                <button class="h-6 px-3 rounded-full bg-bg2 text-text1 text-xs font-medium hover:bg-line1 transition-colors">Cancel</button>
+              </div>
+            </div>
+
+            <!-- Row 1: BTC-PERP Long -->
+            <div class="flex items-center h-12 transition-colors bg-bg2">
+              <div class="flex items-center gap-2 w-[148px] px-4 flex-shrink-0">
+                <div class="w-1 h-7 rounded-sm flex-shrink-0 bg-com-green"></div>
+                <div class="flex flex-col leading-tight">
+                  <span class="text-text1 text-[13px] font-medium">BTC-PERP</span>
+                  <span class="text-xs text-com-green">10X</span>
+                </div>
+              </div>
+              <div class="flex-1 px-4"><span class="text-xs font-medium text-com-green">0.02 BTC</span></div>
+              <div class="flex-1 px-4"><span class="text-text1 text-xs font-medium">39,038.5</span></div>
+              <div class="flex-1 px-4 flex items-center gap-1">
+                <span class="text-text1 text-xs font-medium">75</span>
+                <button class="text-text2 hover:text-text1 transition-colors">
+                  <svg viewBox="0 0 8.5 9" fill="none" class="w-3 h-3" xmlns="http://www.w3.org/2000/svg"><path d="M8.02778 8.05263C8.28858 8.05263 8.5 8.26471 8.5 8.52632C8.5 8.78792 8.28858 9 8.02778 9H0.472222C0.211421 9 0 8.78792 0 8.52632C0 8.26471 0.211421 8.05263 0.472222 8.05263H8.02778Z" fill="currentColor"/><path d="M6.30066 0.382034C6.17993 0.260882 6.03658 0.164784 5.8788 0.0992318C5.72102 0.0336799 5.55191 -3.99567e-05 5.38113 3.55318e-08C5.21035 4.00278e-05 5.04125 0.0338391 4.8835 0.0994648C4.72575 0.165091 4.58244 0.261256 4.46177 0.382464L0.379972 4.48194C0.136762 4.72643 0.000120969 5.05767 0 5.40303V6.7823C0 6.96058 0.14426 7.10526 0.32201 7.10526H1.70579C2.05056 7.10526 2.38116 6.96747 2.6246 6.72331L6.70339 2.62986C6.94669 2.38525 7.08333 2.05385 7.08333 1.70834C7.08333 1.36282 6.94669 1.03142 6.70339 0.786814L6.30066 0.382034Z" fill="currentColor"/></svg>
+                </button>
+              </div>
+              <div class="flex-1 px-4"><span class="text-text1 text-xs font-medium">44,125.1</span></div>
+              <div class="w-[150px] px-4 flex items-center gap-1 flex-shrink-0">
+                <div class="flex flex-col leading-tight text-xs font-medium text-com-green">
+                  <span>+66.46</span><span>(+130.88%)</span>
+                </div>
+                <button class="text-text2 hover:text-text1 transition-colors">
+                  <svg viewBox="0 0 7.5 9" fill="none" class="w-3 h-3" xmlns="http://www.w3.org/2000/svg"><path d="M1.47736 3.00029C1.24202 3.00027 1.01008 3.05734 0.800855 3.16676C0.591632 3.27617 0.411182 3.43475 0.274533 3.6293C0.137884 3.82385 0.0489906 4.04874 0.0152559 4.28522C-0.0184789 4.52171 0.00392131 4.76296 0.0805911 4.98888C0.157261 5.2148 0.285981 5.41886 0.456032 5.58405C0.626084 5.74924 0.832544 5.87078 1.05822 5.93857C1.28389 6.00635 1.52225 6.0184 1.75345 5.97373C1.98464 5.92905 2.20197 5.82894 2.38735 5.68173L2.41826 5.70665L4.56824 7.23521C4.50441 7.59647 4.57325 7.96895 4.76173 8.28213C4.9502 8.59532 5.24523 8.82747 5.59095 8.93464C5.93667 9.0418 6.30909 9.01654 6.6377 8.86364C6.96631 8.71074 7.22831 8.44082 7.37409 8.10496C7.51986 7.76911 7.5393 7.39064 7.42873 7.04121C7.31815 6.69178 7.08523 6.39564 6.77406 6.20886C6.4629 6.02208 6.09509 5.95763 5.74026 6.0277C5.38544 6.09777 5.06823 6.2975 4.84869 6.58908L2.8128 5.14221C2.90371 4.94791 2.95462 4.73007 2.95462 4.50023C2.95462 4.27039 2.90371 4.05256 2.8128 3.85825L4.84915 2.41092C5.06868 2.7025 5.38589 2.90223 5.74072 2.9723C6.09554 3.04237 6.46335 2.97792 6.77452 2.79114C7.08568 2.60436 7.3186 2.30822 7.42918 1.95879C7.53976 1.60936 7.52032 1.23089 7.37454 0.895039C7.22877 0.559184 6.96677 0.289255 6.63816 0.136356C6.30954 -0.0165438 5.93712 -0.0418013 5.5914 0.0653649C5.24568 0.172531 4.95066 0.404683 4.76218 0.717869C4.57371 1.03105 4.50487 1.40354 4.56869 1.76479L2.41826 3.29428L2.38735 3.31874C2.12771 3.11209 1.80726 2.99995 1.47736 3.00029Z" fill="currentColor"/></svg>
+                </button>
+              </div>
+              <div class="w-[100px] px-4 flex-shrink-0"><span class="text-com-brown text-xs font-medium">31,176.5</span></div>
+              <div class="w-[140px] px-4 flex items-center gap-1 flex-shrink-0">
+                <div class="flex flex-col leading-tight text-xs font-medium">
+                  <span class="text-com-green">39,100.5</span>
+                  <span class="text-com-red">38,900.5</span>
+                </div>
+                <span class="text-text2 text-sm">(3)</span>
+                <button class="text-text2 hover:text-text1 transition-colors">
+                  <svg viewBox="0 0 8.5 9" fill="none" class="w-3 h-3" xmlns="http://www.w3.org/2000/svg"><path d="M8.02778 8.05263C8.28858 8.05263 8.5 8.26471 8.5 8.52632C8.5 8.78792 8.28858 9 8.02778 9H0.472222C0.211421 9 0 8.78792 0 8.52632C0 8.26471 0.211421 8.05263 0.472222 8.05263H8.02778Z" fill="currentColor"/><path d="M6.30066 0.382034C6.17993 0.260882 6.03658 0.164784 5.8788 0.0992318C5.72102 0.0336799 5.55191 -3.99567e-05 5.38113 3.55318e-08C5.21035 4.00278e-05 5.04125 0.0338391 4.8835 0.0994648C4.72575 0.165091 4.58244 0.261256 4.46177 0.382464L0.379972 4.48194C0.136762 4.72643 0.000120969 5.05767 0 5.40303V6.7823C0 6.96058 0.14426 7.10526 0.32201 7.10526H1.70579C2.05056 7.10526 2.38116 6.96747 2.6246 6.72331L6.70339 2.62986C6.94669 2.38525 7.08333 2.05385 7.08333 1.70834C7.08333 1.36282 6.94669 1.03142 6.70339 0.786814L6.30066 0.382034Z" fill="currentColor"/></svg>
+                </button>
+              </div>
+              <div class="w-[85px] px-4 flex-shrink-0"><span class="text-com-green text-xs font-medium">+2.34</span></div>
+              <div class="w-[100px] px-4 flex items-center justify-end flex-shrink-0">
+                <button class="h-6 px-3 rounded-full bg-[#FFE701] text-[#2c2e30] text-xs font-medium hover:opacity-90 transition-opacity">Cancel</button>
+              </div>
+            </div>
+
+            <!-- Row 2: ETH-PERP Short -->
+            <div class="flex items-center h-12 transition-colors">
+              <div class="flex items-center gap-2 w-[148px] px-4 flex-shrink-0">
+                <div class="w-1 h-7 rounded-sm flex-shrink-0 bg-com-red"></div>
+                <div class="flex flex-col leading-tight">
+                  <span class="text-text1 text-[13px] font-medium">ETH-PERP</span>
+                  <span class="text-xs text-com-red">10X</span>
+                </div>
+              </div>
+              <div class="flex-1 px-4"><span class="text-xs font-medium text-com-red">0.05 ETH</span></div>
+              <div class="flex-1 px-4"><span class="text-text1 text-xs font-medium">39,038.5</span></div>
+              <div class="flex-1 px-4 flex items-center gap-1">
+                <span class="text-text1 text-xs font-medium">120</span>
+                <button class="text-text2 hover:text-text1 transition-colors">
+                  <svg viewBox="0 0 8.5 9" fill="none" class="w-3 h-3" xmlns="http://www.w3.org/2000/svg"><path d="M8.02778 8.05263C8.28858 8.05263 8.5 8.26471 8.5 8.52632C8.5 8.78792 8.28858 9 8.02778 9H0.472222C0.211421 9 0 8.78792 0 8.52632C0 8.26471 0.211421 8.05263 0.472222 8.05263H8.02778Z" fill="currentColor"/><path d="M6.30066 0.382034C6.17993 0.260882 6.03658 0.164784 5.8788 0.0992318C5.72102 0.0336799 5.55191 -3.99567e-05 5.38113 3.55318e-08C5.21035 4.00278e-05 5.04125 0.0338391 4.8835 0.0994648C4.72575 0.165091 4.58244 0.261256 4.46177 0.382464L0.379972 4.48194C0.136762 4.72643 0.000120969 5.05767 0 5.40303V6.7823C0 6.96058 0.14426 7.10526 0.32201 7.10526H1.70579C2.05056 7.10526 2.38116 6.96747 2.6246 6.72331L6.70339 2.62986C6.94669 2.38525 7.08333 2.05385 7.08333 1.70834C7.08333 1.36282 6.94669 1.03142 6.70339 0.786814L6.30066 0.382034Z" fill="currentColor"/></svg>
+                </button>
+              </div>
+              <div class="flex-1 px-4"><span class="text-text1 text-xs font-medium">44,125.1</span></div>
+              <div class="w-[150px] px-4 flex items-center gap-1 flex-shrink-0">
+                <div class="flex flex-col leading-tight text-xs font-medium text-com-red">
+                  <span>+12650.28</span><span>(-18.88%)</span>
+                </div>
+                <button class="text-text2 hover:text-text1 transition-colors">
+                  <svg viewBox="0 0 7.5 9" fill="none" class="w-3 h-3" xmlns="http://www.w3.org/2000/svg"><path d="M1.47736 3.00029C1.24202 3.00027 1.01008 3.05734 0.800855 3.16676C0.591632 3.27617 0.411182 3.43475 0.274533 3.6293C0.137884 3.82385 0.0489906 4.04874 0.0152559 4.28522C-0.0184789 4.52171 0.00392131 4.76296 0.0805911 4.98888C0.157261 5.2148 0.285981 5.41886 0.456032 5.58405C0.626084 5.74924 0.832544 5.87078 1.05822 5.93857C1.28389 6.00635 1.52225 6.0184 1.75345 5.97373C1.98464 5.92905 2.20197 5.82894 2.38735 5.68173L2.41826 5.70665L4.56824 7.23521C4.50441 7.59647 4.57325 7.96895 4.76173 8.28213C4.9502 8.59532 5.24523 8.82747 5.59095 8.93464C5.93667 9.0418 6.30909 9.01654 6.6377 8.86364C6.96631 8.71074 7.22831 8.44082 7.37409 8.10496C7.51986 7.76911 7.5393 7.39064 7.42873 7.04121C7.31815 6.69178 7.08523 6.39564 6.77406 6.20886C6.4629 6.02208 6.09509 5.95763 5.74026 6.0277C5.38544 6.09777 5.06823 6.2975 4.84869 6.58908L2.8128 5.14221C2.90371 4.94791 2.95462 4.73007 2.95462 4.50023C2.95462 4.27039 2.90371 4.05256 2.8128 3.85825L4.84915 2.41092C5.06868 2.7025 5.38589 2.90223 5.74072 2.9723C6.09554 3.04237 6.46335 2.97792 6.77452 2.79114C7.08568 2.60436 7.3186 2.30822 7.42918 1.95879C7.53976 1.60936 7.52032 1.23089 7.37454 0.895039C7.22877 0.559184 6.96677 0.289255 6.63816 0.136356C6.30954 -0.0165438 5.93712 -0.0418013 5.5914 0.0653649C5.24568 0.172531 4.95066 0.404683 4.76218 0.717869C4.57371 1.03105 4.50487 1.40354 4.56869 1.76479L2.41826 3.29428L2.38735 3.31874C2.12771 3.11209 1.80726 2.99995 1.47736 3.00029Z" fill="currentColor"/></svg>
+                </button>
+              </div>
+              <div class="w-[100px] px-4 flex-shrink-0"><span class="text-com-brown text-xs font-medium">31,176.5</span></div>
+              <div class="w-[140px] px-4 flex items-center gap-1 flex-shrink-0">
+                <div class="flex flex-col leading-tight text-xs font-medium">
+                  <span class="text-com-green">39,100.5</span>
+                  <span class="text-com-red">38,900.5</span>
+                </div>
+                <span class="text-text2 text-sm">(3)</span>
+                <button class="text-text2 hover:text-text1 transition-colors">
+                  <svg viewBox="0 0 8.5 9" fill="none" class="w-3 h-3" xmlns="http://www.w3.org/2000/svg"><path d="M8.02778 8.05263C8.28858 8.05263 8.5 8.26471 8.5 8.52632C8.5 8.78792 8.28858 9 8.02778 9H0.472222C0.211421 9 0 8.78792 0 8.52632C0 8.26471 0.211421 8.05263 0.472222 8.05263H8.02778Z" fill="currentColor"/><path d="M6.30066 0.382034C6.17993 0.260882 6.03658 0.164784 5.8788 0.0992318C5.72102 0.0336799 5.55191 -3.99567e-05 5.38113 3.55318e-08C5.21035 4.00278e-05 5.04125 0.0338391 4.8835 0.0994648C4.72575 0.165091 4.58244 0.261256 4.46177 0.382464L0.379972 4.48194C0.136762 4.72643 0.000120969 5.05767 0 5.40303V6.7823C0 6.96058 0.14426 7.10526 0.32201 7.10526H1.70579C2.05056 7.10526 2.38116 6.96747 2.6246 6.72331L6.70339 2.62986C6.94669 2.38525 7.08333 2.05385 7.08333 1.70834C7.08333 1.36282 6.94669 1.03142 6.70339 0.786814L6.30066 0.382034Z" fill="currentColor"/></svg>
+                </button>
+              </div>
+              <div class="w-[85px] px-4 flex-shrink-0"><span class="text-com-green text-xs font-medium">+2.34</span></div>
+              <div class="w-[100px] px-4 flex items-center justify-end flex-shrink-0">
+                <button class="h-6 w-6 rounded-full bg-bg2 flex items-center justify-center text-text1 hover:bg-line1 transition-colors">
+                  <svg viewBox="0 0 9 9" fill="none" class="w-3 h-3 -scale-y-100" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 6.48893C4.83518 6.48893 5.10695 6.76031 5.10699 7.09548V8.39344C5.10693 8.7286 4.83517 9 4.5 9C4.16483 9 3.89307 8.7286 3.89301 8.39344V7.09548C3.89305 6.76031 4.16482 6.48893 4.5 6.48893ZM2.23564 5.9063C2.47266 5.66932 2.85625 5.66974 3.09326 5.90674C3.33024 6.14377 3.33027 6.5269 3.09326 6.76392L3.0937 6.76436L2.17603 7.68202C1.93902 7.91886 1.55498 7.91901 1.31798 7.68202C1.08101 7.44501 1.08111 7.06098 1.31798 6.82397L2.23564 5.9063ZM5.90674 5.9063C6.14372 5.66962 6.52696 5.66959 6.76392 5.9063L7.68202 6.82397C7.91889 7.06098 7.91898 7.44501 7.68202 7.68202C7.44501 7.91898 7.06098 7.91889 6.82397 7.68202L5.9063 6.76436C5.66959 6.52739 5.66962 6.14372 5.9063 5.90674L5.90674 5.9063ZM1.90452 3.89301C2.23968 3.89305 2.51107 4.16482 2.51107 4.5C2.51107 4.83518 2.23968 5.10695 1.90452 5.10699H0.606556C0.271415 5.10693 1.46309e-08 4.83517 0 4.5C0 4.16483 0.271415 3.89307 0.606556 3.89301H1.90452ZM8.39344 3.89301C8.7286 3.89307 9 4.16483 9 4.5C9 4.83517 8.7286 5.10693 8.39344 5.10699H7.09548C6.76031 5.10695 6.48893 4.83518 6.48893 4.5C6.48893 4.16482 6.76031 3.89305 7.09548 3.89301H8.39344ZM1.31798 1.31798C1.54019 1.09577 1.89156 1.08185 2.12991 1.2762L2.17603 1.31798L3.0937 2.23564C3.33071 2.47266 3.33028 2.85624 3.09326 3.09326C2.85624 3.33028 2.47266 3.33028 2.23564 3.09326L1.31798 2.17603C1.08114 1.93903 1.08098 1.55498 1.31798 1.31798ZM6.87009 1.2762C7.09252 1.09481 7.41342 1.09484 7.6359 1.2762L7.68202 1.31798L7.7238 1.3641C7.9181 1.60244 7.90403 1.95387 7.68202 2.17603L6.76436 3.0937L6.76392 3.09326C6.5269 3.33027 6.14377 3.33024 5.90674 3.09326C5.66974 2.85625 5.66932 2.47266 5.9063 2.23564L6.82397 1.31798L6.87009 1.2762ZM4.5 0C4.83517 1.4631e-08 5.10693 0.271415 5.10699 0.606556V1.90452C5.10695 2.23968 4.83518 2.51107 4.5 2.51107C4.16482 2.51107 3.89305 2.23968 3.89301 1.90452V0.606556C3.89307 0.271415 4.16483 0 4.5 0Z" fill="currentColor"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right panel: Order + Account -->
+  <div class="hidden md:flex flex-col flex-shrink-0 border-l border-line1 overflow-y-auto">
+    <!-- ══════════════ Order Panel ══════════════ -->
+    <div class="flex flex-col bg-bg1 border-t border-line1 lg:border-t-0" style="width:300px">
+      <!-- Leverage + Header -->
+      <div class="flex items-center justify-between px-3 py-2 border-b border-line1">
+        <div class="flex items-center gap-1">
+          <span class="text-text1 text-xs">Isolated </span>
+          <span class="text-com-green text-xs">10X</span>
+          <i data-lucide="chevron-down" class="w-2.5 h-2.5 text-text1"></i>
+        </div>
+        <button class="text-text2 hover:text-text1 transition-colors">
+          <svg viewBox="0 0 6.66667 12" fill="none" class="w-4 h-4" xmlns="http://www.w3.org/2000/svg"><path d="M5.72276 10.1868C6.28081 10.1869 6.66646 10.6279 6.66667 11.0931V11.0964L6.66233 11.1777V11.1803C6.618 11.6112 6.24601 12 5.72276 12H0.944631C0.421382 12 0.0493859 11.6112 0.00506311 11.1803V11.1777L0.000723301 11.0964L0 11.0931C0.000209918 10.6279 0.386575 10.1869 0.944631 10.1868H5.72276Z" fill="currentColor"/><path d="M5.72276 5.09375C6.28085 5.09378 6.66667 5.53455 6.66667 6V6.00326L6.66233 6.08464V6.08724C6.61799 6.51823 6.24578 6.90622 5.72276 6.90625H0.944631C0.421612 6.90622 0.0494029 6.51823 0.00506311 6.08464V6.08464L0.000723301 6.00326L0 6C9.88918e-08 5.53455 0.386544 5.09378 0.944631 5.09375H5.72276Z" fill="currentColor"/><path d="M5.72276 0C6.2811 2.7303e-05 6.66667 0.441704 6.66667 0.906901C6.66646 1.37207 6.28081 1.81312 5.72276 1.81315H0.944631C0.386575 1.81312 0.000933021 1.37207 0.000723301 0.906901C0.000723301 0.441704 0.386293 2.69278e-05 0.944631 0H5.72276Z" fill="currentColor"/></svg>
+        </button>
+      </div>
+
+      <!-- Buy / Sell Toggle -->
+      <div class="px-3 py-3">
+        <div class="flex items-center rounded-full bg-bg2 p-0.5">
+          <button id="side-buy-btn" onclick="selectSide('buy')" class="flex-1 py-1.5 text-sm font-medium rounded-full transition-colors text-text2 hover:text-text1">Buy</button>
+          <button id="side-sell-btn" onclick="selectSide('sell')" class="flex-1 py-1.5 text-sm font-medium rounded-full transition-colors bg-bg1 text-com-red border border-com-red">Sell</button>
+        </div>
+      </div>
+
+      <!-- Order type tabs -->
+      <div class="flex items-end gap-4 px-3 border-b border-line1 pb-0">
+        <button id="order-type-market-btn" onclick="selectOrderType('market')" class="flex flex-col items-start gap-1 pb-2 text-xs font-medium transition-colors text-text1">
+          Market
+          <div class="order-type-underline w-full h-0.5 bg-text1 rounded-full"></div>
+        </button>
+        <button id="order-type-limit-btn" onclick="selectOrderType('limit')" class="flex flex-col items-start gap-1 pb-2 text-xs font-medium transition-colors text-text2 hover:text-text1">
+          Limit
+          <div class="order-type-underline w-full h-0.5 bg-text1 rounded-full hidden"></div>
+        </button>
+      </div>
+
+      <!-- Form -->
+      <div class="flex flex-col gap-3 px-3 py-3 flex-1">
+        <!-- Available -->
+        <div class="flex items-center justify-between">
+          <span class="text-text2 text-xs">Available</span>
+          <div class="flex items-center gap-1">
+            <span class="text-text1 text-xs">0.99 USDC</span>
+            <button class="w-4 h-4 rounded-full bg-text1 flex items-center justify-center">
+              <span class="text-bg1 text-[10px] font-bold leading-none">+</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Market Price -->
+        <div class="flex items-center px-3 h-12 rounded-lg bg-bg2">
+          <span class="text-text1 text-sm">Best Market Price</span>
+        </div>
+
+        <!-- Quantity Input -->
+        <div class="flex flex-col gap-1 relative">
+          <div class="flex items-center justify-between px-3 h-12 rounded-lg bg-bg2 border border-text1/30">
+            <div class="flex flex-col">
+              <span class="text-text2 text-[10px]">Quantity</span>
+              <input value="23,566.55" class="bg-transparent text-text1 text-sm font-medium outline-none w-full" />
+            </div>
+            <button onclick="toggleUnitDropdown()" class="flex items-center gap-1">
+              <span id="quantity-unit-label" class="text-text1 text-sm font-medium">USDC</span>
+              <i id="unit-dropdown-chevron" data-lucide="chevron-down" class="w-3 h-3 text-text2 transition-transform"></i>
+            </button>
+          </div>
+          <span class="text-text2 text-[11px] px-1">= 0.0005 BTC</span>
+
+          <div id="unit-dropdown" class="hidden absolute right-0 top-[52px] z-20 w-[114px] flex flex-col gap-1 p-1 rounded-xl bg-bg1 border border-line1 shadow-lg">
+            <button onclick="selectQuantityUnit('USDC')" data-unit="USDC" class="h-8 px-2 rounded-lg text-sm font-medium text-left transition-colors bg-bg2 text-text1">USDC</button>
+            <button onclick="selectQuantityUnit('SUI')" data-unit="SUI" class="h-8 px-2 rounded-lg text-sm font-medium text-left transition-colors text-text2 hover:bg-bg2/60">SUI</button>
+          </div>
+        </div>
+
+        <!-- Slider -->
+        <div class="relative px-1">
+          <div class="relative h-6 flex items-center">
+            <div class="absolute inset-x-0 h-1 bg-bg2 rounded-full">
+              <div id="slider-fill" class="h-full bg-text1 rounded-full" style="width:25%"></div>
+            </div>
+            <button onclick="setSliderValue(0)" data-mark="0" class="slider-mark absolute w-3 h-3 rounded-full border-2 transition-colors bg-text1 border-text1" style="left:calc(0% - 6px)"></button>
+            <button onclick="setSliderValue(25)" data-mark="25" class="slider-mark absolute w-3 h-3 rounded-full border-2 transition-colors bg-text1 border-text1" style="left:calc(25% - 6px)"></button>
+            <button onclick="setSliderValue(50)" data-mark="50" class="slider-mark absolute w-3 h-3 rounded-full border-2 transition-colors bg-bg2 border-text2" style="left:calc(50% - 6px)"></button>
+            <button onclick="setSliderValue(75)" data-mark="75" class="slider-mark absolute w-3 h-3 rounded-full border-2 transition-colors bg-bg2 border-text2" style="left:calc(75% - 6px)"></button>
+            <button onclick="setSliderValue(100)" data-mark="100" class="slider-mark absolute w-3 h-3 rounded-full border-2 transition-colors bg-bg2 border-text2" style="left:calc(100% - 6px)"></button>
+            <input id="order-slider" type="range" min="0" max="100" value="25" oninput="setSliderValue(Number(this.value))" class="absolute inset-0 opacity-0 cursor-pointer w-full" />
+          </div>
+        </div>
+
+        <!-- Checkboxes -->
+        <div class="flex flex-col gap-2">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <div class="w-5 h-5 rounded-md border border-line1 bg-bg2 flex items-center justify-center"></div>
+            <span class="text-text1 text-sm">Reduce Only</span>
+          </label>
+          <div class="flex items-center justify-between">
+            <label onclick="toggleTpsl()" class="flex items-center gap-2 cursor-pointer">
+              <div id="tpsl-checkbox" class="w-5 h-5 rounded-md bg-text1 flex items-center justify-center">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#202328" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <span class="text-text1 text-sm">TP/SL</span>
+            </label>
+            <div class="flex items-center gap-1">
+              <span class="text-text1 text-xs">Basic</span>
+              <button class="text-text2 hover:text-text1">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M12.47 9.01C12.86 9.01 13.05 9.41 12.85 9.68L12.8 9.73L10.29 12.08C10.02 12.34 9.57 12.34 9.29 12.08C9.02 11.83 9.02 11.42 9.29 11.17L10.2 10.32L3.85 10.32C3.45 10.32 3.14 10.02 3.14 9.66C3.14 9.31 3.45 9.01 3.85 9.01H12.47ZM5.68 3.92C5.96 3.66 6.41 3.66 6.68 3.92C6.95 4.17 6.95 4.58 6.68 4.83L5.9 5.57L12.12 5.68C12.52 5.68 12.83 5.98 12.83 6.34C12.83 6.69 12.52 6.99 12.12 6.99L5.52 6.99L3.55 6.99C3.33 6.99 3.17 6.87 3.1 6.72C3.04 6.56 3.06 6.38 3.21 6.24L5.68 3.92Z" fill="#F9F9F9"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div id="tpsl-rows" class="flex flex-col gap-2">
+            <div class="flex gap-2">
+              <div class="flex-1 flex flex-col gap-1 px-3 py-2 rounded-lg bg-bg2">
+                <span class="text-text2 text-[10px]">TP Price</span>
+                <input value="23,566.55" class="bg-transparent text-text1 text-sm font-medium outline-none" />
+              </div>
+              <div class="w-20 flex flex-col gap-1 px-3 py-2 rounded-lg bg-bg2">
+                <span class="text-text2 text-[10px]">ROI</span>
+                <div class="flex items-center gap-0.5">
+                  <input value="20" class="bg-transparent text-text1 text-sm font-medium outline-none w-8" />
+                  <span class="text-text1 text-sm">%</span>
+                </div>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <div class="flex-1 flex flex-col gap-1 px-3 py-2 rounded-lg bg-bg2">
+                <span class="text-text2 text-[10px]">SL Price</span>
+                <input value="23,566.55" class="bg-transparent text-text1 text-sm font-medium outline-none" />
+              </div>
+              <div class="w-20 flex flex-col gap-1 px-3 py-2 rounded-lg bg-bg2">
+                <span class="text-text2 text-[10px]">ROI</span>
+                <div class="flex items-center gap-0.5">
+                  <input value="20" class="bg-transparent text-text1 text-sm font-medium outline-none w-8" />
+                  <span class="text-text1 text-sm">%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button id="submit-order-btn" class="w-full py-2.5 rounded-full text-sm font-semibold text-white transition-colors bg-com-red hover:bg-com-red/90">Sell / Short</button>
+
+        <!-- Cost info -->
+        <div class="flex flex-col gap-1 pt-2 border-t border-line1">
+          <div class="flex items-center justify-between">
+            <span class="text-text2 text-xs border-b border-dashed border-text3">Cost</span>
+            <span class="text-text1 text-xs font-medium">35.343 USDC</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-text2 text-xs">Max Sell</span>
+            <span class="text-text1 text-xs">35.343 BTC</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════ Account Panel ══════════════ -->
+    <div class="flex flex-col bg-bg1 border-t border-line1" style="width:300px">
+      <div class="flex items-center justify-between px-3 py-2.5 border-b border-line1">
+        <span class="text-text1 text-sm font-medium">Perp Account</span>
+        <button class="text-text2 hover:text-text1 transition-colors">
+          <svg viewBox="0 0 6.66667 12" fill="none" class="w-4 h-4" xmlns="http://www.w3.org/2000/svg"><path d="M5.72276 10.1868C6.28081 10.1869 6.66646 10.6279 6.66667 11.0931V11.0964L6.66233 11.1777V11.1803C6.618 11.6112 6.24601 12 5.72276 12H0.944631C0.421382 12 0.0493859 11.6112 0.00506311 11.1803V11.1777L0.000723301 11.0964L0 11.0931C0.000209918 10.6279 0.386575 10.1869 0.944631 10.1868H5.72276Z" fill="currentColor"/><path d="M5.72276 5.09375C6.28085 5.09378 6.66667 5.53455 6.66667 6V6.00326L6.66233 6.08464V6.08724C6.61799 6.51823 6.24578 6.90622 5.72276 6.90625H0.944631C0.421612 6.90622 0.0494029 6.51823 0.00506311 6.08464V6.08464L0.000723301 6.00326L0 6C9.88918e-08 5.53455 0.386544 5.09378 0.944631 5.09375H5.72276Z" fill="currentColor"/><path d="M5.72276 0C6.2811 2.7303e-05 6.66667 0.441704 6.66667 0.906901C6.66646 1.37207 6.28081 1.81312 5.72276 1.81315H0.944631C0.386575 1.81312 0.000933021 1.37207 0.000723301 0.906901C0.000723301 0.441704 0.386293 2.69278e-05 0.944631 0H5.72276Z" fill="currentColor"/></svg>
+        </button>
+      </div>
+      <div class="flex flex-col gap-2 px-3 py-3">
+        <div class="flex items-center justify-between">
+          <span class="text-text2 text-xs border-b border-dashed border-text2">Wallet Balance</span>
+          <span class="text-text1 text-xs">0.0000 USDC</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-text2 text-xs border-b border-dashed border-text2">Unrealized P&amp;L</span>
+          <span class="text-text1 text-xs">0.0000 USDC</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-text2 text-xs border-b border-dashed border-text2">Account Value</span>
+          <span class="text-text1 text-xs">0.0000 USDC</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════ FOOTER ══════════════════════════ -->
+<div class="flex items-center justify-between px-4 h-10 bg-bg1 border-t border-line1 flex-shrink-0">
+  <div class="flex items-center gap-1">
+    <svg viewBox="0 0 12 11.9065" fill="none" class="w-3 h-3 text-com-green" xmlns="http://www.w3.org/2000/svg"><path d="M0.755437 7.48811C1.07875 7.42095 1.44896 7.51557 1.81745 7.6939C2.18601 7.8723 2.53447 8.12509 2.80157 8.3439L2.8029 8.34523C2.81512 8.35506 2.82761 8.36508 2.84019 8.3752L3.07057 8.571C3.29496 8.77245 3.49994 8.99108 3.67848 9.23298L3.77037 9.35552C4.01065 9.67708 4.19861 10.0392 4.36031 10.4151L4.36097 10.4164C4.3672 10.4306 4.37388 10.4445 4.38028 10.4591C4.49758 10.7328 4.52301 11.0427 4.42889 11.3175C4.31358 11.5655 4.12003 11.7564 3.86892 11.8536C3.59406 11.9328 3.29722 11.9262 3.0446 11.8123C2.79103 11.671 2.65765 11.4741 2.5339 11.1903V11.189L2.45866 11.0291C2.06937 10.2474 1.48473 9.72643 0.667545 9.38416C0.508672 9.31727 0.387795 9.243 0.291344 9.14974C0.195935 9.05747 0.118342 8.94168 0.0516412 8.78544C-0.0239152 8.57317 -0.0161644 8.26802 0.0722823 8.06619C0.233253 7.77464 0.441557 7.59741 0.755437 7.48811ZM0.434501 0.149008C0.759572 -0.0479793 1.10951 -0.0152038 1.52515 0.0524407L1.52582 0.0531067C1.55083 0.0570522 1.55097 0.0570837 1.57642 0.0610985C2.62759 0.22702 3.65024 0.515558 4.62132 0.946187L4.69589 0.978154C5.74382 1.44221 6.71588 2.04874 7.59297 2.78629C7.61144 2.80175 7.61217 2.80189 7.63092 2.81759C7.94647 3.08234 8.24447 3.36508 8.53847 3.65806C8.55951 3.67899 8.58071 3.69976 8.60239 3.72133L8.77284 3.89848C8.82855 3.95856 8.88317 4.01979 8.93664 4.08229L8.93797 4.08362C8.96231 4.11119 8.98677 4.13871 9.01122 4.1662C9.1868 4.3652 9.35181 4.57122 9.51126 4.7849C9.55207 4.83954 9.59296 4.89403 9.63378 4.94806C10.7517 6.43696 11.5014 8.19032 11.845 10.0195L11.8544 10.0681C11.959 10.6289 12.0053 10.8852 11.9995 11.0564C11.9945 11.2046 11.9517 11.2808 11.8244 11.488C11.6792 11.6907 11.4867 11.8244 11.2478 11.8869C10.9471 11.9321 10.6608 11.9015 10.4215 11.7464C10.1153 11.5096 10.0394 11.2313 9.97469 10.818C9.82021 9.83933 9.55911 8.89502 9.13972 7.99026C9.12986 7.96852 9.11992 7.94673 9.10976 7.92433C8.65449 6.92151 8.02041 6.01891 7.28069 5.21312L7.24407 5.1725C7.10276 5.01749 6.95816 4.86856 6.80595 4.72496L6.6508 4.58311L6.59354 4.53049L6.35584 4.32471C6.27528 4.25874 6.19367 4.19509 6.11214 4.13224C6.0757 4.10394 6.03982 4.07525 6.00294 4.04566L5.71796 3.82922C5.42801 3.61983 5.12351 3.42877 4.81508 3.25448L4.75515 3.22051C3.57856 2.55413 2.26813 2.1175 0.922563 1.96181C0.62874 1.92397 0.391644 1.80804 0.210112 1.58553C0.0309188 1.33932 -0.00716781 1.08921 0.0190149 0.767704C0.0670227 0.516995 0.219139 0.308974 0.434501 0.149008ZM0.236745 4.03367C0.510849 3.67857 0.959519 3.65765 1.42261 3.75862C1.45245 3.76499 1.4831 3.77071 1.51383 3.77727C1.79492 3.83888 2.07071 3.9153 2.34547 4.0037C2.36844 4.01108 2.39173 4.01875 2.41538 4.02635C2.73795 4.1313 3.0476 4.25587 3.35355 4.40263C3.37806 4.41432 3.37871 4.41478 3.40349 4.4266C3.51336 4.47936 3.62247 4.5342 3.73109 4.5911L3.78635 4.61974C4.36659 4.92568 4.90715 5.30297 5.39636 5.74058L5.39702 5.74125C5.41893 5.76052 5.44104 5.78 5.46361 5.79985C5.62359 5.94324 5.77685 6.0945 5.93236 6.24872L5.99628 6.31133C6.13389 6.44885 6.25854 6.59448 6.38247 6.74954L6.38447 6.75221C6.40933 6.78181 6.4345 6.81129 6.45971 6.84078C6.68308 7.10529 6.87403 7.39301 7.06562 7.6919C7.07638 7.70862 7.08717 7.72597 7.09825 7.74319L7.31199 8.09349C7.5335 8.47364 7.77057 8.93417 7.95452 9.40814C8.20057 10.0421 8.34174 10.6779 8.24683 11.1743C8.1892 11.3759 8.09968 11.5299 7.9472 11.6671L7.94454 11.6698C7.92627 11.6872 7.90798 11.7046 7.88927 11.7224C7.66595 11.9057 7.38284 11.9176 7.05564 11.8949C6.81988 11.8533 6.62396 11.7125 6.47103 11.5106C6.36837 11.3434 6.32518 11.1835 6.27926 10.9705V10.9692L6.23465 10.7754L6.224 10.7274L6.14543 10.4278C6.08779 10.231 6.02011 10.0395 5.94501 9.85035L5.82716 9.56731C5.81958 9.54968 5.81166 9.53219 5.80385 9.51403C5.57326 8.98262 5.25932 8.49099 4.89165 8.0482L4.73052 7.86173C4.71986 7.84974 4.70953 7.83745 4.69855 7.8251C4.52106 7.62628 4.336 7.43345 4.13392 7.25502L3.92618 7.08187C3.912 7.07058 3.8975 7.05953 3.8829 7.0479C3.32276 6.60223 2.70182 6.24261 2.03052 5.98833C2.01187 5.98126 1.99314 5.9743 1.97393 5.96701H1.9726C1.63752 5.84269 1.29628 5.76192 0.957853 5.68664C0.626926 5.61169 0.380118 5.51864 0.186807 5.27439C0.0201157 5.00053 -0.0310514 4.71665 0.0323318 4.39996C0.0739249 4.28398 0.133907 4.17695 0.20878 4.07363L0.210112 4.07163C0.218928 4.05909 0.227718 4.04652 0.236745 4.03367Z" fill="currentColor"/></svg>
+    <span class="text-com-green text-xs">System connection stable</span>
+  </div>
+  <div class="flex items-center gap-4">
+    <button class="flex items-center gap-1 text-text2 text-xs hover:text-text1 transition-colors">
+      <svg viewBox="0 0 18 16" fill="none" class="w-4 h-4" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M9.03955 1.7283e-09C10.9792 2.03796e-09 12.4871 -0.000144861 13.6608 0.123751C14.8479 0.248482 15.7883 0.508277 16.5384 1.09657C17.3084 1.70046 17.6684 2.486 17.8383 3.47706C17.9998 4.42145 18 5.62455 18 7.12429V7.27382C18 8.73603 17.9996 9.74844 17.8321 10.5025C17.7417 10.9085 17.5994 11.2615 17.3751 11.5879C17.1549 11.9095 16.8732 12.1805 16.5384 12.443C15.7883 13.0305 14.8479 13.2903 13.6608 13.4158C12.4871 13.5389 10.9792 13.5387 9.03955 13.5387H9C8.11508 13.5387 7.4399 13.8316 6.7333 14.2812C6.43855 14.4726 6.14972 14.6726 5.8667 14.8802L5.61182 15.0616C5.21419 15.3438 4.7796 15.6435 4.28906 15.9184C4.19362 15.972 4.0853 16.0002 3.97529 16C3.86543 15.9998 3.75752 15.9714 3.6624 15.9175C3.56721 15.8635 3.488 15.7857 3.43301 15.6923C3.37807 15.5991 3.34879 15.4932 3.34863 15.3855V13.2629C2.61287 13.107 1.98982 12.8573 1.46162 12.443C1.126 12.1805 0.845016 11.9095 0.624023 11.5879C0.400572 11.2615 0.258294 10.9085 0.167871 10.5025C0.000430857 9.74844 0 8.73603 0 7.27382V7.12429C0 5.62452 0.000198054 4.42142 0.161719 3.47621C0.331653 2.48591 0.691563 1.70047 1.46162 1.09657C2.21175 0.509068 3.15202 0.248436 4.33916 0.122892C5.51289 -0.000187452 7.02071 1.77925e-09 8.96045 1.7283e-09H9.03955ZM8.79873 9.19884C8.636 9.19885 8.47962 9.2625 8.36455 9.37501C8.24964 9.48747 8.18443 9.63972 8.18437 9.79869V10.1992C8.18447 10.3581 8.24962 10.5104 8.36455 10.6228C8.47962 10.7353 8.63601 10.799 8.79873 10.799C8.96131 10.7989 9.11705 10.7352 9.23203 10.6228C9.34699 10.5104 9.41211 10.3581 9.41221 10.1992V9.79869C9.41216 9.63967 9.347 9.48748 9.23203 9.37501C9.11705 9.26258 8.96133 9.19894 8.79873 9.19884ZM8.79873 3.19777C8.23678 3.19302 7.69151 3.38808 7.26592 3.74691C6.82165 4.13251 6.54873 4.69829 6.54873 5.39349C6.54881 5.55252 6.61302 5.70557 6.72803 5.81803C6.84307 5.93039 6.99959 5.99333 7.16221 5.99334C7.32464 5.99328 7.48053 5.93019 7.59551 5.81803C7.71052 5.70557 7.7756 5.55252 7.77568 5.39349C7.77568 5.0256 7.91137 4.79223 8.08066 4.64583C8.26065 4.4891 8.52064 4.39833 8.79873 4.39832C9.0607 4.39375 9.31586 4.48141 9.5168 4.64583C9.68528 4.79303 9.8209 5.02559 9.8209 5.39349C9.82085 5.68281 9.75122 5.83505 9.67764 5.93662C9.58928 6.05981 9.46301 6.15722 9.24785 6.31561L9.22676 6.33194C9.03449 6.47354 8.76208 6.6724 8.55264 6.96358C8.31875 7.28669 8.18444 7.68675 8.18437 8.19852C8.18439 8.35763 8.24949 8.51054 8.36455 8.62305C8.47961 8.73555 8.63601 8.79921 8.79873 8.79923C8.96128 8.79912 9.11706 8.73541 9.23203 8.62305C9.3471 8.51054 9.41219 8.35763 9.41221 8.19852C9.41226 7.90895 9.48203 7.75694 9.55547 7.65539C9.64383 7.53219 9.77007 7.43394 9.98525 7.27554L10.0072 7.26007C10.1994 7.11932 10.4702 6.91935 10.6796 6.62756C10.9135 6.30362 11.0487 5.90535 11.0487 5.39349C11.0487 4.69829 10.7749 4.13251 10.3298 3.74691C9.89714 3.37208 9.33841 3.19785 8.79873 3.19777Z" fill="currentColor"/></svg>
+      Announcement
+    </button>
+    <button class="flex items-center gap-1 text-text2 text-xs hover:text-text1 transition-colors">
+      <svg viewBox="0 0 14 18" fill="none" class="w-4 h-4" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.3916 1.52669C13.7473 1.61184 14 1.95147 14 2.34321V10.6921C14 12.3694 13.2202 13.9357 11.9219 14.8661L8.00061 17.6769C7.39946 18.1077 6.60053 18.1077 5.99939 17.6769L2.07812 14.8661C0.779895 13.9357 0 12.3693 0 10.6921V2.34321C0 1.95134 0.25338 1.6117 0.609253 1.52669L7 0L13.3916 1.52669ZM6.57275 5.29815C6.48423 5.29841 6.39774 5.32632 6.3241 5.37814C6.25038 5.43002 6.1925 5.50372 6.15833 5.58996L4.75183 9.05643L4.75012 9.06083C4.63055 9.36884 4.83959 9.72002 5.16626 9.72002H6.17029L5.88745 12.3445C5.85392 12.6591 6.24333 12.8491 6.43774 12.5739L9.12769 8.75848L9.16357 8.69871C9.31909 8.39498 9.12247 7.99496 8.76794 7.99469H7.86389L8.61926 5.95032L8.63721 5.89143C8.70605 5.60108 8.50319 5.29831 8.20056 5.29815H6.57275Z" fill="currentColor"/></svg>
+      Security
+    </button>
+    <button class="flex items-center gap-1 text-text2 text-xs hover:text-text1 transition-colors">
+      <svg viewBox="0 0 18 18" fill="none" class="w-4 h-4" xmlns="http://www.w3.org/2000/svg"><path d="M1.07721 7.32573C-0.35907 6.55491 -0.359068 4.69301 1.07721 3.92218L7.85846 0.282817C8.56109 -0.0942728 9.43888 -0.0942715 10.1415 0.282817L16.9228 3.92218C18.3591 4.69301 18.3591 6.55492 16.9228 7.32574L10.1415 10.9651C9.43888 11.3422 8.56109 11.3422 7.85846 10.9651L1.07721 7.32573Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M3.80456 14.2034V10.2288L7.85839 12.4044C8.56102 12.7816 9.43882 12.7816 10.1414 12.4044L14.1953 10.2288V14.2105C14.1848 15.2426 11.8626 16.0781 8.99992 16.0781C6.13715 16.0781 3.81519 15.2426 3.8046 14.2105L3.80456 14.2034Z" fill="currentColor"/><path d="M16.7541 5.61435H15.4041V14.2584H16.7541V5.61435Z" fill="currentColor"/><path d="M14.917 14.8793C15.0448 14.3269 15.4931 13.9406 16.0066 13.9406H16.1402C16.6486 13.9406 17.0939 14.3194 17.2263 14.8647L17.6053 16.4245C17.7983 17.2188 17.2597 18 16.5191 18H15.6459C14.9109 18 14.3734 17.2299 14.5562 16.4392L14.917 14.8793Z" fill="currentColor"/></svg>
+      Tutorial
+    </button>
+    <button class="flex items-center gap-1 text-text2 text-xs hover:text-text1 transition-colors">
+      <svg viewBox="0 0 18 18" fill="none" class="w-4 h-4" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.1623 0.011409L12.3596 0.0454551C12.7459 0.132073 13.0806 0.329847 13.3419 0.625985L13.4665 0.782248L13.5551 0.921924C13.7405 1.25041 13.7798 1.59819 13.7971 1.81498C13.8193 2.09295 13.8191 2.44368 13.8191 2.82065V12.2279C13.8191 12.6048 13.8193 12.9556 13.7971 13.2335C13.7773 13.4813 13.7292 13.9007 13.4665 14.2663C13.1515 14.7044 12.6995 14.9715 12.1623 15.0371C11.7054 15.0928 11.2996 14.9233 11.0729 14.8215C10.809 14.703 10.4856 14.5268 10.1309 14.3344C9.07746 13.7628 8.93231 13.2607 7.97089 13.1087V15.1724C7.97089 15.3222 7.97184 15.4785 7.95774 15.6211C7.83384 16.8731 6.83876 17.8636 5.58085 17.9869C5.43766 18.0009 5.28125 18 5.13091 18C4.98041 18 4.82345 18.0009 4.68009 17.9869C3.42219 17.8636 2.4271 16.8731 2.30321 15.6211C2.28911 15.4785 2.29005 15.3222 2.29005 15.1724V13.024C2.08017 12.9986 1.85921 12.952 1.63575 12.8599C0.986579 12.5922 0.47063 12.0787 0.201729 11.4326C0.0776991 11.1344 0.035973 10.8404 0.0175427 10.5718C-0.000189021 10.3131 1.33803e-06 10.0026 1.12167e-06 9.66393V6.75254C6.32671e-07 6.1327 -0.000717205 5.59986 0.0350843 5.16372C0.0719742 4.71464 0.153058 4.26949 0.371883 3.84203C0.699096 3.20297 1.2217 2.6836 1.86379 2.35797C2.29332 2.14019 2.74044 2.05857 3.19169 2.02188C3.62985 1.98627 4.16446 1.98783 4.7871 1.98783H7.42097C8.46027 1.98776 8.86653 1.40016 10.1309 0.714156C10.4856 0.521743 10.809 0.34555 11.0729 0.227034C11.2712 0.137995 11.6063 -0.00334139 11.993 6.02839e-05L12.1623 0.011409Z" fill="currentColor"/><path d="M16.8773 3.88743C17.4973 3.88743 17.9999 4.38776 18 5.00484V10.0437C18 10.6608 17.4974 11.1611 16.8773 11.1611C16.2573 11.1611 15.7547 10.6608 15.7547 10.0437V5.00484C15.7547 4.38777 16.2574 3.88743 16.8773 3.88743Z" fill="currentColor"/></svg>
+      Support
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════════════════ ECONOMIC CALENDAR DRAWER ══════════════════════════ -->
+<div id="calendar-backdrop" class="fixed inset-0 bg-black/40 z-40 hidden" onclick="closeCalendar()"></div>
+
+<div id="calendar-drawer" class="fixed top-0 right-0 h-full w-full max-w-[560px] bg-bg1 z-50 flex flex-col shadow-2xl border-l border-line1 transition-transform duration-300 translate-x-full">
+  <!-- Drawer Header -->
+  <div class="flex items-center justify-between px-4 py-3 border-b border-line1 bg-bg1 flex-shrink-0">
+    <span class="text-text1 font-semibold text-sm">Calendar</span>
+    <button onclick="closeCalendar()" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-bg2 transition-colors text-text2 hover:text-text1">
+      <i data-lucide="x" class="w-4 h-4"></i>
+    </button>
+  </div>
+
+  <div class="flex-1 overflow-y-auto">
+    <!-- Date Nav Toolbar -->
+    <div class="flex items-center gap-1.5 px-4 py-2.5 border-b border-line1">
+      <button class="px-2.5 py-1 rounded text-xs font-medium text-text1 bg-bg2 hover:bg-line1 transition-colors">Today</button>
+      <button class="w-7 h-7 flex items-center justify-center rounded text-text2 hover:text-text1 hover:bg-bg2 transition-colors"><i data-lucide="calendar-days" class="w-3.5 h-3.5"></i></button>
+      <div class="flex items-center gap-0.5 ml-auto">
+        <button class="w-7 h-7 flex items-center justify-center rounded text-text2 hover:text-text1 hover:bg-bg2 transition-colors"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+        <span class="text-text1 text-xs font-medium px-1 whitespace-nowrap">Jun 15 — 21</span>
+        <button class="w-7 h-7 flex items-center justify-center rounded text-text2 hover:text-text1 hover:bg-bg2 transition-colors"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+      </div>
+      <button class="w-7 h-7 flex items-center justify-center rounded text-text2 hover:text-text1 hover:bg-bg2 transition-colors"><i data-lucide="settings" class="w-3.5 h-3.5"></i></button>
+      <button class="w-7 h-7 flex items-center justify-center rounded text-text2 hover:text-text1 hover:bg-bg2 transition-colors"><i data-lucide="panel-right-close" class="w-3.5 h-3.5"></i></button>
+    </div>
+
+    <!-- Week day cards -->
+    <div class="grid grid-cols-7 gap-1.5 px-4 py-3 border-b border-line1">
+      <button class="flex flex-col items-center gap-1 px-1 py-2 rounded-lg border border-com-red bg-com-red/5 transition-colors">
+        <span class="text-text2 text-[10px] leading-none">Mon</span>
+        <span class="text-sm font-bold leading-none text-com-red">15</span>
+        <div class="flex flex-col gap-0.5 items-start w-full px-1 mt-0.5"><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-blue-500 bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">43</span></div><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-violet-400 bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">110</span></div><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-com-green bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">2022</span></div><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-com-brown bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">1</span></div></div>
+      </button>
+      <button class="flex flex-col items-center gap-1 px-1 py-2 rounded-lg border border-line1 hover:border-text2/40 transition-colors">
+        <span class="text-text2 text-[10px] leading-none">Tue</span>
+        <span class="text-sm font-bold leading-none text-text1">16</span>
+        <div class="flex flex-col gap-0.5 items-start w-full px-1 mt-0.5"><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-blue-500 bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">48</span></div><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-violet-400 bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">67</span></div><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-com-green bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">638</span></div><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-com-brown bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">1</span></div></div>
+      </button>
+      <button class="flex flex-col items-center gap-1 px-1 py-2 rounded-lg border border-line1 hover:border-text2/40 transition-colors">
+        <span class="text-text2 text-[10px] leading-none">Wed</span>
+        <span class="text-sm font-bold leading-none text-text1">17</span>
+        <div class="flex flex-col gap-0.5 items-start w-full px-1 mt-0.5"><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-blue-500 bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">68</span></div><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-violet-400 bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">50</span></div><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-com-green bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">473</span></div></div>
+      </button>
+      <button class="flex flex-col items-center gap-1 px-1 py-2 rounded-lg border border-line1 hover:border-text2/40 transition-colors">
+        <span class="text-text2 text-[10px] leading-none">Thu</span>
+        <span class="text-sm font-bold leading-none text-text1">18</span>
+        <div class="flex flex-col gap-0.5 items-start w-full px-1 mt-0.5"><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-blue-500 bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">63</span></div><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-violet-400 bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">73</span></div><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-com-green bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">1261</span></div><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-com-brown bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">1</span></div></div>
+      </button>
+      <button class="flex flex-col items-center gap-1 px-1 py-2 rounded-lg border border-line1 hover:border-text2/40 transition-colors">
+        <span class="text-text2 text-[10px] leading-none">Fri</span>
+        <span class="text-sm font-bold leading-none text-text1">19</span>
+        <div class="flex flex-col gap-0.5 items-start w-full px-1 mt-0.5"><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-blue-500 bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">45</span></div><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-violet-400 bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">29</span></div><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-com-green bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">257</span></div><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-com-brown bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">1</span></div></div>
+      </button>
+      <button class="flex flex-col items-center gap-1 px-1 py-2 rounded-lg border border-line1 hover:border-text2/40 transition-colors">
+        <span class="text-text2 text-[10px] leading-none">Sat</span>
+        <span class="text-sm font-bold leading-none text-text1">20</span>
+        <div class="flex flex-col gap-0.5 items-start w-full px-1 mt-0.5"><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-blue-500 bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">3</span></div></div>
+      </button>
+      <button class="flex flex-col items-center gap-1 px-1 py-2 rounded-lg border border-line1 hover:border-text2/40 transition-colors">
+        <span class="text-text2 text-[10px] leading-none">Sun</span>
+        <span class="text-sm font-bold leading-none text-text1">21</span>
+        <div class="flex flex-col gap-0.5 items-start w-full px-1 mt-0.5"><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-com-green bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">3</span></div></div>
+      </button>
+    </div>
+
+    <!-- Category filter pills -->
+    <div class="flex items-center gap-1.5 px-4 py-2.5 overflow-x-auto scrollbar-none border-b border-line1" id="calendar-tabs">
+      <button onclick="selectCalendarTab(this,'Economic')" data-cal-tab="Economic" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-text1 text-bg1">Economic</button>
+      <button onclick="selectCalendarTab(this,'Earnings')" data-cal-tab="Earnings" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-bg2 text-text2 hover:text-text1">Earnings</button>
+      <button onclick="selectCalendarTab(this,'Revenue')" data-cal-tab="Revenue" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-bg2 text-text2 hover:text-text1">Revenue</button>
+      <button onclick="selectCalendarTab(this,'Dividends')" data-cal-tab="Dividends" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-bg2 text-text2 hover:text-text1">Dividends</button>
+      <button onclick="selectCalendarTab(this,'IPO')" data-cal-tab="IPO" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-bg2 text-text2 hover:text-text1">IPO</button>
+    </div>
+
+    <!-- Filter row -->
+    <div class="flex items-center gap-2.5 px-4 py-2 border-b border-line1 text-text2">
+      <i data-lucide="bar-chart-2" class="w-3.5 h-3.5"></i>
+      <span class="w-px h-3.5 bg-line1"></span>
+      <button class="flex items-center gap-1 text-xs hover:text-text1 transition-colors">
+        <span>All categories</span>
+        <i data-lucide="chevron-down" class="w-3 h-3"></i>
+      </button>
+    </div>
+
+    <!-- Tab content: Economic -->
+    <div id="calendar-content-economic">
+      <div class="grid items-center gap-0 px-4 py-2 bg-bg2/50 border-b border-line1" style="grid-template-columns:48px 28px 22px 1fr 64px 64px 64px;border-left:3px solid var(--red)">
+        <span class="text-text1 text-xs font-bold" style="grid-column:1/5">Monday, June 15</span>
+        <span class="text-text2 text-[11px] text-right">Actual</span>
+        <span class="text-text2 text-[11px] text-right">Forecast</span>
+        <span class="text-text2 text-[11px] text-right">Prior</span>
+      </div>
+      <div class="border-b border-line1/30">
+        <button onclick="toggleEconRow(this)" class="w-full box-border grid items-center gap-0 px-4 py-2.5 text-left hover:bg-bg2/40 transition-colors" style="grid-template-columns:48px 28px 22px 1fr 64px 64px 64px">
+          <span></span>
+          <span class="text-base leading-none text-center">🇩🇪</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-line1" fill="currentColor"/></svg>
+          <div class="flex items-center gap-1 pr-2 min-w-0">
+            <span class="text-text1 text-xs leading-tight truncate">6-Month Bubill Auction</span>
+            <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
+          </div>
+          <span class="text-xs text-right self-center text-text1 font-semibold">2.331%</span>
+          <span class="text-text2 text-xs text-right self-center">—</span>
+          <span class="text-text2 text-xs text-right self-center">2.257%</span>
+        </button>
+        <div class="econ-detail hidden">
+          <div class="mx-4 mb-2.5 p-3 rounded-lg bg-bg2/60 border border-line1/50">
+            <p class="text-text1 text-[11px] leading-relaxed">German 6-month Treasury bill (Bubill) auction result, a short-term funding cost benchmark for the Eurozone's largest economy.</p>
+            <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t border-line1/50">
+              <span class="text-text2 text-[10px]">Actual: <span class="text-text1">2.331%</span></span>
+              <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">—</span></span>
+              <span class="text-text2 text-[10px]">Prior: <span class="text-text1">2.257%</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="border-b border-line1/30">
+        <button onclick="toggleEconRow(this)" class="w-full box-border grid items-center gap-0 px-4 py-2.5 text-left hover:bg-bg2/40 transition-colors" style="grid-template-columns:48px 28px 22px 1fr 64px 64px 64px">
+          <span></span>
+          <span class="text-base leading-none text-center">🇿🇦</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-line1" fill="currentColor"/></svg>
+          <div class="flex items-center gap-1 pr-2 min-w-0">
+            <span class="text-text1 text-xs leading-tight truncate">91-Day T-Bill Auction</span>
+            <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
+          </div>
+          <span class="text-xs text-right self-center text-text1 font-semibold">7.26%</span>
+          <span class="text-text2 text-xs text-right self-center">—</span>
+          <span class="text-text2 text-xs text-right self-center">7.26%</span>
+        </button>
+        <div class="econ-detail hidden">
+          <div class="mx-4 mb-2.5 p-3 rounded-lg bg-bg2/60 border border-line1/50">
+            <p class="text-text1 text-[11px] leading-relaxed">South African 91-day Treasury bill auction yield, a short-term government funding cost benchmark for the local market.</p>
+            <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t border-line1/50">
+              <span class="text-text2 text-[10px]">Actual: <span class="text-text1">7.26%</span></span>
+              <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">—</span></span>
+              <span class="text-text2 text-[10px]">Prior: <span class="text-text1">7.26%</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="border-b border-line1/30">
+        <button onclick="toggleEconRow(this)" class="w-full box-border grid items-center gap-0 px-4 py-2.5 text-left hover:bg-bg2/40 transition-colors" style="grid-template-columns:48px 28px 22px 1fr 64px 64px 64px">
+          <span></span>
+          <span class="text-base leading-none text-center">🇮🇳</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-blue-500" fill="currentColor"/></svg>
+          <div class="flex items-center gap-1 pr-2 min-w-0">
+            <span class="text-text1 text-xs leading-tight truncate">Balance of Trade</span>
+            <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
+          </div>
+          <span class="text-xs text-right self-center text-text1 font-semibold">-28.21B $</span>
+          <span class="text-text2 text-xs text-right self-center">-27B $</span>
+          <span class="text-text2 text-xs text-right self-center">-28.38B $</span>
+        </button>
+        <div class="econ-detail hidden">
+          <div class="mx-4 mb-2.5 p-3 rounded-lg bg-bg2/60 border border-line1/50">
+            <p class="text-text1 text-[11px] leading-relaxed">Difference between India's exports and imports of goods and services. A narrowing deficit is generally currency-positive for the rupee.</p>
+            <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t border-line1/50">
+              <span class="text-text2 text-[10px]">Actual: <span class="text-text1">-28.21B $</span></span>
+              <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">-27B $</span></span>
+              <span class="text-text2 text-[10px]">Prior: <span class="text-text1">-28.38B $</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="border-b border-line1/30">
+        <button onclick="toggleEconRow(this)" class="w-full box-border grid items-center gap-0 px-4 py-2.5 text-left hover:bg-bg2/40 transition-colors" style="grid-template-columns:48px 28px 22px 1fr 64px 64px 64px">
+          <span></span>
+          <span></span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-line1" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-line1" fill="currentColor"/></svg>
+          <div class="flex items-center gap-1 pr-2 min-w-0">
+            <span class="text-text1 text-xs leading-tight truncate">Exports</span>
+            <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
+          </div>
+          <span class="text-xs text-right self-center text-text1 font-semibold">45.2B $</span>
+          <span class="text-text2 text-xs text-right self-center">—</span>
+          <span class="text-text2 text-xs text-right self-center">43.56B $</span>
+        </button>
+        <div class="econ-detail hidden">
+          <div class="mx-4 mb-2.5 p-3 rounded-lg bg-bg2/60 border border-line1/50">
+            <p class="text-text1 text-[11px] leading-relaxed">Total value of India's exported goods and services for the period.</p>
+            <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t border-line1/50">
+              <span class="text-text2 text-[10px]">Actual: <span class="text-text1">45.2B $</span></span>
+              <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">—</span></span>
+              <span class="text-text2 text-[10px]">Prior: <span class="text-text1">43.56B $</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="border-b border-line1/30">
+        <button onclick="toggleEconRow(this)" class="w-full box-border grid items-center gap-0 px-4 py-2.5 text-left hover:bg-bg2/40 transition-colors" style="grid-template-columns:48px 28px 22px 1fr 64px 64px 64px">
+          <span></span>
+          <span></span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-line1" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-line1" fill="currentColor"/></svg>
+          <div class="flex items-center gap-1 pr-2 min-w-0">
+            <span class="text-text1 text-xs leading-tight truncate">Imports</span>
+            <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
+          </div>
+          <span class="text-xs text-right self-center text-text1 font-semibold">73.41B $</span>
+          <span class="text-text2 text-xs text-right self-center">—</span>
+          <span class="text-text2 text-xs text-right self-center">71.94B $</span>
+        </button>
+        <div class="econ-detail hidden">
+          <div class="mx-4 mb-2.5 p-3 rounded-lg bg-bg2/60 border border-line1/50">
+            <p class="text-text1 text-[11px] leading-relaxed">Total value of India's imported goods and services for the period.</p>
+            <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t border-line1/50">
+              <span class="text-text2 text-[10px]">Actual: <span class="text-text1">73.41B $</span></span>
+              <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">—</span></span>
+              <span class="text-text2 text-[10px]">Prior: <span class="text-text1">71.94B $</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="border-b border-line1/30" style="border-top:2px solid var(--red)">
+        <button onclick="toggleEconRow(this)" class="w-full box-border grid items-center gap-0 px-4 py-2.5 text-left hover:bg-bg2/40 transition-colors" style="grid-template-columns:48px 28px 22px 1fr 64px 64px 64px">
+          <span class="inline-flex items-center justify-center h-5 px-1.5 rounded text-[10px] font-semibold text-white" style="background:var(--red)">19:30</span>
+          <span class="text-base leading-none text-center">🇮🇳</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-blue-500" fill="currentColor"/></svg>
+          <div class="flex items-center gap-1 pr-2 min-w-0">
+            <span class="text-text1 text-xs leading-tight truncate">Unemployment Rate</span>
+            <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
+          </div>
+          <span class="text-xs text-right font-semibold self-center" style="color:var(--red)" id="calendar-coming-in">Coming in 11:41</span>
+          <span class="text-text2 text-xs text-right self-center">5.3%</span>
+          <span class="text-text2 text-xs text-right self-center">5.2%</span>
+        </button>
+        <div class="econ-detail hidden">
+          <div class="mx-4 mb-2.5 p-3 rounded-lg bg-bg2/60 border border-line1/50">
+            <p class="text-text1 text-[11px] leading-relaxed">India's unemployment rate, a key labor-market indicator that can influence central bank policy expectations.</p>
+            <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t border-line1/50">
+              <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">5.3%</span></span>
+              <span class="text-text2 text-[10px]">Prior: <span class="text-text1">5.2%</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="border-b border-line1/30">
+        <button onclick="toggleEconRow(this)" class="w-full box-border grid items-center gap-0 px-4 py-2.5 text-left hover:bg-bg2/40 transition-colors" style="grid-template-columns:48px 28px 22px 1fr 64px 64px 64px">
+          <span class="text-text2 text-[11px]">20:30</span>
+          <span class="text-base leading-none text-center">🇧🇷</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-line1" fill="currentColor"/></svg>
+          <div class="flex items-center gap-1 pr-2 min-w-0">
+            <span class="text-text1 text-xs leading-tight truncate">BCB Focus Market Readout</span>
+            <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
+          </div>
+          <span class="text-xs text-right self-center text-text2">—</span>
+          <span class="text-text2 text-xs text-right self-center">—</span>
+          <span class="text-text2 text-xs text-right self-center">—</span>
+        </button>
+        <div class="econ-detail hidden">
+          <div class="mx-4 mb-2.5 p-3 rounded-lg bg-bg2/60 border border-line1/50">
+            <p class="text-text1 text-[11px] leading-relaxed">Brazilian Central Bank's weekly survey of market economists' expectations for inflation, GDP growth, and the policy rate.</p>
+            <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t border-line1/50">
+              <span class="text-text2 text-[10px]">Actual: <span class="text-text1">—</span></span>
+              <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">—</span></span>
+              <span class="text-text2 text-[10px]">Prior: <span class="text-text1">—</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="border-b border-line1/30">
+        <button onclick="toggleEconRow(this)" class="w-full box-border grid items-center gap-0 px-4 py-2.5 text-left hover:bg-bg2/40 transition-colors" style="grid-template-columns:48px 28px 22px 1fr 64px 64px 64px">
+          <span class="text-text2 text-[11px]">21:15</span>
+          <span class="text-base leading-none text-center">🇨🇦</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-line1" fill="currentColor"/></svg>
+          <div class="flex items-center gap-1 pr-2 min-w-0">
+            <span class="text-text1 text-xs leading-tight truncate">Housing Starts</span>
+            <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
+          </div>
+          <span class="text-xs text-right self-center text-text1 font-semibold">255.1K</span>
+          <span class="text-text2 text-xs text-right self-center">—</span>
+          <span class="text-text2 text-xs text-right self-center">279.3K</span>
+        </button>
+        <div class="econ-detail hidden">
+          <div class="mx-4 mb-2.5 p-3 rounded-lg bg-bg2/60 border border-line1/50">
+            <p class="text-text1 text-[11px] leading-relaxed">Annualized number of new residential construction projects started in Canada during the month.</p>
+            <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t border-line1/50">
+              <span class="text-text2 text-[10px]">Actual: <span class="text-text1">255.1K</span></span>
+              <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">—</span></span>
+              <span class="text-text2 text-[10px]">Prior: <span class="text-text1">279.3K</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="border-b border-line1/30">
+        <button onclick="toggleEconRow(this)" class="w-full box-border grid items-center gap-0 px-4 py-2.5 text-left hover:bg-bg2/40 transition-colors" style="grid-template-columns:48px 28px 22px 1fr 64px 64px 64px">
+          <span class="text-text2 text-[11px]">21:30</span>
+          <span class="text-base leading-none text-center">🇨🇦</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-line1" fill="currentColor"/></svg>
+          <div class="flex items-center gap-1 pr-2 min-w-0">
+            <span class="text-text1 text-xs leading-tight truncate">Manufacturing Sales MoM Final</span>
+            <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
+          </div>
+          <span class="text-xs text-right self-center text-text1 font-semibold">4.5%</span>
+          <span class="text-text2 text-xs text-right self-center">—</span>
+          <span class="text-text2 text-xs text-right self-center">3%</span>
+        </button>
+        <div class="econ-detail hidden">
+          <div class="mx-4 mb-2.5 p-3 rounded-lg bg-bg2/60 border border-line1/50">
+            <p class="text-text1 text-[11px] leading-relaxed">Month-over-month change in the total value of sales reported by Canadian manufacturers.</p>
+            <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t border-line1/50">
+              <span class="text-text2 text-[10px]">Actual: <span class="text-text1">4.5%</span></span>
+              <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">—</span></span>
+              <span class="text-text2 text-[10px]">Prior: <span class="text-text1">3%</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="border-b border-line1/30">
+        <button onclick="toggleEconRow(this)" class="w-full box-border grid items-center gap-0 px-4 py-2.5 text-left hover:bg-bg2/40 transition-colors" style="grid-template-columns:48px 28px 22px 1fr 64px 64px 64px">
+          <span class="text-text2 text-[11px]">21:30</span>
+          <span class="text-base leading-none text-center">🇺🇸</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-blue-500" fill="currentColor"/></svg>
+          <div class="flex items-center gap-1 pr-2 min-w-0">
+            <span class="text-text1 text-xs leading-tight truncate">NY Empire State Manufacturing Index</span>
+            <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
+          </div>
+          <span class="text-xs text-right self-center text-text1 font-semibold">14</span>
+          <span class="text-text2 text-xs text-right self-center">—</span>
+          <span class="text-text2 text-xs text-right self-center">19.6</span>
+        </button>
+        <div class="econ-detail hidden">
+          <div class="mx-4 mb-2.5 p-3 rounded-lg bg-bg2/60 border border-line1/50">
+            <p class="text-text1 text-[11px] leading-relaxed">Federal Reserve Bank of New York's gauge of manufacturing activity in the state, an early read on the broader US factory sector.</p>
+            <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t border-line1/50">
+              <span class="text-text2 text-[10px]">Actual: <span class="text-text1">14</span></span>
+              <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">—</span></span>
+              <span class="text-text2 text-[10px]">Prior: <span class="text-text1">19.6</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="grid items-center gap-0 px-4 py-2 bg-bg2/50 border-b border-line1" style="grid-template-columns:48px 28px 22px 1fr 64px 64px 64px">
+        <span class="text-text1 text-xs font-bold" style="grid-column:1/5">Tuesday, June 16</span>
+        <span class="text-text2 text-[11px] text-right">Actual</span>
+        <span class="text-text2 text-[11px] text-right">Forecast</span>
+        <span class="text-text2 text-[11px] text-right">Prior</span>
+      </div>
+      <div class="border-b border-line1/30">
+        <button onclick="toggleEconRow(this)" class="w-full box-border grid items-center gap-0 px-4 py-2.5 text-left hover:bg-bg2/40 transition-colors" style="grid-template-columns:48px 28px 22px 1fr 64px 64px 64px">
+          <span class="text-text2 text-[11px]">14:30</span>
+          <span class="text-base leading-none text-center">🇪🇺</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-blue-500" fill="currentColor"/></svg>
+          <div class="flex items-center gap-1 pr-2 min-w-0">
+            <span class="text-text1 text-xs leading-tight truncate">ECB Monetary Policy Meeting</span>
+            <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
+          </div>
+          <span class="text-xs text-right self-center text-text2">—</span>
+          <span class="text-text2 text-xs text-right self-center">3.65%</span>
+          <span class="text-text2 text-xs text-right self-center">3.65%</span>
+        </button>
+        <div class="econ-detail hidden">
+          <div class="mx-4 mb-2.5 p-3 rounded-lg bg-bg2/60 border border-line1/50">
+            <p class="text-text1 text-[11px] leading-relaxed">European Central Bank policy rate decision and statement. Shifts in the rate path are a major driver of EUR and risk-asset volatility.</p>
+            <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t border-line1/50">
+              <span class="text-text2 text-[10px]">Actual: <span class="text-text1">—</span></span>
+              <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">3.65%</span></span>
+              <span class="text-text2 text-[10px]">Prior: <span class="text-text1">3.65%</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="border-b border-line1/30">
+        <button onclick="toggleEconRow(this)" class="w-full box-border grid items-center gap-0 px-4 py-2.5 text-left hover:bg-bg2/40 transition-colors" style="grid-template-columns:48px 28px 22px 1fr 64px 64px 64px">
+          <span class="text-text2 text-[11px]">20:00</span>
+          <span class="text-base leading-none text-center">🇺🇸</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-blue-500" fill="currentColor"/></svg>
+          <div class="flex items-center gap-1 pr-2 min-w-0">
+            <span class="text-text1 text-xs leading-tight truncate">FOMC Meeting Minutes</span>
+            <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
+          </div>
+          <span class="text-xs text-right self-center text-text2">—</span>
+          <span class="text-text2 text-xs text-right self-center">—</span>
+          <span class="text-text2 text-xs text-right self-center">—</span>
+        </button>
+        <div class="econ-detail hidden">
+          <div class="mx-4 mb-2.5 p-3 rounded-lg bg-bg2/60 border border-line1/50">
+            <p class="text-text1 text-[11px] leading-relaxed">Detailed record of the Federal Open Market Committee's most recent meeting. Markets parse the minutes for forward guidance on rate policy.</p>
+            <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t border-line1/50">
+              <span class="text-text2 text-[10px]">Actual: <span class="text-text1">—</span></span>
+              <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">—</span></span>
+              <span class="text-text2 text-[10px]">Prior: <span class="text-text1">—</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab content: not Economic -->
+    <div id="calendar-content-other" class="hidden flex flex-col items-center justify-center py-16 text-text2">
+      <i data-lucide="bar-chart-2" class="w-10 h-10 mb-3 opacity-40"></i>
+      <p class="text-sm font-medium text-text1">No <span id="calendar-other-tab">Earnings</span> Data</p>
+      <p class="text-xs mt-1"><span id="calendar-other-tab2">Earnings</span> calendar data will appear here</p>
+    </div>
+  </div>
+</div>
+<script>
+  // ══════════════════════════ DATA ══════════════════════════
+  var SYMBOLS = {
+    XAU: {
+      id: "XAU",
+      ticker: "XAU-PERP",
+      name: "Gold",
+      category: "Metal",
+      price: "96,789.08",
+      change: "+1205.12",
+      changePct: "+3.14%",
+      trendUp: true,
+      company: { legalName: "Gold Spot" },
+      assetInfo: {
+        about: "Gold (XAU) is a precious metal that has served as a global store of value and safe-haven asset for centuries. Spot gold is quoted in U.S. dollars per troy ounce and trades around the clock across London, New York and Asian sessions, with prices driven by real interest rates, the U.S. dollar, central bank reserves and geopolitical risk sentiment.",
+        marketData: [
+          { k: "Spot Price", v: "$3,251.40 / oz" },
+          { k: "1Y Range", v: "$2,180 – $3,310" },
+          { k: "Contract Size", v: "100 troy oz" },
+          { k: "Sector", v: "Precious Metals" },
+          { k: "Primary Exchange", v: "COMEX / LBMA" },
+          { k: "Settlement Currency", v: "USD" }
+        ],
+        dataSrc: "Data: LBMA / CME Group",
+        links: [
+          { tip: "LBMA", href: "https://www.lbma.org.uk", icon: "globe" },
+          { tip: "CME Group", href: "https://www.cmegroup.com/markets/metals/precious/gold.html", icon: "bar-chart-2" }
+        ]
+      },
+    },
+    TSLA: {
+      id: "TSLA",
+      ticker: "TSLA-PERP",
+      name: "Stock Tesla",
+      category: "Equity",
+      price: "248.50",
+      change: "+6.32",
+      changePct: "+2.61%",
+      trendUp: true,
+      company: { legalName: "Tesla, Inc." },
+      assetInfo: {
+        about: "Tesla, Inc. (TSLA) designs, develops, manufactures, leases and sells electric vehicles, energy generation and storage systems, and related services. Headquartered in Austin, Texas, Tesla is one of the world's most valuable automakers and clean energy companies.",
+        marketData: [
+          { k: "Market Cap", v: "$793.2B" },
+          { k: "P/E Ratio", v: "65.4" },
+          { k: "Sector", v: "Consumer Disc." },
+          { k: "Exchange", v: "NASDAQ" },
+          { k: "IPO Date", v: "Jun 29, 2010" },
+          { k: "Shares Outstanding", v: "3.19B" }
+        ],
+        dataSrc: "Data: Yahoo Finance",
+        links: [
+          { tip: "TradingView", href: "https://www.tradingview.com/symbols/NASDAQ-TSLA/", icon: "bar-chart-2" }
+        ]
+      },
+    }
+  };
+
+  var currentSymbolId = "XAU";
+
+  // ══════════════════════════ ICON HELPERS ══════════════════════════
+  function symbolIconHtml(id, sizeClass) {
+    if (id === "TSLA") {
+      return '<div class="' + sizeClass + ' rounded-full bg-com-red flex items-center justify-center flex-shrink-0"><span class="text-white font-bold text-xs">T</span></div>';
+    }
+    return '<div class="' + sizeClass + ' rounded-full bg-[#D59B02] flex items-center justify-center flex-shrink-0"><svg width="16" height="11" viewBox="0 0 18 12" fill="none"><path d="M6.17 6.63C6.59 6.63 6.97 6.88 7.13 7.26L8.40 10.27C8.69 10.96 8.19 11.72 7.44 11.72H1.05C0.30 11.72 -0.20 10.97 0.08 10.28L1.30 7.28C1.46 6.88 1.84 6.63 2.27 6.63H6.17ZM15.65 6.63C16.07 6.63 16.45 6.88 16.62 7.26L17.89 10.27C18.18 10.96 17.67 11.72 16.92 11.72H10.53C9.79 11.72 9.28 10.97 9.56 10.28L10.78 7.28C10.94 6.88 11.33 6.63 11.75 6.63H15.65ZM10.69 0C11.11 0 11.49 0.25 11.66 0.64L12.93 3.64C13.22 4.33 12.71 5.09 11.96 5.09H5.57C4.83 5.09 4.32 4.34 4.60 3.65L5.82 0.65C5.98 0.26 6.37 0 6.79 0H10.69Z" fill="white"/></svg></div>';
+  }
+
+  // ══════════════════════════ TOP NAV / TITLE BAR ══════════════════════════
+  function toggleSymbolMenu() {
+    document.getElementById("symbol-menu").classList.toggle("hidden");
+    document.getElementById("symbol-menu-overlay").classList.toggle("hidden");
+    document.getElementById("symbol-menu-chevron").classList.toggle("rotate-180");
+  }
+
+  function closeSymbolMenu() {
+    document.getElementById("symbol-menu").classList.add("hidden");
+    document.getElementById("symbol-menu-overlay").classList.add("hidden");
+    document.getElementById("symbol-menu-chevron").classList.remove("rotate-180");
+  }
+
+  function selectSymbol(id) {
+    currentSymbolId = id;
+    var sym = SYMBOLS[id];
+    var trendClass = sym.trendUp ? "text-com-green" : "text-com-red";
+
+    document.getElementById("tb-symbol-icon").innerHTML = symbolIconHtml(sym.id, "w-7 h-7");
+    document.getElementById("tb-ticker").textContent = sym.ticker;
+    document.getElementById("tb-name").textContent = sym.name;
+
+    var priceEl = document.getElementById("tb-price");
+    priceEl.textContent = sym.price;
+    priceEl.className = "font-bold text-lg leading-tight " + trendClass;
+
+    var changeEl = document.getElementById("tb-change");
+    changeEl.textContent = sym.change;
+    changeEl.className = "text-xs " + trendClass;
+
+    var changePctEl = document.getElementById("tb-changepct");
+    changePctEl.textContent = "(" + sym.changePct + ")";
+    changePctEl.className = "text-xs " + trendClass;
+
+    document.querySelectorAll("[data-sym-row]").forEach(function (row) {
+      if (row.getAttribute("data-sym-row") === id) {
+        row.classList.add("bg-bg2");
+        row.classList.remove("hover:bg-bg2/60");
+      } else {
+        row.classList.remove("bg-bg2");
+        row.classList.add("hover:bg-bg2/60");
+      }
+    });
+
+    renderAssetInfo(id);
+    closeSymbolMenu();
+    lucide.createIcons();
+  }
+
+  function toggleFastTrade() {
+    var icon = document.getElementById("fast-trade-icon");
+    icon.classList.toggle("text-com-green");
+    icon.classList.toggle("text-text2");
+  }
+
+  // ══════════════════════════ ECONOMIC CALENDAR DRAWER ══════════════════════════
+  function openCalendar() {
+    document.getElementById("calendar-backdrop").classList.remove("hidden");
+    document.getElementById("calendar-drawer").classList.remove("translate-x-full");
+    document.getElementById("calendar-drawer").classList.add("translate-x-0");
+  }
+
+  function closeCalendar() {
+    document.getElementById("calendar-backdrop").classList.add("hidden");
+    document.getElementById("calendar-drawer").classList.add("translate-x-full");
+    document.getElementById("calendar-drawer").classList.remove("translate-x-0");
+  }
+
+  function toggleDetail(btn) {
+    var detail = btn.nextElementSibling;
+    var chevron = btn.querySelector(".chevron");
+    detail.classList.toggle("hidden");
+    if (chevron) chevron.classList.toggle("rotate-180");
+  }
+  var toggleEconRow = toggleDetail;
+
+  function selectCalendarTab(el, tab) {
+    document.querySelectorAll("[data-cal-tab]").forEach(function (btn) {
+      if (btn === el) {
+        btn.classList.remove("bg-bg2", "text-text2", "hover:text-text1");
+        btn.classList.add("bg-text1", "text-bg1");
+      } else {
+        btn.classList.remove("bg-text1", "text-bg1");
+        btn.classList.add("bg-bg2", "text-text2", "hover:text-text1");
+      }
+    });
+
+    var economic = document.getElementById("calendar-content-economic");
+    var other = document.getElementById("calendar-content-other");
+    if (tab === "Economic") {
+      economic.classList.remove("hidden");
+      other.classList.add("hidden");
+    } else {
+      economic.classList.add("hidden");
+      other.classList.remove("hidden");
+      document.getElementById("calendar-other-tab").textContent = tab;
+      document.getElementById("calendar-other-tab2").textContent = tab;
+    }
+  }
+
+  // ══════════════════════════ ASSET INFO ══════════════════════════
+  function renderAssetInfo(id) {
+    var sym = SYMBOLS[id];
+    var info = sym.assetInfo;
+    var target = document.getElementById("asset-info-content");
+    if (!info) {
+      target.innerHTML = '<div class="flex items-center justify-center h-40 text-text2 text-sm">Asset Info coming soon</div>';
+      return;
+    }
+
+    function row(r) {
+      return '<div class="flex items-center justify-between h-8 px-3"><span class="text-text2 text-xs">' + r.k + '</span><span class="text-text1 text-xs font-medium">' + r.v + '</span></div>';
+    }
+    var half = Math.ceil(info.marketData.length / 2);
+    var leftRows = info.marketData.slice(0, half).map(row).join("");
+    var rightRows = info.marketData.slice(half).map(row).join("");
+
+    var linkBtns = info.links.map(function (l) {
+      return '<a href="' + l.href + '" target="_blank" rel="noopener" class="group relative w-9 h-9 rounded-lg border border-line1 flex items-center justify-center text-text2 hover:text-text1 hover:bg-bg2 transition-colors">' +
+        '<i data-lucide="' + l.icon + '" class="w-4 h-4"></i>' +
+        '<span class="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-2 whitespace-nowrap rounded-md border border-line1 bg-bg1 px-2 py-1 text-[11px] text-text1 opacity-0 group-hover:opacity-100 transition-opacity">' + l.tip + '</span>' +
+        '</a>';
+    }).join("");
+
+    target.innerHTML =
+      '<div class="flex items-start gap-6 pb-5 border-b border-line1">' +
+        '<div class="flex items-center gap-3 flex-shrink-0 w-[180px]">' +
+          symbolIconHtml(sym.id, "w-10 h-10") +
+          '<div class="flex flex-col gap-0.5 min-w-0">' +
+            '<span class="text-text1 text-sm font-semibold truncate">' + (sym.company ? sym.company.legalName : sym.name) + '</span>' +
+            '<span class="text-text2 text-[11px]">' + sym.ticker + ' · ' + sym.category + '</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="flex-1 min-w-0">' +
+          '<div class="text-text3 text-[10px] font-semibold uppercase tracking-wide mb-2">About</div>' +
+          '<p class="text-text2 text-xs leading-relaxed">' + info.about + '</p>' +
+        '</div>' +
+      '</div>' +
+      '<div class="py-5 border-b border-line1">' +
+        '<div class="text-text3 text-[10px] font-semibold uppercase tracking-wide mb-2">Market Data</div>' +
+        '<div class="grid grid-cols-1 md:grid-cols-2 gap-x-8">' +
+          '<div>' + leftRows + '</div>' +
+          '<div>' + rightRows + '</div>' +
+        '</div>' +
+        '<div class="text-text3 text-[11px] mt-2 px-3">' + info.dataSrc + '</div>' +
+      '</div>' +
+      '<div class="py-5">' +
+        '<div class="text-text3 text-[10px] font-semibold uppercase tracking-wide mb-2">Links</div>' +
+        '<div class="flex items-center gap-2.5">' + linkBtns + '</div>' +
+      '</div>';
+
+    lucide.createIcons();
+  }
+
+  // ══════════════════════════ CHART AREA ══════════════════════════
+  function switchChartTab(tab) {
+    document.getElementById("chart-tab-chart").classList.toggle("hidden", tab !== "chart");
+    document.getElementById("chart-tab-contract-info").classList.toggle("hidden", tab !== "contract-info");
+    document.getElementById("chart-tab-asset-info").classList.toggle("hidden", tab !== "asset-info");
+
+    document.querySelectorAll("[data-chart-tab]").forEach(function (btn) {
+      var underline = btn.querySelector(".tab-underline");
+      if (btn.getAttribute("data-chart-tab") === tab) {
+        btn.classList.remove("text-text2", "hover:text-text1");
+        btn.classList.add("text-text1");
+        underline.classList.remove("hidden");
+      } else {
+        btn.classList.remove("text-text1");
+        btn.classList.add("text-text2", "hover:text-text1");
+        underline.classList.add("hidden");
+      }
+    });
+  }
+
+  function selectInterval(el) {
+    document.querySelectorAll("[data-interval]").forEach(function (btn) {
+      if (btn === el) {
+        btn.classList.remove("text-text2", "hover:text-text1");
+        btn.classList.add("text-text1");
+      } else {
+        btn.classList.remove("text-text1");
+        btn.classList.add("text-text2", "hover:text-text1");
+      }
+    });
+  }
+
+  function generateCandles() {
+    var container = document.getElementById("candle-bars");
+    var html = "";
+    for (var i = 0; i < 40; i++) {
+      var height = 20 + Math.random() * 60;
+      var top = 10 + Math.random() * 20;
+      var color = Math.random() > 0.45 ? "bg-com-green" : "bg-com-red";
+      html +=
+        '<div class="flex flex-col items-center gap-0.5" style="height:' + (height + top) + '%">' +
+          '<div class="w-px flex-1 ' + color + '"></div>' +
+          '<div class="w-2 rounded-sm ' + color + '" style="height:' + height + '%"></div>' +
+          '<div class="w-px flex-1 ' + color + '"></div>' +
+        '</div>';
+    }
+    container.innerHTML = html;
+  }
+
+  // ══════════════════════════ POSITIONS TABLE ══════════════════════════
+  function selectPosTab(el) {
+    Array.prototype.forEach.call(el.parentElement.children, function (btn) {
+      if (btn === el) {
+        btn.classList.remove("text-text2", "border-transparent");
+        btn.classList.add("text-text1", "border-text1");
+      } else {
+        btn.classList.remove("text-text1", "border-text1");
+        btn.classList.add("text-text2", "border-transparent", "hover:text-text1");
+      }
+    });
+  }
+
+  function toggleHideOthers() {
+    var btn = document.getElementById("hide-others-btn");
+    var check = document.getElementById("hide-others-check");
+    var nowHidden = check.classList.toggle("hidden");
+    if (nowHidden) {
+      btn.classList.remove("bg-text1", "border-text1");
+      btn.classList.add("border-line1", "bg-bg2");
+    } else {
+      btn.classList.add("bg-text1", "border-text1");
+      btn.classList.remove("border-line1", "bg-bg2");
+    }
+  }
+
+  // ══════════════════════════ ORDER PANEL ══════════════════════════
+  function selectSide(side) {
+    var buyBtn = document.getElementById("side-buy-btn");
+    var sellBtn = document.getElementById("side-sell-btn");
+    var submitBtn = document.getElementById("submit-order-btn");
+    var base = "flex-1 py-1.5 text-sm font-medium rounded-full transition-colors ";
+    var inactive = "text-text2 hover:text-text1";
+    if (side === "buy") {
+      buyBtn.className = base + "bg-bg1 text-com-green border border-com-green";
+      sellBtn.className = base + inactive;
+      submitBtn.className = "w-full py-2.5 rounded-full text-sm font-semibold text-white transition-colors bg-com-green hover:bg-com-green/90";
+      submitBtn.textContent = "Buy / Long";
+    } else {
+      sellBtn.className = base + "bg-bg1 text-com-red border border-com-red";
+      buyBtn.className = base + inactive;
+      submitBtn.className = "w-full py-2.5 rounded-full text-sm font-semibold text-white transition-colors bg-com-red hover:bg-com-red/90";
+      submitBtn.textContent = "Sell / Short";
+    }
+  }
+
+  function selectOrderType(type) {
+    var marketBtn = document.getElementById("order-type-market-btn");
+    var limitBtn = document.getElementById("order-type-limit-btn");
+    var marketUnderline = marketBtn.querySelector(".order-type-underline");
+    var limitUnderline = limitBtn.querySelector(".order-type-underline");
+    if (type === "market") {
+      marketBtn.classList.remove("text-text2", "hover:text-text1");
+      marketBtn.classList.add("text-text1");
+      limitBtn.classList.remove("text-text1");
+      limitBtn.classList.add("text-text2", "hover:text-text1");
+      marketUnderline.classList.remove("hidden");
+      limitUnderline.classList.add("hidden");
+    } else {
+      limitBtn.classList.remove("text-text2", "hover:text-text1");
+      limitBtn.classList.add("text-text1");
+      marketBtn.classList.remove("text-text1");
+      marketBtn.classList.add("text-text2", "hover:text-text1");
+      limitUnderline.classList.remove("hidden");
+      marketUnderline.classList.add("hidden");
+    }
+  }
+
+  function toggleUnitDropdown() {
+    document.getElementById("unit-dropdown").classList.toggle("hidden");
+    document.getElementById("unit-dropdown-chevron").classList.toggle("rotate-180");
+  }
+
+  function selectQuantityUnit(unit) {
+    document.getElementById("quantity-unit-label").textContent = unit;
+    document.querySelectorAll("[data-unit]").forEach(function (btn) {
+      if (btn.getAttribute("data-unit") === unit) {
+        btn.classList.add("bg-bg2", "text-text1");
+        btn.classList.remove("text-text2", "hover:bg-bg2/60");
+      } else {
+        btn.classList.remove("bg-bg2", "text-text1");
+        btn.classList.add("text-text2", "hover:bg-bg2/60");
+      }
+    });
+    toggleUnitDropdown();
+  }
+
+  function setSliderValue(val) {
+    document.getElementById("slider-fill").style.width = val + "%";
+    document.getElementById("order-slider").value = val;
+    document.querySelectorAll(".slider-mark").forEach(function (mark) {
+      var markVal = Number(mark.getAttribute("data-mark"));
+      if (markVal <= val) {
+        mark.classList.add("bg-text1", "border-text1");
+        mark.classList.remove("bg-bg2", "border-text2");
+      } else {
+        mark.classList.remove("bg-text1", "border-text1");
+        mark.classList.add("bg-bg2", "border-text2");
+      }
+    });
+  }
+
+  function toggleTpsl() {
+    var checkbox = document.getElementById("tpsl-checkbox");
+    var rows = document.getElementById("tpsl-rows");
+    var isChecked = checkbox.classList.contains("bg-text1");
+    if (isChecked) {
+      checkbox.classList.remove("bg-text1");
+      checkbox.classList.add("border", "border-line1", "bg-bg2");
+      checkbox.innerHTML = "";
+      rows.classList.add("hidden");
+    } else {
+      checkbox.classList.add("bg-text1");
+      checkbox.classList.remove("border", "border-line1", "bg-bg2");
+      checkbox.innerHTML = '<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#202328" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      rows.classList.remove("hidden");
+    }
+  }
+
+  // ══════════════════════════ CALENDAR COUNTDOWN ══════════════════════════
+  var calCd = 11 * 3600 + 41 * 60;
+  function calendarTick() {
+    if (calCd > 0) calCd--;
+    var h = String(Math.floor(calCd / 3600)).padStart(2, '0');
+    var m = String(Math.floor((calCd % 3600) / 60)).padStart(2, '0');
+    var el = document.getElementById('calendar-coming-in');
+    if (el) el.textContent = 'Coming in ' + h + ':' + m;
+  }
+  setInterval(calendarTick, 1000);
+
+  // ══════════════════════════ INIT ══════════════════════════
+  generateCandles();
+  renderAssetInfo(currentSymbolId);
+  lucide.createIcons();
+</script>
+
+</body>
+</html>
