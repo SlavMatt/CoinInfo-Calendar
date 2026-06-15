@@ -1179,7 +1179,7 @@ body{
     </button>
   </div>
 
-  <div class="flex-1 overflow-y-auto">
+  <div class="flex-1 overflow-y-auto sm:pl-1.5">
     <!-- Date Nav Toolbar -->
     <div id="calendar-toolbar" class="flex items-center gap-1 px-4 py-2.5">
       <button onclick="calendarGoToday()" class="px-2 py-1 rounded text-xs font-medium text-text1 bg-bg2 hover:bg-line1 transition-colors">Today</button>
@@ -1259,20 +1259,20 @@ body{
 
     <!-- Tab content: Economic -->
     <div id="calendar-content-economic">
-      <div class="grid items-center gap-0 mx-4 py-2 cal-bg2-50 border-b border-line1" data-date="2026-06-15" style="grid-template-columns:48px 28px 22px 1fr 64px 64px 64px;border-left:3px solid var(--red)">
+      <div class="grid items-center gap-0 mx-4 sm:mx-6 py-2 cal-bg2-50 border-b border-line1" data-date="2026-06-15" style="grid-template-columns:48px 28px 22px 1fr 64px 64px 64px;border-left:3px solid var(--red)">
         <span class="text-text1 text-xs font-bold" style="grid-column:1/5">Monday, June 15</span>
         <span class="text-text2 text-[11px] text-right">Actual</span>
         <span class="text-text2 text-[11px] text-right">Forecast</span>
         <span class="text-text2 text-[11px] text-right">Prior</span>
       </div>
-      <div class="mx-4 border-b cal-line1-30">
+      <div class="mx-4 sm:mx-6 border-b cal-line1-30">
       <div onclick="toggleEconRow(this)" class="w-full flex items-stretch cursor-pointer">
         <div class="grid items-center gap-0 py-2.5 flex-shrink-0" style="grid-template-columns:48px 28px 22px">
             <span></span>
             <span class="text-base leading-none text-center">🇩🇪</span>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-line1" fill="currentColor"/></svg>
         </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
+        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
             <div class="flex items-center gap-1 pr-2 min-w-0">
               <span class="text-text1 text-xs leading-tight truncate" title="6-Month Bubill Auction">6-Month Bubill Auction</span>
               <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
@@ -1283,7 +1283,7 @@ body{
         </div>
       </div>
         <div class="econ-detail hidden">
-          <div class="mx-4 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
+          <div class="mx-4 sm:mx-6 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
             <p class="text-text1 text-[11px] leading-relaxed">German 6-month Treasury bill (Bubill) auction result, a short-term funding cost benchmark for the Eurozone's largest economy.</p>
             <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
               <span class="text-text2 text-[10px]">Actual: <span class="text-text1">2.331%</span></span>
@@ -1293,14 +1293,14 @@ body{
           </div>
         </div>
       </div>
-      <div class="mx-4 border-b cal-line1-30">
+      <div class="mx-4 sm:mx-6 border-b cal-line1-30">
       <div onclick="toggleEconRow(this)" class="w-full flex items-stretch cursor-pointer">
         <div class="grid items-center gap-0 py-2.5 flex-shrink-0" style="grid-template-columns:48px 28px 22px">
             <span></span>
             <span class="text-base leading-none text-center">🇿🇦</span>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-line1" fill="currentColor"/></svg>
         </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
+        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
             <div class="flex items-center gap-1 pr-2 min-w-0">
               <span class="text-text1 text-xs leading-tight truncate" title="91-Day T-Bill Auction">91-Day T-Bill Auction</span>
               <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
@@ -1311,7 +1311,7 @@ body{
         </div>
       </div>
         <div class="econ-detail hidden">
-          <div class="mx-4 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
+          <div class="mx-4 sm:mx-6 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
             <p class="text-text1 text-[11px] leading-relaxed">South African 91-day Treasury bill auction yield, a short-term government funding cost benchmark for the local market.</p>
             <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
               <span class="text-text2 text-[10px]">Actual: <span class="text-text1">7.26%</span></span>
@@ -1321,14 +1321,14 @@ body{
           </div>
         </div>
       </div>
-      <div class="mx-4 border-b cal-line1-30">
+      <div class="mx-4 sm:mx-6 border-b cal-line1-30">
       <div onclick="toggleEconRow(this)" class="w-full flex items-stretch cursor-pointer">
         <div class="grid items-center gap-0 py-2.5 flex-shrink-0" style="grid-template-columns:48px 28px 22px">
             <span></span>
             <span class="text-base leading-none text-center">🇮🇳</span>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-blue-500" fill="currentColor"/></svg>
         </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
+        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
             <div class="flex items-center gap-1 pr-2 min-w-0">
               <span class="text-text1 text-xs leading-tight truncate" title="Balance of Trade">Balance of Trade</span>
               <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
@@ -1339,7 +1339,7 @@ body{
         </div>
       </div>
         <div class="econ-detail hidden">
-          <div class="mx-4 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
+          <div class="mx-4 sm:mx-6 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
             <p class="text-text1 text-[11px] leading-relaxed">Difference between India's exports and imports of goods and services. A narrowing deficit is generally currency-positive for the rupee.</p>
             <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
               <span class="text-text2 text-[10px]">Actual: <span class="text-text1">-28.21B $</span></span>
@@ -1349,14 +1349,14 @@ body{
           </div>
         </div>
       </div>
-      <div class="mx-4 border-b cal-line1-30">
+      <div class="mx-4 sm:mx-6 border-b cal-line1-30">
       <div onclick="toggleEconRow(this)" class="w-full flex items-stretch cursor-pointer">
         <div class="grid items-center gap-0 py-2.5 flex-shrink-0" style="grid-template-columns:48px 28px 22px">
             <span></span>
             <span></span>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-line1" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-line1" fill="currentColor"/></svg>
         </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
+        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
             <div class="flex items-center gap-1 pr-2 min-w-0">
               <span class="text-text1 text-xs leading-tight truncate" title="Exports">Exports</span>
               <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
@@ -1367,7 +1367,7 @@ body{
         </div>
       </div>
         <div class="econ-detail hidden">
-          <div class="mx-4 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
+          <div class="mx-4 sm:mx-6 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
             <p class="text-text1 text-[11px] leading-relaxed">Total value of India's exported goods and services for the period.</p>
             <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
               <span class="text-text2 text-[10px]">Actual: <span class="text-text1">45.2B $</span></span>
@@ -1377,14 +1377,14 @@ body{
           </div>
         </div>
       </div>
-      <div class="mx-4 border-b cal-line1-30">
+      <div class="mx-4 sm:mx-6 border-b cal-line1-30">
       <div onclick="toggleEconRow(this)" class="w-full flex items-stretch cursor-pointer">
         <div class="grid items-center gap-0 py-2.5 flex-shrink-0" style="grid-template-columns:48px 28px 22px">
             <span></span>
             <span></span>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-line1" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-line1" fill="currentColor"/></svg>
         </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
+        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
             <div class="flex items-center gap-1 pr-2 min-w-0">
               <span class="text-text1 text-xs leading-tight truncate" title="Imports">Imports</span>
               <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
@@ -1395,7 +1395,7 @@ body{
         </div>
       </div>
         <div class="econ-detail hidden">
-          <div class="mx-4 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
+          <div class="mx-4 sm:mx-6 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
             <p class="text-text1 text-[11px] leading-relaxed">Total value of India's imported goods and services for the period.</p>
             <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
               <span class="text-text2 text-[10px]">Actual: <span class="text-text1">73.41B $</span></span>
@@ -1405,14 +1405,14 @@ body{
           </div>
         </div>
       </div>
-      <div class="mx-4 border-b cal-line1-30" style="border-top:2px solid var(--red)">
+      <div class="mx-4 sm:mx-6 border-b cal-line1-30" style="border-top:2px solid var(--red)">
       <div onclick="toggleEconRow(this)" class="w-full flex items-stretch cursor-pointer">
         <div class="grid items-center gap-0 py-2.5 flex-shrink-0" style="grid-template-columns:48px 28px 22px">
             <span data-time-utc="19:30" class="inline-flex items-center justify-center h-5 px-1.5 rounded text-[10px] font-semibold text-white" style="background:var(--red)">19:30</span>
             <span class="text-base leading-none text-center">🇮🇳</span>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-blue-500" fill="currentColor"/></svg>
         </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
+        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
             <div class="flex items-center gap-1 pr-2 min-w-0">
               <span class="text-text1 text-xs leading-tight truncate" title="Unemployment Rate">Unemployment Rate</span>
               <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
@@ -1423,7 +1423,7 @@ body{
         </div>
       </div>
         <div class="econ-detail hidden">
-          <div class="mx-4 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
+          <div class="mx-4 sm:mx-6 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
             <p class="text-text1 text-[11px] leading-relaxed">India's unemployment rate, a key labor-market indicator that can influence central bank policy expectations.</p>
             <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
               <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">5.3%</span></span>
@@ -1432,14 +1432,14 @@ body{
           </div>
         </div>
       </div>
-      <div class="mx-4 border-b cal-line1-30">
+      <div class="mx-4 sm:mx-6 border-b cal-line1-30">
       <div onclick="toggleEconRow(this)" class="w-full flex items-stretch cursor-pointer">
         <div class="grid items-center gap-0 py-2.5 flex-shrink-0" style="grid-template-columns:48px 28px 22px">
             <span data-time-utc="20:30" class="text-text2 text-[11px]">20:30</span>
             <span class="text-base leading-none text-center">🇧🇷</span>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-line1" fill="currentColor"/></svg>
         </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
+        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
             <div class="flex items-center gap-1 pr-2 min-w-0">
               <span class="text-text1 text-xs leading-tight truncate" title="BCB Focus Market Readout">BCB Focus Market Readout</span>
               <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
@@ -1450,7 +1450,7 @@ body{
         </div>
       </div>
         <div class="econ-detail hidden">
-          <div class="mx-4 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
+          <div class="mx-4 sm:mx-6 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
             <p class="text-text1 text-[11px] leading-relaxed">Brazilian Central Bank's weekly survey of market economists' expectations for inflation, GDP growth, and the policy rate.</p>
             <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
               <span class="text-text2 text-[10px]">Actual: <span class="text-text1">—</span></span>
@@ -1460,14 +1460,14 @@ body{
           </div>
         </div>
       </div>
-      <div class="mx-4 border-b cal-line1-30">
+      <div class="mx-4 sm:mx-6 border-b cal-line1-30">
       <div onclick="toggleEconRow(this)" class="w-full flex items-stretch cursor-pointer">
         <div class="grid items-center gap-0 py-2.5 flex-shrink-0" style="grid-template-columns:48px 28px 22px">
             <span data-time-utc="21:15" class="text-text2 text-[11px]">21:15</span>
             <span class="text-base leading-none text-center">🇨🇦</span>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-line1" fill="currentColor"/></svg>
         </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
+        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
             <div class="flex items-center gap-1 pr-2 min-w-0">
               <span class="text-text1 text-xs leading-tight truncate" title="Housing Starts">Housing Starts</span>
               <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
@@ -1478,7 +1478,7 @@ body{
         </div>
       </div>
         <div class="econ-detail hidden">
-          <div class="mx-4 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
+          <div class="mx-4 sm:mx-6 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
             <p class="text-text1 text-[11px] leading-relaxed">Annualized number of new residential construction projects started in Canada during the month.</p>
             <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
               <span class="text-text2 text-[10px]">Actual: <span class="text-text1">255.1K</span></span>
@@ -1488,14 +1488,14 @@ body{
           </div>
         </div>
       </div>
-      <div class="mx-4 border-b cal-line1-30">
+      <div class="mx-4 sm:mx-6 border-b cal-line1-30">
       <div onclick="toggleEconRow(this)" class="w-full flex items-stretch cursor-pointer">
         <div class="grid items-center gap-0 py-2.5 flex-shrink-0" style="grid-template-columns:48px 28px 22px">
             <span data-time-utc="21:30" class="text-text2 text-[11px]">21:30</span>
             <span class="text-base leading-none text-center">🇨🇦</span>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-line1" fill="currentColor"/></svg>
         </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
+        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
             <div class="flex items-center gap-1 pr-2 min-w-0">
               <span class="text-text1 text-xs leading-tight truncate" title="Manufacturing Sales MoM Final">Manufacturing Sales MoM Final</span>
               <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
@@ -1506,7 +1506,7 @@ body{
         </div>
       </div>
         <div class="econ-detail hidden">
-          <div class="mx-4 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
+          <div class="mx-4 sm:mx-6 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
             <p class="text-text1 text-[11px] leading-relaxed">Month-over-month change in the total value of sales reported by Canadian manufacturers.</p>
             <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
               <span class="text-text2 text-[10px]">Actual: <span class="text-text1">4.5%</span></span>
@@ -1516,14 +1516,14 @@ body{
           </div>
         </div>
       </div>
-      <div class="mx-4 border-b cal-line1-30">
+      <div class="mx-4 sm:mx-6 border-b cal-line1-30">
       <div onclick="toggleEconRow(this)" class="w-full flex items-stretch cursor-pointer">
         <div class="grid items-center gap-0 py-2.5 flex-shrink-0" style="grid-template-columns:48px 28px 22px">
             <span data-time-utc="21:30" class="text-text2 text-[11px]">21:30</span>
             <span class="text-base leading-none text-center">🇺🇸</span>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-blue-500" fill="currentColor"/></svg>
         </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
+        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
             <div class="flex items-center gap-1 pr-2 min-w-0">
               <span class="text-text1 text-xs leading-tight truncate" title="NY Empire State Manufacturing Index">NY Empire State Manufacturing Index</span>
               <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
@@ -1534,7 +1534,7 @@ body{
         </div>
       </div>
         <div class="econ-detail hidden">
-          <div class="mx-4 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
+          <div class="mx-4 sm:mx-6 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
             <p class="text-text1 text-[11px] leading-relaxed">Federal Reserve Bank of New York's gauge of manufacturing activity in the state, an early read on the broader US factory sector.</p>
             <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
               <span class="text-text2 text-[10px]">Actual: <span class="text-text1">14</span></span>
@@ -1544,20 +1544,20 @@ body{
           </div>
         </div>
       </div>
-      <div class="grid items-center gap-0 mx-4 py-2 cal-bg2-50 border-b border-line1" data-date="2026-06-16" style="grid-template-columns:48px 28px 22px 1fr 64px 64px 64px">
+      <div class="grid items-center gap-0 mx-4 sm:mx-6 py-2 cal-bg2-50 border-b border-line1" data-date="2026-06-16" style="grid-template-columns:48px 28px 22px 1fr 64px 64px 64px">
         <span class="text-text1 text-xs font-bold" style="grid-column:1/5">Tuesday, June 16</span>
         <span class="text-text2 text-[11px] text-right">Actual</span>
         <span class="text-text2 text-[11px] text-right">Forecast</span>
         <span class="text-text2 text-[11px] text-right">Prior</span>
       </div>
-      <div class="mx-4 border-b cal-line1-30">
+      <div class="mx-4 sm:mx-6 border-b cal-line1-30">
       <div onclick="toggleEconRow(this)" class="w-full flex items-stretch cursor-pointer">
         <div class="grid items-center gap-0 py-2.5 flex-shrink-0" style="grid-template-columns:48px 28px 22px">
             <span data-time-utc="14:30" class="text-text2 text-[11px]">14:30</span>
             <span class="text-base leading-none text-center">🇪🇺</span>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-blue-500" fill="currentColor"/></svg>
         </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
+        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
             <div class="flex items-center gap-1 pr-2 min-w-0">
               <span class="text-text1 text-xs leading-tight truncate" title="ECB Monetary Policy Meeting">ECB Monetary Policy Meeting</span>
               <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
@@ -1568,7 +1568,7 @@ body{
         </div>
       </div>
         <div class="econ-detail hidden">
-          <div class="mx-4 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
+          <div class="mx-4 sm:mx-6 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
             <p class="text-text1 text-[11px] leading-relaxed">European Central Bank policy rate decision and statement. Shifts in the rate path are a major driver of EUR and risk-asset volatility.</p>
             <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
               <span class="text-text2 text-[10px]">Actual: <span class="text-text1">—</span></span>
@@ -1578,14 +1578,14 @@ body{
           </div>
         </div>
       </div>
-      <div class="mx-4 border-b cal-line1-30">
+      <div class="mx-4 sm:mx-6 border-b cal-line1-30">
       <div onclick="toggleEconRow(this)" class="w-full flex items-stretch cursor-pointer">
         <div class="grid items-center gap-0 py-2.5 flex-shrink-0" style="grid-template-columns:48px 28px 22px">
             <span data-time-utc="20:00" class="text-text2 text-[11px]">20:00</span>
             <span class="text-base leading-none text-center">🇺🇸</span>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-blue-500" fill="currentColor"/></svg>
         </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
+        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
             <div class="flex items-center gap-1 pr-2 min-w-0">
               <span class="text-text1 text-xs leading-tight truncate" title="FOMC Meeting Minutes">FOMC Meeting Minutes</span>
               <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
@@ -1596,7 +1596,7 @@ body{
         </div>
       </div>
         <div class="econ-detail hidden">
-          <div class="mx-4 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
+          <div class="mx-4 sm:mx-6 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
             <p class="text-text1 text-[11px] leading-relaxed">Detailed record of the Federal Open Market Committee's most recent meeting. Markets parse the minutes for forward guidance on rate policy.</p>
             <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
               <span class="text-text2 text-[10px]">Actual: <span class="text-text1">—</span></span>
@@ -2021,7 +2021,7 @@ function toggleCalendarWeekCards() {
   const drawer = document.getElementById("calendar-drawer");
   const handle = document.getElementById("calendar-resize-handle");
   if (!drawer || !handle) return;
-  const MIN_W = 375; // H5 width
+  const MIN_W = 420; // min width that still fits the economic table's columns + margins
   let startX = 0, startW = 0, dragging = false;
   function clamp(w) {
     const maxW = window.innerWidth;
@@ -2169,21 +2169,21 @@ function calBuildPlaceholderHTML(start) {
     const rowCount = counts.economic > 0 ? Math.min(4, Math.max(1, Math.round(counts.economic / 18))) : 0;
     if (rowCount === 0) continue;
     any = true;
-    html += `<div class="grid items-center gap-0 mx-4 py-2 cal-bg2-50 border-b border-line1" data-date="${calDateKey(d)}" style="grid-template-columns:48px 28px 22px 1fr 64px 64px 64px">
+    html += `<div class="grid items-center gap-0 mx-4 sm:mx-6 py-2 cal-bg2-50 border-b border-line1" data-date="${calDateKey(d)}" style="grid-template-columns:48px 28px 22px 1fr 64px 64px 64px">
         <span class="text-text1 text-xs font-bold" style="grid-column:1/5">${WEEKDAY_FULL[i]}, ${MONTH_FULL[d.getMonth()]} ${d.getDate()}</span>
         <span class="text-text2 text-[11px] text-right">Actual</span>
         <span class="text-text2 text-[11px] text-right">Forecast</span>
         <span class="text-text2 text-[11px] text-right">Prior</span>
       </div>`;
     for (let j = 0; j < rowCount; j++) {
-      html += `<div class="mx-4 border-b cal-line1-30">
+      html += `<div class="mx-4 sm:mx-6 border-b cal-line1-30">
         <div onclick="toggleEconRow(this)" class="w-full flex items-stretch cursor-pointer">
           <div class="grid items-center gap-0 py-2.5 flex-shrink-0" style="grid-template-columns:48px 28px 22px">
             <span class="text-text2 text-[11px]">TBD</span>
             <span class="text-base leading-none text-center">🌐</span>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-line1" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-line1" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-line1" fill="currentColor"/></svg>
           </div>
-          <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
+          <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
             <div class="flex items-center gap-1 pr-2 min-w-0">
               <span class="text-text1 text-xs leading-tight truncate" title="Economic Event">Economic Event</span>
               <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
@@ -2194,7 +2194,7 @@ function calBuildPlaceholderHTML(start) {
           </div>
         </div>
         <div class="econ-detail hidden">
-          <div class="mx-4 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
+          <div class="mx-4 sm:mx-6 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
             <p class="text-text1 text-[11px] leading-relaxed">Event details are not finalized yet — the exact time and figures will be confirmed closer to the date.</p>
           </div>
         </div>
@@ -2247,21 +2247,21 @@ function calBuildCategoryPlaceholderHTML(start, category) {
     const rowCount = total > 0 ? Math.min(4, Math.max(1, Math.round(total / cfg.perRow))) : 0;
     if (rowCount === 0) continue;
     any = true;
-    html += `<div class="grid items-center gap-0 mx-4 py-2 cal-bg2-50 border-b border-line1" data-date="${calDateKey(d)}" style="grid-template-columns:48px 28px 22px 1fr 64px 64px 64px">
+    html += `<div class="grid items-center gap-0 mx-4 sm:mx-6 py-2 cal-bg2-50 border-b border-line1" data-date="${calDateKey(d)}" style="grid-template-columns:48px 28px 22px 1fr 64px 64px 64px">
         <span class="text-text1 text-xs font-bold" style="grid-column:1/5">${WEEKDAY_FULL[i]}, ${MONTH_FULL[d.getMonth()]} ${d.getDate()}</span>
         <span class="text-text2 text-[11px] text-right">${cfg.headers[0]}</span>
         <span class="text-text2 text-[11px] text-right">${cfg.headers[1]}</span>
         <span class="text-text2 text-[11px] text-right">${cfg.headers[2]}</span>
       </div>`;
     for (let j = 0; j < rowCount; j++) {
-      html += `<div class="mx-4 border-b cal-line1-30">
+      html += `<div class="mx-4 sm:mx-6 border-b cal-line1-30">
         <div onclick="toggleEconRow(this)" class="w-full flex items-stretch cursor-pointer">
           <div class="grid items-center gap-0 py-2.5 flex-shrink-0" style="grid-template-columns:48px 28px 22px">
             <span class="text-text2 text-[11px]">TBD</span>
             <span class="text-base leading-none text-center">${cfg.icon}</span>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-line1" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-line1" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-line1" fill="currentColor"/></svg>
           </div>
-          <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
+          <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
             <div class="flex items-center gap-1 pr-2 min-w-0">
               <span class="text-text1 text-xs leading-tight truncate" title="${cfg.rowTitle}">${cfg.rowTitle}</span>
               <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
@@ -2272,7 +2272,7 @@ function calBuildCategoryPlaceholderHTML(start, category) {
           </div>
         </div>
         <div class="econ-detail hidden">
-          <div class="mx-4 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
+          <div class="mx-4 sm:mx-6 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
             <p class="text-text1 text-[11px] leading-relaxed">${cfg.detail}</p>
           </div>
         </div>
