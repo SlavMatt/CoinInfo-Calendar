@@ -41,6 +41,11 @@ button,a{all:unset;cursor:pointer}
 .cal-line1-50{border-color:rgba(59,62,69,.5)}
 .cal-row-back{transition:background-color .15s}
 .cal-row-back:hover{background-color:rgba(42,46,55,.6)}
+#calendar-content-economic [data-date]>span:first-child{padding-left:8px}
+#calendar-content-economic [data-date]>span:not(:first-child){padding-right:4px}
+.cal-row-back>span{padding-right:4px}
+.cal-line1-30>div[onclick]>div:first-child>span:first-child{padding-left:8px}
+#calendar-week-cards>button{box-sizing:border-box;flex:1 1 0%;min-width:100px;max-width:150px}
 
 /* ── Design tokens (aligned with coininfo/index.html palette) ── */
 :root{
@@ -1210,41 +1215,41 @@ body{
     </div>
 
     <!-- Week day cards -->
-    <div class="grid grid-cols-7 gap-1.5 px-4 py-3" id="calendar-week-cards">
-      <button class="flex flex-col items-start gap-1 px-1 py-2 rounded-lg border border-com-red bg-com-red/5 transition-colors">
+    <div class="flex gap-1.5 px-4 py-3 overflow-x-auto scrollbar-none" id="calendar-week-cards">
+      <button class="flex flex-col items-start gap-1 px-1 py-2 rounded-lg border border-line1 hover:border-text2/40 transition-colors">
         <span class="text-text2 text-[10px] leading-none">Mon</span>
-        <span class="text-sm font-bold leading-none text-com-red">15</span>
-        <div class="flex flex-col gap-0.5 items-start w-full px-1 mt-0.5"><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-blue-500 bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">43</span></div><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-violet-400 bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">110</span></div><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-com-green bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">2022</span></div><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-com-brown bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">1</span></div></div>
+        <span class="text-sm font-bold leading-none px-1 text-text1 border-b-2 border-text1">15</span>
+        <div class="flex flex-wrap gap-1.5 items-center w-full px-1 mt-0.5"><span class="text-blue-500 text-[9px] leading-none font-semibold">43</span><span class="text-violet-400 text-[9px] leading-none font-semibold">110</span><span class="text-com-green text-[9px] leading-none font-semibold">2022</span><span class="text-com-brown text-[9px] leading-none font-semibold">1</span></div>
       </button>
       <button class="flex flex-col items-start gap-1 px-1 py-2 rounded-lg border border-line1 hover:border-text2/40 transition-colors">
         <span class="text-text2 text-[10px] leading-none">Tue</span>
         <span class="text-sm font-bold leading-none text-text1">16</span>
-        <div class="flex flex-col gap-0.5 items-start w-full px-1 mt-0.5"><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-blue-500 bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">48</span></div><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-violet-400 bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">67</span></div><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-com-green bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">638</span></div><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-com-brown bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">1</span></div></div>
+        <div class="flex flex-wrap gap-1.5 items-center w-full px-1 mt-0.5"><span class="text-blue-500 text-[9px] leading-none font-semibold">48</span><span class="text-violet-400 text-[9px] leading-none font-semibold">67</span><span class="text-com-green text-[9px] leading-none font-semibold">638</span><span class="text-com-brown text-[9px] leading-none font-semibold">1</span></div>
       </button>
       <button class="flex flex-col items-start gap-1 px-1 py-2 rounded-lg border border-line1 hover:border-text2/40 transition-colors">
         <span class="text-text2 text-[10px] leading-none">Wed</span>
         <span class="text-sm font-bold leading-none text-text1">17</span>
-        <div class="flex flex-col gap-0.5 items-start w-full px-1 mt-0.5"><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-blue-500 bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">68</span></div><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-violet-400 bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">50</span></div><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-com-green bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">473</span></div></div>
+        <div class="flex flex-wrap gap-1.5 items-center w-full px-1 mt-0.5"><span class="text-blue-500 text-[9px] leading-none font-semibold">68</span><span class="text-violet-400 text-[9px] leading-none font-semibold">50</span><span class="text-com-green text-[9px] leading-none font-semibold">473</span></div>
       </button>
       <button class="flex flex-col items-start gap-1 px-1 py-2 rounded-lg border border-line1 hover:border-text2/40 transition-colors">
         <span class="text-text2 text-[10px] leading-none">Thu</span>
         <span class="text-sm font-bold leading-none text-text1">18</span>
-        <div class="flex flex-col gap-0.5 items-start w-full px-1 mt-0.5"><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-blue-500 bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">63</span></div><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-violet-400 bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">73</span></div><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-com-green bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">1261</span></div><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-com-brown bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">1</span></div></div>
+        <div class="flex flex-wrap gap-1.5 items-center w-full px-1 mt-0.5"><span class="text-blue-500 text-[9px] leading-none font-semibold">63</span><span class="text-violet-400 text-[9px] leading-none font-semibold">73</span><span class="text-com-green text-[9px] leading-none font-semibold">1261</span><span class="text-com-brown text-[9px] leading-none font-semibold">1</span></div>
       </button>
       <button class="flex flex-col items-start gap-1 px-1 py-2 rounded-lg border border-line1 hover:border-text2/40 transition-colors">
         <span class="text-text2 text-[10px] leading-none">Fri</span>
         <span class="text-sm font-bold leading-none text-text1">19</span>
-        <div class="flex flex-col gap-0.5 items-start w-full px-1 mt-0.5"><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-blue-500 bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">45</span></div><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-violet-400 bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">29</span></div><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-com-green bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">257</span></div><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-com-brown bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">1</span></div></div>
+        <div class="flex flex-wrap gap-1.5 items-center w-full px-1 mt-0.5"><span class="text-blue-500 text-[9px] leading-none font-semibold">45</span><span class="text-violet-400 text-[9px] leading-none font-semibold">29</span><span class="text-com-green text-[9px] leading-none font-semibold">257</span><span class="text-com-brown text-[9px] leading-none font-semibold">1</span></div>
       </button>
       <button class="flex flex-col items-start gap-1 px-1 py-2 rounded-lg border border-line1 hover:border-text2/40 transition-colors">
         <span class="text-text2 text-[10px] leading-none">Sat</span>
         <span class="text-sm font-bold leading-none text-text1">20</span>
-        <div class="flex flex-col gap-0.5 items-start w-full px-1 mt-0.5"><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-blue-500 bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">3</span></div></div>
+        <div class="flex flex-wrap gap-1.5 items-center w-full px-1 mt-0.5"><span class="text-blue-500 text-[9px] leading-none font-semibold">3</span></div>
       </button>
       <button class="flex flex-col items-start gap-1 px-1 py-2 rounded-lg border border-line1 hover:border-text2/40 transition-colors">
         <span class="text-text2 text-[10px] leading-none">Sun</span>
         <span class="text-sm font-bold leading-none text-text1">21</span>
-        <div class="flex flex-col gap-0.5 items-start w-full px-1 mt-0.5"><div class="flex items-center gap-1"><span class="w-1 h-1 rounded-full text-com-green bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">3</span></div></div>
+        <div class="flex flex-wrap gap-1.5 items-center w-full px-1 mt-0.5"><span class="text-com-green text-[9px] leading-none font-semibold">3</span></div>
       </button>
     </div>
 
@@ -1259,7 +1264,7 @@ body{
 
     <!-- Tab content: Economic -->
     <div id="calendar-content-economic">
-      <div class="grid items-center gap-0 mx-4 sm:mx-6 py-2 cal-bg2-50 border-b border-line1" data-date="2026-06-15" style="grid-template-columns:48px 28px 22px 1fr 64px 64px 64px;border-left:3px solid var(--red)">
+      <div class="grid items-center gap-0 mx-4 sm:mx-6 py-2 cal-bg2-50 border-b border-line1" data-date="2026-06-15" style="grid-template-columns:48px 28px 22px 1fr 64px 64px 64px;border-left:3px solid var(--t1)">
         <span class="text-text1 text-xs font-bold" style="grid-column:1/5">Monday, June 15</span>
         <span class="text-text2 text-[11px] text-right">Actual</span>
         <span class="text-text2 text-[11px] text-right">Forecast</span>
@@ -1286,6 +1291,7 @@ body{
           <div class="mx-4 sm:mx-6 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
             <p class="text-text1 text-[11px] leading-relaxed">German 6-month Treasury bill (Bubill) auction result, a short-term funding cost benchmark for the Eurozone's largest economy.</p>
             <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
+              <a href="#" class="order-last ml-auto text-text2 text-[10px] hover:text-text1 transition-colors">Source: <span class="text-text1">Link</span></a>
               <span class="text-text2 text-[10px]">Actual: <span class="text-text1">2.331%</span></span>
               <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">—</span></span>
               <span class="text-text2 text-[10px]">Prior: <span class="text-text1">2.257%</span></span>
@@ -1314,6 +1320,7 @@ body{
           <div class="mx-4 sm:mx-6 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
             <p class="text-text1 text-[11px] leading-relaxed">South African 91-day Treasury bill auction yield, a short-term government funding cost benchmark for the local market.</p>
             <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
+              <a href="#" class="order-last ml-auto text-text2 text-[10px] hover:text-text1 transition-colors">Source: <span class="text-text1">Link</span></a>
               <span class="text-text2 text-[10px]">Actual: <span class="text-text1">7.26%</span></span>
               <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">—</span></span>
               <span class="text-text2 text-[10px]">Prior: <span class="text-text1">7.26%</span></span>
@@ -1342,6 +1349,7 @@ body{
           <div class="mx-4 sm:mx-6 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
             <p class="text-text1 text-[11px] leading-relaxed">Difference between India's exports and imports of goods and services. A narrowing deficit is generally currency-positive for the rupee.</p>
             <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
+              <a href="#" class="order-last ml-auto text-text2 text-[10px] hover:text-text1 transition-colors">Source: <span class="text-text1">Link</span></a>
               <span class="text-text2 text-[10px]">Actual: <span class="text-text1">-28.21B $</span></span>
               <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">-27B $</span></span>
               <span class="text-text2 text-[10px]">Prior: <span class="text-text1">-28.38B $</span></span>
@@ -1370,6 +1378,7 @@ body{
           <div class="mx-4 sm:mx-6 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
             <p class="text-text1 text-[11px] leading-relaxed">Total value of India's exported goods and services for the period.</p>
             <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
+              <a href="#" class="order-last ml-auto text-text2 text-[10px] hover:text-text1 transition-colors">Source: <span class="text-text1">Link</span></a>
               <span class="text-text2 text-[10px]">Actual: <span class="text-text1">45.2B $</span></span>
               <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">—</span></span>
               <span class="text-text2 text-[10px]">Prior: <span class="text-text1">43.56B $</span></span>
@@ -1398,6 +1407,7 @@ body{
           <div class="mx-4 sm:mx-6 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
             <p class="text-text1 text-[11px] leading-relaxed">Total value of India's imported goods and services for the period.</p>
             <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
+              <a href="#" class="order-last ml-auto text-text2 text-[10px] hover:text-text1 transition-colors">Source: <span class="text-text1">Link</span></a>
               <span class="text-text2 text-[10px]">Actual: <span class="text-text1">73.41B $</span></span>
               <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">—</span></span>
               <span class="text-text2 text-[10px]">Prior: <span class="text-text1">71.94B $</span></span>
@@ -1453,6 +1463,7 @@ body{
           <div class="mx-4 sm:mx-6 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
             <p class="text-text1 text-[11px] leading-relaxed">Brazilian Central Bank's weekly survey of market economists' expectations for inflation, GDP growth, and the policy rate.</p>
             <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
+              <a href="#" class="order-last ml-auto text-text2 text-[10px] hover:text-text1 transition-colors">Source: <span class="text-text1">Link</span></a>
               <span class="text-text2 text-[10px]">Actual: <span class="text-text1">—</span></span>
               <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">—</span></span>
               <span class="text-text2 text-[10px]">Prior: <span class="text-text1">—</span></span>
@@ -1481,6 +1492,7 @@ body{
           <div class="mx-4 sm:mx-6 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
             <p class="text-text1 text-[11px] leading-relaxed">Annualized number of new residential construction projects started in Canada during the month.</p>
             <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
+              <a href="#" class="order-last ml-auto text-text2 text-[10px] hover:text-text1 transition-colors">Source: <span class="text-text1">Link</span></a>
               <span class="text-text2 text-[10px]">Actual: <span class="text-text1">255.1K</span></span>
               <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">—</span></span>
               <span class="text-text2 text-[10px]">Prior: <span class="text-text1">279.3K</span></span>
@@ -1509,6 +1521,7 @@ body{
           <div class="mx-4 sm:mx-6 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
             <p class="text-text1 text-[11px] leading-relaxed">Month-over-month change in the total value of sales reported by Canadian manufacturers.</p>
             <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
+              <a href="#" class="order-last ml-auto text-text2 text-[10px] hover:text-text1 transition-colors">Source: <span class="text-text1">Link</span></a>
               <span class="text-text2 text-[10px]">Actual: <span class="text-text1">4.5%</span></span>
               <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">—</span></span>
               <span class="text-text2 text-[10px]">Prior: <span class="text-text1">3%</span></span>
@@ -1537,6 +1550,7 @@ body{
           <div class="mx-4 sm:mx-6 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
             <p class="text-text1 text-[11px] leading-relaxed">Federal Reserve Bank of New York's gauge of manufacturing activity in the state, an early read on the broader US factory sector.</p>
             <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
+              <a href="#" class="order-last ml-auto text-text2 text-[10px] hover:text-text1 transition-colors">Source: <span class="text-text1">Link</span></a>
               <span class="text-text2 text-[10px]">Actual: <span class="text-text1">14</span></span>
               <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">—</span></span>
               <span class="text-text2 text-[10px]">Prior: <span class="text-text1">19.6</span></span>
@@ -1571,6 +1585,7 @@ body{
           <div class="mx-4 sm:mx-6 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
             <p class="text-text1 text-[11px] leading-relaxed">European Central Bank policy rate decision and statement. Shifts in the rate path are a major driver of EUR and risk-asset volatility.</p>
             <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
+              <a href="#" class="order-last ml-auto text-text2 text-[10px] hover:text-text1 transition-colors">Source: <span class="text-text1">Link</span></a>
               <span class="text-text2 text-[10px]">Actual: <span class="text-text1">—</span></span>
               <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">3.65%</span></span>
               <span class="text-text2 text-[10px]">Prior: <span class="text-text1">3.65%</span></span>
@@ -1599,6 +1614,7 @@ body{
           <div class="mx-4 sm:mx-6 mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
             <p class="text-text1 text-[11px] leading-relaxed">Detailed record of the Federal Open Market Committee's most recent meeting. Markets parse the minutes for forward guidance on rate policy.</p>
             <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
+              <a href="#" class="order-last ml-auto text-text2 text-[10px] hover:text-text1 transition-colors">Source: <span class="text-text1">Link</span></a>
               <span class="text-text2 text-[10px]">Actual: <span class="text-text1">—</span></span>
               <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">—</span></span>
               <span class="text-text2 text-[10px]">Prior: <span class="text-text1">—</span></span>
@@ -2299,15 +2315,15 @@ function renderCalendarWeek() {
     for (const cat of CAT_ORDER) {
       const v = counts[cat];
       if (v > 0) {
-        rows += `<div class="flex items-center gap-1 w-full rounded px-0.5 -mx-0.5 hover:bg-white/5 transition-colors"><span class="w-1 h-1 rounded-full ${CAT_DOT[cat]} bg-current flex-shrink-0"></span><span class="text-text2 text-[9px] leading-none">${v}</span></div>`;
+        rows += `<span class="${CAT_DOT[cat]} text-[9px] leading-none font-semibold">${v}</span>`;
       }
     }
     const ringCls = isSelected ? 'ring-2 ring-inset ring-text1' : '';
-    const numCls = isToday ? 'text-com-red border-b-2 border-com-red' : 'text-text1 border-b-2 border-transparent';
+    const numCls = isToday ? 'text-text1 border-b-2 border-text1' : 'text-text1 border-b-2 border-transparent';
     cardsHtml += `<button onclick="calSelectDay(${d.getTime()})" class="flex flex-col items-start gap-1 px-1 py-2 rounded-lg border border-solid border-line1 hover:border-text2/40 hover:bg-bg2 ${ringCls} transition-colors">
         <span class="text-text2 text-[10px] leading-none">${DAY_ABBR[i]}</span>
         <span class="text-sm font-bold leading-none px-1 ${numCls}">${d.getDate()}</span>
-        <div class="flex flex-col gap-0.5 items-start w-full px-1 mt-1">${rows}</div>
+        <div class="flex flex-wrap gap-1.5 items-center w-full px-1 mt-1">${rows}</div>
       </button>`;
   }
   document.getElementById('calendar-week-cards').innerHTML = cardsHtml;
