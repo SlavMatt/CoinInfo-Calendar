@@ -1215,6 +1215,9 @@ body{
       </button>
     </div>
 
+    <!-- Next Event card -->
+    <div id="calendar-next-event" class="px-4 pb-2"></div>
+
     <!-- Week day cards -->
     <div class="flex gap-1.5 px-4 py-3 overflow-x-auto scrollbar-none" id="calendar-week-cards">
       <button class="flex flex-col items-start gap-1 px-1 py-2 rounded-lg border border-line1 hover:border-text2/40 transition-colors">
@@ -2159,6 +2162,32 @@ function calFormatRange(start, end) {
 }
 
 // ── Market / region filter ──
+// ── Next Event per asset ──
+const NEXT_EVENTS = {
+  'BTC-PERP': {
+    day:'18', month:'Jun', ts: new Date(2026,5,18).getTime(),
+    title:'FOMC Interest Rate Decision',
+    impact:'high', time:'Jun 18, 2026 · 18:00 UTC',
+    desc:'Fed expected to hold rates at 4.25–4.50%. Watch forward guidance on potential H2 cuts — BTC historically reacts sharply to rate surprises.',
+    source:'#',
+  },
+  'TSLA-PERP': {
+    day:'23', month:'Jul', ts: new Date(2026,6,23).getTime(),
+    title:'Q2 2026 Earnings Release',
+    impact:'high', time:'Jul 23, 2026 · AMC',
+    desc:'Tesla Q2 earnings — analysts forecast EPS $0.68 on revenue $25.8B. Cybertruck ramp pace and energy storage margins are the key swing factors.',
+    source:'#',
+  },
+  'WTI-PERP': {
+    day:'17', month:'Jun', ts: new Date(2026,5,17).getTime(),
+    title:'EIA Crude Oil Inventory Report',
+    impact:'medium', time:'Jun 17, 2026 · 14:30 UTC',
+    desc:'Weekly U.S. crude inventory data from the EIA. A draw above 3 MB could push WTI above the $76/barrel resistance zone.',
+    source:'#',
+  },
+};
+let calNextEventOpen = true;
+
 const MARKET_OPTIONS = [
   { key: 'all', label: 'All Market' },
   { key: 'us-stock', label: 'US-STOCK' },
@@ -2306,11 +2335,13 @@ function renderCalendarWeek() {
 
   document.getElementById('calendar-date-range').textContent = calFormatRange(start, end);
 
+  const nextEv = NEXT_EVENTS[currentAsset];
   let cardsHtml = '';
   for (let i = 0; i < 7; i++) {
     const d = calAddDays(start, i);
     const isToday = calSameDay(d, CAL_TODAY);
     const isSelected = calSelectedTs !== null && calSameDay(d, new Date(calSelectedTs));
+    const isNextEvent = nextEv && calSameDay(d, new Date(nextEv.ts));
     const counts = calCountsFor(d, i, calWeekOffset);
     let rows = '';
     for (const cat of CAT_ORDER) {
@@ -2319,6 +2350,7 @@ function renderCalendarWeek() {
         rows += `<span class="${CAT_DOT[cat]} text-[9px] leading-none font-semibold">${v}</span>`;
       }
     }
+    if (isNextEvent) rows += `<span class="text-yellow text-[8px] leading-none font-bold ml-auto">★</span>`;
     const ringCls = isSelected ? 'ring-2 ring-inset ring-text1' : '';
     const numCls = isToday ? 'text-text1 border-b-2 border-text1' : 'text-text1 border-b-2 border-transparent';
     cardsHtml += `<button onclick="calSelectDay(${d.getTime()})" class="flex flex-col items-start gap-1 px-1 py-2 rounded-lg border border-solid border-line1 hover:border-text2/40 hover:bg-bg2 ${ringCls} transition-colors">
@@ -2392,6 +2424,64 @@ function resetCalendarState() {
   calSetActiveTab('Economic');
   closeCalendarPopups();
   renderCalendarWeek();
+  renderNextEvent(currentAsset);
+}
+
+// ── Next Event card ──
+function renderNextEvent(key) {
+  const el = document.getElementById('calendar-next-event');
+  if (!el) return;
+  const ev = NEXT_EVENTS[key];
+  if (!ev) { el.innerHTML = ''; return; }
+  const assetSub = (ASSETS[key] && ASSETS[key].sub) || key;
+  const IC = { high:'text-com-red', medium:'text-yellow', low:'text-com-green' };
+  const DOTS = { high:'●●●', medium:'●●○', low:'●○○' };
+  const ic = IC[ev.impact] || 'text-text2';
+  const dots = DOTS[ev.impact] || '○○○';
+  if (!calNextEventOpen) {
+    el.innerHTML = `
+      <button onclick="toggleNextEvent()" class="w-full flex items-center gap-2 px-3 py-2 rounded-lg border cal-line1-30 hover:border-text2/40 transition-colors text-left">
+        <span class="text-[10px] font-semibold text-text2 uppercase tracking-wider whitespace-nowrap">Next Event</span>
+        <span class="text-[11px] text-text1 truncate flex-1">${ev.title}</span>
+        <span class="${ic} text-[9px] tracking-wider flex-shrink-0">${dots}</span>
+        <span class="text-[10px] text-text2 whitespace-nowrap flex-shrink-0">${ev.day} ${ev.month}</span>
+        <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-text2 flex-shrink-0"></i>
+      </button>`;
+  } else {
+    el.innerHTML = `
+      <div class="rounded-lg border cal-line1-50 overflow-hidden">
+        <div class="flex items-center justify-between px-3 py-2 border-b cal-line1-30">
+          <div class="flex items-center gap-1.5">
+            <span class="text-[10px] font-semibold text-text1 uppercase tracking-wider">Next Event</span>
+            <span class="text-text2 text-[10px]">· ${assetSub}</span>
+          </div>
+          <button onclick="toggleNextEvent()" class="w-5 h-5 flex items-center justify-center rounded text-text2 hover:text-text1 hover:bg-bg2 transition-colors">
+            <i data-lucide="chevron-up" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+        <div class="flex gap-3 p-3">
+          <div class="flex-shrink-0 w-10 flex flex-col items-center justify-center rounded-lg bg-bg2 border cal-line1-30 py-2.5 gap-0.5">
+            <span class="text-text1 text-sm font-bold leading-none">${ev.day}</span>
+            <span class="text-text2 text-[9px] leading-none">${ev.month}</span>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-start gap-2">
+              <span class="text-text1 text-[11px] font-semibold leading-snug flex-1">${ev.title}</span>
+              <span class="${ic} text-[9px] tracking-wider flex-shrink-0">${dots}</span>
+            </div>
+            <div class="text-text2 text-[10px] mt-0.5">${ev.time}</div>
+            <p class="text-text2 text-[10px] mt-1.5 leading-relaxed">${ev.desc}</p>
+            <a href="${ev.source}" class="text-text2 text-[10px] hover:text-text1 transition-colors mt-1.5 inline-block">Source ↗</a>
+          </div>
+        </div>
+      </div>`;
+  }
+  lucide.createIcons();
+}
+
+function toggleNextEvent() {
+  calNextEventOpen = !calNextEventOpen;
+  renderNextEvent(currentAsset);
 }
 
 // ── Date picker popup ──
@@ -2654,6 +2744,7 @@ renderMarketInfo('BTC-PERP');
 renderTradingInfo('BTC-PERP');
 document.getElementById('calendar-tz-label').textContent = fmtTz(calTzOffset);
 renderCalendarWeek();
+renderNextEvent('BTC-PERP');
 
 // ── Slider drag ──
 const track=document.getElementById('sldr');
