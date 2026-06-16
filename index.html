@@ -46,8 +46,8 @@ button,a{all:unset;cursor:pointer}
 /* .cal-row-back container already has pr-2 (8px) so spans need no extra padding-right */
 .cal-line1-30>div[onclick]>div:first-child>span:first-child{padding-left:8px}
 #calendar-week-cards>button{box-sizing:border-box;flex:1 1 0%;min-width:120px;max-width:170px}
-#calendar-week-cards{-webkit-mask-image:linear-gradient(to right,transparent 16px,black 16px);mask-image:linear-gradient(to right,transparent 16px,black 16px)}
-@media(min-width:640px){#calendar-week-cards{-webkit-mask-image:linear-gradient(to right,transparent 42px,black 42px);mask-image:linear-gradient(to right,transparent 42px,black 42px)}}
+#calendar-week-cards,#calendar-tabs{-webkit-mask-image:linear-gradient(to right,transparent 16px,black 16px);mask-image:linear-gradient(to right,transparent 16px,black 16px)}
+@media(min-width:640px){#calendar-week-cards,#calendar-tabs{-webkit-mask-image:linear-gradient(to right,transparent 42px,black 42px);mask-image:linear-gradient(to right,transparent 42px,black 42px)}}
 #calendar-marketmenu>button,#calendar-tzmenu>button,#calendar-picker-yearmenu>button{box-sizing:border-box}
 
 /* ── Design tokens (aligned with coininfo/index.html palette) ── */
@@ -1264,10 +1264,9 @@ body{
 
     <!-- Category filter pills -->
     <div class="flex items-center gap-1.5 px-4 sm:px-[42px] py-3 overflow-x-auto scrollbar-none" id="calendar-tabs">
-      <button onclick="selectCalendarTab(this,'Economic')" data-cal-tab="Economic" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-text1 text-bg1">Economic</button>
-      <button onclick="selectCalendarTab(this,'Earnings')" data-cal-tab="Earnings" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-bg2 text-text2 hover:text-text1">Earnings</button>
-      <button onclick="selectCalendarTab(this,'Revenue')" data-cal-tab="Revenue" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-bg2 text-text2 hover:text-text1">Revenue</button>
-      <button onclick="selectCalendarTab(this,'Dividends')" data-cal-tab="Dividends" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-bg2 text-text2 hover:text-text1">Dividends</button>
+      <button onclick="selectCalendarTab(this,'Crypto')" data-cal-tab="Crypto" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-text1 text-bg1">Crypto</button>
+      <button onclick="selectCalendarTab(this,'Stock')" data-cal-tab="Stock" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-bg2 text-text2 hover:text-text1">Stock</button>
+      <button onclick="selectCalendarTab(this,'Commodities')" data-cal-tab="Commodities" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-bg2 text-text2 hover:text-text1">Commodities</button>
       <button onclick="selectCalendarTab(this,'IPO')" data-cal-tab="IPO" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-bg2 text-text2 hover:text-text1">IPO</button>
     </div>
 
@@ -2100,8 +2099,8 @@ function calSetActiveTab(tab) {
       btn.classList.add("bg-bg2", "text-text2", "hover:text-text1");
     }
   });
-  document.getElementById("calendar-content-economic").classList.toggle("hidden", tab !== "Economic");
-  document.getElementById("calendar-content-other").classList.toggle("hidden", tab === "Economic");
+  document.getElementById("calendar-content-economic").classList.toggle("hidden", tab !== "Crypto");
+  document.getElementById("calendar-content-other").classList.toggle("hidden", tab === "Crypto");
 }
 
 function selectCalendarTab(el, tab) {
@@ -2115,7 +2114,7 @@ const CAL_TODAY = new Date(2026, 5, 15); // Monday, June 15, 2026
 let calWeekOffset = 0;
 let calEconHTML = null;
 let calSelectedTs = null;
-let calActiveTab = 'Economic';
+let calActiveTab = 'Crypto';
 
 const MONTH_ABBR = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const MONTH_FULL = ['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -2230,7 +2229,7 @@ function calBuildPlaceholderHTML(start) {
   for (let i = 0; i < 7; i++) {
     const d = calAddDays(start, i);
     const counts = calCountsFor(d, i, calWeekOffset);
-    const rowCount = counts.stock > 0 ? Math.min(4, Math.max(1, Math.round(counts.stock / 35))) : 0;
+    const rowCount = counts.crypto > 0 ? Math.min(4, Math.max(1, counts.crypto)) : 0;
     if (rowCount === 0) continue;
     any = true;
     html += `<div class="grid items-center gap-0 mx-4 sm:mx-[42px] py-2 cal-bg2-50 border-b border-line1" data-date="${calDateKey(d)}" style="grid-template-columns:48px 28px 22px 1fr 64px 64px 64px">
@@ -2273,29 +2272,23 @@ function calBuildPlaceholderHTML(start) {
 // the placeholder row title/icon/detail copy. Mirrors the Economic tab's 7-col grid
 // (time | flag/exchange | importance | title | col1 | col2 | col3) for visual consistency.
 const CAL_CATEGORY_CONFIG = {
-  Earnings: {
-    countKey: 'earnings', perRow: 18, icon: '🏢',
+  Stock: {
+    countKey: 'stock', perRow: 35, icon: '🏢',
     rowTitle: 'Earnings Report',
     headers: ['EPS Actual', 'EPS Forecast', 'EPS Prior'],
     detail: 'Quarterly EPS — actual vs. consensus estimate and prior period. Reporting session (pre/post market) shown alongside the company name.',
   },
-  Revenue: {
-    countKey: 'earnings', perRow: 18, icon: '🏢',
-    rowTitle: 'Revenue Report',
-    headers: ['Revenue Actual', 'Revenue Forecast', 'Revenue Prior'],
-    detail: 'Quarterly revenue — actual vs. consensus estimate and prior period, reported alongside earnings.',
-  },
-  Dividends: {
-    countKey: 'dividends', perRow: 250, icon: '💰',
-    rowTitle: 'Ex-Dividend Date',
-    headers: ['Dividend', 'Yield', 'Prior'],
-    detail: 'Ex-dividend date — shares must be held before this date to receive the upcoming payout. Amount and annualized yield shown alongside prior payout.',
+  Commodities: {
+    countKey: 'commodities', perRow: 30, icon: '🛢️',
+    rowTitle: 'Commodity Event',
+    headers: ['Actual', 'Forecast', 'Prior'],
+    detail: 'Key commodity market event — EIA inventory data, OPEC decisions, and agricultural reports with Actual vs. Forecast vs. Prior.',
   },
   IPO: {
     countKey: 'ipo', perRow: 1, icon: '🚀',
     rowTitle: 'IPO Listing',
     headers: ['Price Range', 'Deal Size', 'Exchange'],
-    detail: 'Expected listing date, indicative price range, deal size and target exchange. Figures are estimates until priced.',
+    detail: 'Expected listing date, indicative price range, deal size and target exchange (NASDAQ only). Figures are estimates until priced.',
   },
 };
 
@@ -2388,7 +2381,7 @@ function renderCalendarTabContent(start) {
   const otherEl = document.getElementById('calendar-content-other');
   if (calEconHTML === null) calEconHTML = econEl.innerHTML;
 
-  if (calActiveTab === 'Economic') {
+  if (calActiveTab === 'Crypto') {
     if (calMarketFilter !== 'all') {
       const label = MARKET_OPTIONS.find(o => o.key === calMarketFilter).label;
       econEl.innerHTML = calEmptyState(`No ${label} Data`, `${label} calendar data is not available in this preview`);
@@ -2441,7 +2434,7 @@ function resetCalendarState() {
   const drawer = document.getElementById('calendar-drawer');
   drawer.style.width = '';
   drawer.style.maxWidth = '';
-  calSetActiveTab('Economic');
+  calSetActiveTab('Crypto');
   closeCalendarPopups();
   renderCalendarWeek();
   renderNextEvent(currentAsset);
