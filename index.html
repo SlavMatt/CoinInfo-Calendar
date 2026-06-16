@@ -2108,7 +2108,8 @@ function selectCalendarTab(el, tab) {
 }
 
 // ══════════════════════════ CALENDAR WEEK NAV ══════════════════════════
-const CAL_TODAY = new Date(2026, 5, 15); // Monday, June 15, 2026
+const _calNow = new Date();
+const CAL_TODAY = new Date(_calNow.getFullYear(), _calNow.getMonth(), _calNow.getDate());
 let calWeekOffset = 0;
 let calEconHTML = null;
 let calSelectedTs = null;
@@ -2124,28 +2125,20 @@ const CAL_API = 'https://coininfo-api.vercel.app';
 let calCountsCache = {};  // { 'YYYY-MM-DD': { crypto, stock, commodities, ipo } }
 let calEventsCache = {};  // { 'from-to-cat': Event[] | null }
 
-// real category counts for the current (offset 0) week, Mon..Sun
-const CAL_REAL_COUNTS = [
-  { crypto:3,  stock:110, ipo:1, commodities:43 },
-  { crypto:2,  stock:67,  ipo:1, commodities:48 },
-  { crypto:5,  stock:50,  ipo:0, commodities:68 },
-  { crypto:8,  stock:73,  ipo:1, commodities:63 },
-  { crypto:2,  stock:29,  ipo:1, commodities:45 },
-  { crypto:1,  stock:0,   ipo:0, commodities:3  },
-  { crypto:0,  stock:0,   ipo:0, commodities:0  },
-];
-
 function calAddDays(d, n) { const r = new Date(d); r.setDate(r.getDate() + n); return r; }
-function calWeekStart(offset) { return calAddDays(CAL_TODAY, offset * 7); }
+function calWeekStart(offset) {
+  const dow = (CAL_TODAY.getDay() + 6) % 7; // Mon=0 .. Sun=6
+  return calAddDays(CAL_TODAY, -dow + offset * 7);
+}
 function calSameDay(a, b) { return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate(); }
 function calDateKey(d) { return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; }
 
-// deterministic pseudo-random counts for weeks without real data
+// deterministic pseudo-random counts for past/future weeks without real data
 function calHash(n) { const x = Math.sin(n) * 10000; return x - Math.floor(x); }
 function calCountsFor(date, dayIdx, offset) {
   const key = calDateKey(date);
   if (calCountsCache[key]) return calCountsCache[key];
-  if (offset === 0) return CAL_REAL_COUNTS[dayIdx];
+  if (offset === 0) return { crypto: 0, stock: 0, commodities: 0, ipo: 0 };
   const seed = date.getFullYear() * 372 + date.getMonth() * 31 + date.getDate();
   const isWeekend = dayIdx >= 5;
   return {
@@ -2402,13 +2395,13 @@ function calEventRow(ev) {
     const a = Number(ev.actual), p = Number(ev.prior);
     const chg = !isNaN(a) && !isNaN(p) && ev.prior!=null ? a - p : null;
     if (chg !== null) {
-      v5 = (chg>=0?'+':'')+calFmtNum(Math.abs(chg))+'K';
+      v5 = (chg>=0?'+':'')+calFmtNum(Math.abs(chg));
       c5 = chg<0?'text-[#42b37f]':'text-[#E84142]'; // draw=bullish, build=bearish
     } else {
-      v5 = !isNaN(a) && ev.actual!=null ? calFmtNum(a)+'K' : '—';
+      v5 = !isNaN(a) && ev.actual!=null ? calFmtNum(a) : '—';
     }
     v6 = '—';
-    v7 = !isNaN(p) && ev.prior!=null ? calFmtNum(p)+'K' : '—';
+    v7 = !isNaN(p) && ev.prior!=null ? calFmtNum(p) : '—';
   } else if (et==='macro') {
     const a = Number(ev.actual);
     const sym = ev.symbol||'';
@@ -2431,7 +2424,7 @@ function calEventRow(ev) {
     else if (et==='etf_flow') { const f=ev.net_flow_usd; detail=`BTC Spot ETF net flow: ${f!=null?(f>=0?'+':'')+'$'+calFmtNum(Math.abs(f)):'N/A'}.`; }
     else if (et==='ipo') detail=`${ev.title} IPO on ${ev.exchange??'—'}. Price range: ${ev.price_range??'—'}, deal size: ${ev.raise_usd?'$'+calFmtNum(ev.raise_usd):'—'}.`;
     else if (et==='trending'||et==='price_update') detail=`${ev.title} — 24h change: ${ev.actual??'—'}%. Current price: ${calFmtPrice(ev.price_range)}.`;
-    else if (et==='energy') { const a=Number(ev.actual),p=Number(ev.prior); const chg=!isNaN(a)&&!isNaN(p)&&ev.prior!=null?a-p:null; detail=`EIA crude oil inventories: ${calFmtNum(a)}K bbls${chg!==null?` (WoW: ${chg>=0?'+':''}${calFmtNum(Math.abs(chg))}K bbls)`:''}. Prior week: ${ev.prior!=null?calFmtNum(p)+'K bbls':'—'}. Source: EIA Weekly Petroleum Status Report.`; }
+    else if (et==='energy') { const a=Number(ev.actual),p=Number(ev.prior); const chg=!isNaN(a)&&!isNaN(p)&&ev.prior!=null?a-p:null; detail=`EIA crude oil inventories: ${calFmtNum(a)} bbls${chg!==null?` (WoW: ${chg>=0?'+':''}${calFmtNum(Math.abs(chg))} bbls)`:''}. Prior week: ${ev.prior!=null?calFmtNum(p)+' bbls':'—'}. Source: EIA Weekly Petroleum Status Report.`; }
     else if (et==='macro') { const unit=ev.symbol==='FOMC'?'%':''; detail=ev.actual!=null?`${ev.title}. Value: ${ev.actual}${unit}. Source: FRED / Federal Reserve.`:`${ev.title} — upcoming scheduled release. Actual figure will be available on this date.`; }
     else detail='No additional details available.';
   }
@@ -2506,6 +2499,11 @@ async function fetchWeekCounts(start) {
     const res = await fetch(`${CAL_API}/api/counts?from=${from}&to=${to}`);
     if (!res.ok) return;
     const data = await res.json();
+    // Fill zeros for days with no events so they never fall back to stale placeholders
+    for (let i = 0; i < 7; i++) {
+      const dk = calDateKey(calAddDays(start, i));
+      if (!data[dk]) data[dk] = { crypto: 0, stock: 0, commodities: 0, ipo: 0 };
+    }
     Object.assign(calCountsCache, data);
     if (calDateKey(calWeekStart(calWeekOffset)) !== from) return;
     // Rebuild just the cards HTML
