@@ -1176,9 +1176,9 @@ body{
   <!-- Shadow fade on the page side of the drawer's left edge; hidden while the drawer is closed -->
   <div id="calendar-shadow-edge" class="invisible absolute top-0 -left-6 w-6 h-full pointer-events-none" style="background:linear-gradient(to right, transparent, rgba(0,0,0,.35))"></div>
   <!-- Drag-to-resize handle (desktop only; min width = H5): visible vertical bar straddling the drawer's left edge, also separates drawer from page -->
-  <div id="calendar-resize-handle" class="hidden sm:block absolute top-1/2 -translate-y-1/2 h-24 w-1.5 rounded-full bg-line1 hover:bg-text2 hover:w-2 cursor-ew-resize transition-all z-10" style="left:5px"></div>
+  <div id="calendar-resize-handle" class="hidden sm:block absolute top-1/2 -translate-y-1/2 h-24 w-1.5 rounded-full bg-line1 hover:bg-text2 hover:w-2 cursor-ew-resize transition-all z-10" style="left:9px"></div>
   <!-- Drawer Header -->
-  <div class="flex items-center justify-between px-4 py-3 bg-bg1 flex-shrink-0">
+  <div class="flex items-center justify-between px-4 sm:px-6 py-3 bg-bg1 flex-shrink-0">
     <span class="text-text1 font-semibold text-sm">Calendar</span>
     <button onclick="closeCalendar()" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-bg2 transition-colors text-text2 hover:text-text1">
       <i data-lucide="x" class="w-4 h-4"></i>
@@ -1186,14 +1186,14 @@ body{
   </div>
 
   <!-- Next Event card (pinned below header, above toolbar) -->
-  <div id="calendar-next-event" class="px-4 pt-1 pb-1 flex-shrink-0"></div>
+  <div id="calendar-next-event" class="px-4 sm:px-6 pt-1 pb-1 flex-shrink-0"></div>
 
   <!-- Event time table (below Next Event, above calendar) -->
-  <div id="calendar-event-table" class="px-4 pb-3 flex-shrink-0"></div>
+  <div id="calendar-event-table" class="px-4 sm:px-6 pb-3 flex-shrink-0"></div>
 
   <div class="flex-1 overflow-y-auto">
     <!-- Date Nav Toolbar -->
-    <div id="calendar-toolbar" class="flex items-center gap-1 px-4 py-2.5">
+    <div id="calendar-toolbar" class="flex items-center gap-1 px-4 sm:px-6 py-2.5">
       <button onclick="calendarGoToday()" class="px-2 py-1 rounded text-xs font-medium text-text1 bg-bg2 hover:bg-line1 transition-colors">Today</button>
       <div class="relative">
         <button data-cal-popup-trigger onclick="toggleCalendarDatePicker(event)" class="w-7 h-7 flex items-center justify-center rounded text-text2 hover:text-text1 hover:bg-bg2 transition-colors"><i data-lucide="calendar-days" class="w-3.5 h-3.5"></i></button>
@@ -1222,7 +1222,7 @@ body{
     </div>
 
     <!-- Week day cards -->
-    <div class="flex gap-1.5 px-4 py-3 overflow-x-auto scrollbar-none" id="calendar-week-cards">
+    <div class="flex gap-1.5 px-4 sm:px-6 py-3 overflow-x-auto scrollbar-none" id="calendar-week-cards">
       <button class="flex flex-col items-start gap-1 px-1 py-2 rounded-lg border border-line1 hover:border-text2/40 transition-colors">
         <span class="text-text2 text-[10px] leading-none">Mon</span>
         <span class="text-sm font-bold leading-none px-1 text-text1 border-b-2 border-text1">15</span>
@@ -1261,7 +1261,7 @@ body{
     </div>
 
     <!-- Category filter pills -->
-    <div class="flex items-center gap-1.5 px-4 py-2.5 overflow-x-auto scrollbar-none" id="calendar-tabs">
+    <div class="flex items-center gap-1.5 px-4 sm:px-6 py-2.5 overflow-x-auto scrollbar-none" id="calendar-tabs">
       <button onclick="selectCalendarTab(this,'Economic')" data-cal-tab="Economic" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-text1 text-bg1">Economic</button>
       <button onclick="selectCalendarTab(this,'Earnings')" data-cal-tab="Earnings" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-bg2 text-text2 hover:text-text1">Earnings</button>
       <button onclick="selectCalendarTab(this,'Revenue')" data-cal-tab="Revenue" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-bg2 text-text2 hover:text-text1">Revenue</button>
