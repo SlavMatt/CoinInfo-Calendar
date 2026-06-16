@@ -42,8 +42,8 @@ button,a{all:unset;cursor:pointer}
 .cal-row-back{transition:background-color .15s}
 .cal-row-back:hover{background-color:rgba(42,46,55,.6)}
 #calendar-content-economic [data-date]>span:first-child{padding-left:8px}
-#calendar-content-economic [data-date]>span:not(:first-child){padding-right:4px}
-/* .cal-row-back container already has pr-1 (4px) so spans need no extra padding-right */
+#calendar-content-economic [data-date]>span:not(:first-child){padding-right:8px}
+/* .cal-row-back container already has pr-2 (8px) so spans need no extra padding-right */
 .cal-line1-30>div[onclick]>div:first-child>span:first-child{padding-left:8px}
 #calendar-week-cards>button{box-sizing:border-box;flex:1 1 0%;min-width:100px;max-width:150px}
 #calendar-marketmenu>button,#calendar-tzmenu>button,#calendar-picker-yearmenu>button{box-sizing:border-box}
@@ -1186,7 +1186,10 @@ body{
   </div>
 
   <!-- Next Event card (pinned below header, above toolbar) -->
-  <div id="calendar-next-event" class="px-4 pt-1 pb-2 flex-shrink-0 border-b border-line1/50"></div>
+  <div id="calendar-next-event" class="px-4 pt-1 pb-1 flex-shrink-0"></div>
+
+  <!-- Event time table (below Next Event, above calendar) -->
+  <div id="calendar-event-table" class="px-4 pb-3 flex-shrink-0"></div>
 
   <div class="flex-1 overflow-y-auto sm:pl-1.5">
     <!-- Date Nav Toolbar -->
@@ -1281,7 +1284,7 @@ body{
             <span class="text-base leading-none text-center">🇩🇪</span>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-line1" fill="currentColor"/></svg>
         </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
+        <div class="flex-1 grid items-center gap-0 py-2.5 pr-2 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
             <div class="flex items-center gap-1 pr-2 min-w-0">
               <span class="text-text1 text-xs leading-tight truncate" title="6-Month Bubill Auction">6-Month Bubill Auction</span>
               <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
@@ -1310,7 +1313,7 @@ body{
             <span class="text-base leading-none text-center">🇿🇦</span>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-line1" fill="currentColor"/></svg>
         </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
+        <div class="flex-1 grid items-center gap-0 py-2.5 pr-2 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
             <div class="flex items-center gap-1 pr-2 min-w-0">
               <span class="text-text1 text-xs leading-tight truncate" title="91-Day T-Bill Auction">91-Day T-Bill Auction</span>
               <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
@@ -1339,7 +1342,7 @@ body{
             <span class="text-base leading-none text-center">🇮🇳</span>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-blue-500" fill="currentColor"/></svg>
         </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
+        <div class="flex-1 grid items-center gap-0 py-2.5 pr-2 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
             <div class="flex items-center gap-1 pr-2 min-w-0">
               <span class="text-text1 text-xs leading-tight truncate" title="Balance of Trade">Balance of Trade</span>
               <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
@@ -1368,7 +1371,7 @@ body{
             <span></span>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-line1" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-line1" fill="currentColor"/></svg>
         </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
+        <div class="flex-1 grid items-center gap-0 py-2.5 pr-2 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
             <div class="flex items-center gap-1 pr-2 min-w-0">
               <span class="text-text1 text-xs leading-tight truncate" title="Exports">Exports</span>
               <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
@@ -1397,7 +1400,7 @@ body{
             <span></span>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-line1" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-line1" fill="currentColor"/></svg>
         </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
+        <div class="flex-1 grid items-center gap-0 py-2.5 pr-2 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
             <div class="flex items-center gap-1 pr-2 min-w-0">
               <span class="text-text1 text-xs leading-tight truncate" title="Imports">Imports</span>
               <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
@@ -1426,7 +1429,7 @@ body{
             <span class="text-base leading-none text-center">🇮🇳</span>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-blue-500" fill="currentColor"/></svg>
         </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
+        <div class="flex-1 grid items-center gap-0 py-2.5 pr-2 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
             <div class="flex items-center gap-1 pr-2 min-w-0">
               <span class="text-text1 text-xs leading-tight truncate" title="Unemployment Rate">Unemployment Rate</span>
               <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
@@ -1453,7 +1456,7 @@ body{
             <span class="text-base leading-none text-center">🇧🇷</span>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-line1" fill="currentColor"/></svg>
         </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
+        <div class="flex-1 grid items-center gap-0 py-2.5 pr-2 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
             <div class="flex items-center gap-1 pr-2 min-w-0">
               <span class="text-text1 text-xs leading-tight truncate" title="BCB Focus Market Readout">BCB Focus Market Readout</span>
               <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
@@ -1482,7 +1485,7 @@ body{
             <span class="text-base leading-none text-center">🇨🇦</span>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-line1" fill="currentColor"/></svg>
         </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
+        <div class="flex-1 grid items-center gap-0 py-2.5 pr-2 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
             <div class="flex items-center gap-1 pr-2 min-w-0">
               <span class="text-text1 text-xs leading-tight truncate" title="Housing Starts">Housing Starts</span>
               <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
@@ -1511,7 +1514,7 @@ body{
             <span class="text-base leading-none text-center">🇨🇦</span>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-line1" fill="currentColor"/></svg>
         </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
+        <div class="flex-1 grid items-center gap-0 py-2.5 pr-2 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
             <div class="flex items-center gap-1 pr-2 min-w-0">
               <span class="text-text1 text-xs leading-tight truncate" title="Manufacturing Sales MoM Final">Manufacturing Sales MoM Final</span>
               <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
@@ -1540,7 +1543,7 @@ body{
             <span class="text-base leading-none text-center">🇺🇸</span>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-blue-500" fill="currentColor"/></svg>
         </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
+        <div class="flex-1 grid items-center gap-0 py-2.5 pr-2 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
             <div class="flex items-center gap-1 pr-2 min-w-0">
               <span class="text-text1 text-xs leading-tight truncate" title="NY Empire State Manufacturing Index">NY Empire State Manufacturing Index</span>
               <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
@@ -1575,7 +1578,7 @@ body{
             <span class="text-base leading-none text-center">🇪🇺</span>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-blue-500" fill="currentColor"/></svg>
         </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
+        <div class="flex-1 grid items-center gap-0 py-2.5 pr-2 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
             <div class="flex items-center gap-1 pr-2 min-w-0">
               <span class="text-text1 text-xs leading-tight truncate" title="ECB Monetary Policy Meeting">ECB Monetary Policy Meeting</span>
               <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
@@ -1604,7 +1607,7 @@ body{
             <span class="text-base leading-none text-center">🇺🇸</span>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-blue-500" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-blue-500" fill="currentColor"/></svg>
         </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
+        <div class="flex-1 grid items-center gap-0 py-2.5 pr-2 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
             <div class="flex items-center gap-1 pr-2 min-w-0">
               <span class="text-text1 text-xs leading-tight truncate" title="FOMC Meeting Minutes">FOMC Meeting Minutes</span>
               <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
@@ -2186,6 +2189,19 @@ const NEXT_EVENTS = {
     source:'#',
   },
 };
+
+const EVENT_TABLE_DATA = {
+  'BTC-PERP': [
+    { country:'🇺🇸', label:'Fed Interest Rate', actual:'—', forecast:'4.25%', prior:'4.25%' },
+  ],
+  'TSLA-PERP': [
+    { country:'📈', label:'EPS (GAAP)',  actual:'—', forecast:'$0.68',  prior:'$0.45' },
+    { country:'📈', label:'Revenue',     actual:'—', forecast:'$25.8B', prior:'$22.9B' },
+  ],
+  'WTI-PERP': [
+    { country:'🇺🇸', label:'Crude Inventories (WoW)', actual:'—', forecast:'−3.0M', prior:'−2.4M' },
+  ],
+};
 let calNextEventOpen = true;
 
 const MARKET_OPTIONS = [
@@ -2229,7 +2245,7 @@ function calBuildPlaceholderHTML(start) {
             <span class="text-base leading-none text-center">🌐</span>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-line1" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-line1" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-line1" fill="currentColor"/></svg>
           </div>
-          <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
+          <div class="flex-1 grid items-center gap-0 py-2.5 pr-2 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
             <div class="flex items-center gap-1 pr-2 min-w-0">
               <span class="text-text1 text-xs leading-tight truncate" title="Economic Event">Economic Event</span>
               <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
@@ -2307,7 +2323,7 @@ function calBuildCategoryPlaceholderHTML(start, category) {
             <span class="text-base leading-none text-center">${cfg.icon}</span>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="flex-shrink-0"><rect x="1" y="8" width="2.5" height="5" rx="0.5" class="text-line1" fill="currentColor"/><rect x="5.75" y="5" width="2.5" height="8" rx="0.5" class="text-line1" fill="currentColor"/><rect x="10.5" y="2" width="2.5" height="11" rx="0.5" class="text-line1" fill="currentColor"/></svg>
           </div>
-          <div class="flex-1 grid items-center gap-0 py-2.5 pr-1 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
+          <div class="flex-1 grid items-center gap-0 py-2.5 pr-2 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
             <div class="flex items-center gap-1 pr-2 min-w-0">
               <span class="text-text1 text-xs leading-tight truncate" title="${cfg.rowTitle}">${cfg.rowTitle}</span>
               <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
@@ -2407,6 +2423,8 @@ function calendarShiftWeek(delta) {
 function calendarGoToday() {
   calWeekOffset = 0;
   calSelectedTs = null;
+  const scroller = document.querySelector('#calendar-drawer .flex-1.overflow-y-auto');
+  if (scroller) scroller.scrollTop = 0;
   renderCalendarWeek();
   closeCalendarPopups();
 }
@@ -2425,6 +2443,7 @@ function resetCalendarState() {
   closeCalendarPopups();
   renderCalendarWeek();
   renderNextEvent(currentAsset);
+  renderEventTable(currentAsset);
 }
 
 // ── Next Event card ──
@@ -2433,17 +2452,21 @@ function renderNextEvent(key) {
   if (!el) return;
   const ev = NEXT_EVENTS[key];
   if (!ev) { el.innerHTML = ''; return; }
-  const assetSub = (ASSETS[key] && ASSETS[key].sub) || key;
-  const IC = { high:'text-com-red', medium:'text-yellow', low:'text-com-green' };
-  const DOTS = { high:'●●●', medium:'●●○', low:'●○○' };
-  const ic = IC[ev.impact] || 'text-text2';
-  const dots = DOTS[ev.impact] || '○○○';
+  const asset = ASSETS[key];
+  const assetSub = (asset && asset.sub) || key;
+  const logoColor = asset ? asset.icoColor : '#666';
+  const logoLabel = asset ? asset.icoLabel : key[0];
+  const isEmoji = logoLabel && /\p{Emoji}/u.test(logoLabel);
+  const logoStyle = isEmoji
+    ? `width:16px;height:16px;border-radius:50%;background:${logoColor};font-size:10px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;line-height:1`
+    : `width:14px;height:14px;border-radius:50%;background:${logoColor};font-size:${logoLabel.length>1?'6px':'8px'};display:inline-flex;align-items:center;justify-content:center;color:#fff;font-weight:700;flex-shrink:0;line-height:1`;
+  const logoHtml = `<span style="${logoStyle}">${logoLabel}</span>`;
   if (!calNextEventOpen) {
     el.innerHTML = `
       <button onclick="toggleNextEvent()" class="w-full flex items-center gap-2 px-3 py-2 rounded-lg border cal-line1-30 hover:border-text2/40 transition-colors text-left">
         <span class="text-[10px] font-semibold text-text2 uppercase tracking-wider whitespace-nowrap">Next Event</span>
+        ${logoHtml}
         <span class="text-[11px] text-text1 truncate flex-1">${ev.title}</span>
-        <span class="${ic} text-[9px] tracking-wider flex-shrink-0">${dots}</span>
         <span class="text-[10px] text-text2 whitespace-nowrap flex-shrink-0">${ev.day} ${ev.month}</span>
         <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-text2 flex-shrink-0"></i>
       </button>`;
@@ -2453,6 +2476,7 @@ function renderNextEvent(key) {
         <div class="flex items-center justify-between px-3 py-2 border-b cal-line1-30">
           <div class="flex items-center gap-1.5">
             <span class="text-[10px] font-semibold text-text1 uppercase tracking-wider">Next Event</span>
+            ${logoHtml}
             <span class="text-text2 text-[10px]">· ${assetSub}</span>
           </div>
           <button onclick="toggleNextEvent()" class="w-5 h-5 flex items-center justify-center rounded text-text2 hover:text-text1 hover:bg-bg2 transition-colors">
@@ -2467,7 +2491,6 @@ function renderNextEvent(key) {
           <div class="flex-1 min-w-0">
             <div class="flex items-start gap-2">
               <span class="text-text1 text-[11px] font-semibold leading-snug flex-1">${ev.title}</span>
-              <span class="${ic} text-[9px] tracking-wider flex-shrink-0">${dots}</span>
             </div>
             <div class="text-text2 text-[10px] mt-0.5">${ev.time}</div>
             <p class="text-text2 text-[10px] mt-1.5 leading-relaxed">${ev.desc}</p>
@@ -2482,6 +2505,33 @@ function renderNextEvent(key) {
 function toggleNextEvent() {
   calNextEventOpen = !calNextEventOpen;
   renderNextEvent(currentAsset);
+}
+
+function renderEventTable(key) {
+  const el = document.getElementById('calendar-event-table');
+  if (!el) return;
+  const rows = EVENT_TABLE_DATA[key];
+  if (!rows || rows.length === 0) { el.innerHTML = ''; return; }
+  const rowsHtml = rows.map((r, i) => `
+    <div class="grid items-center gap-0 px-3 py-2${i < rows.length - 1 ? ' border-b cal-line1-30' : ''}" style="grid-template-columns:1fr 52px 66px 52px">
+      <div class="flex items-center gap-1.5 min-w-0">
+        <span class="text-sm leading-none flex-shrink-0">${r.country}</span>
+        <span class="text-text1 text-[11px] truncate">${r.label}</span>
+      </div>
+      <span class="text-text2 text-[11px] text-right font-medium">${r.actual}</span>
+      <span class="text-text2 text-[11px] text-right">${r.forecast}</span>
+      <span class="text-text2 text-[11px] text-right">${r.prior}</span>
+    </div>`).join('');
+  el.innerHTML = `
+    <div class="rounded-lg border cal-line1-50 overflow-hidden">
+      <div class="grid items-center gap-0 px-3 py-1.5 border-b cal-line1-30" style="grid-template-columns:1fr 52px 66px 52px">
+        <span class="text-text2 text-[10px]">Market Consensus</span>
+        <span class="text-text2 text-[10px] text-right">Actual</span>
+        <span class="text-text2 text-[10px] text-right">Forecast</span>
+        <span class="text-text2 text-[10px] text-right">Prior</span>
+      </div>
+      ${rowsHtml}
+    </div>`;
 }
 
 // ── Date picker popup ──
@@ -2745,6 +2795,7 @@ renderTradingInfo('BTC-PERP');
 document.getElementById('calendar-tz-label').textContent = fmtTz(calTzOffset);
 renderCalendarWeek();
 renderNextEvent('BTC-PERP');
+renderEventTable('BTC-PERP');
 
 // ── Slider drag ──
 const track=document.getElementById('sldr');
