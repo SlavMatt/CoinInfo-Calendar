@@ -2443,7 +2443,11 @@ function buildEventWeekHTML(events, start, category) {
   if (!events || !events.length) return calEmptyState(`No ${category} Events`, `No ${category.toLowerCase()} events for ${calFormatRange(start, calAddDays(start, 6))}`);
   const hdr = CAL_TAB_HEADERS[category] || ['','',''];
   const byDate = {};
-  for (const ev of events) { if (!byDate[ev.date]) byDate[ev.date]=[]; byDate[ev.date].push(ev); }
+  for (const ev of events) {
+    if (ev.event_type === 'price_update' || ev.event_type === 'trending') continue;
+    if (!byDate[ev.date]) byDate[ev.date]=[];
+    byDate[ev.date].push(ev);
+  }
   let html = '';
   for (let i = 0; i < 7; i++) {
     const d = calAddDays(start, i);
