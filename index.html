@@ -1287,7 +1287,7 @@ body{
   </div>
 
   <!-- Next Event card -->
-  <div id="calendar-next-event" class="px-4 sm:px-[42px] py-3 flex-shrink-0"></div>
+  <div id="calendar-next-event" class="px-4 sm:px-[42px] py-3 flex-shrink-0 overflow-y-auto scrollbar-none" style="max-height:min(44vh,380px)"></div>
 
   <!-- Date Nav Toolbar (sticky) -->
   <div id="calendar-toolbar" class="flex items-center gap-1 px-4 sm:px-[42px] py-3 flex-shrink-0">
@@ -3020,6 +3020,9 @@ function renderCalendarTabContent(start) {
 
 // ── Scroll-based day card highlight ──
 function calOnScroll() {
+  // During calSelectDay animation (560ms + 60ms buffer), skip scroll-based override
+  if (performance.now() - _calSelectTime < 620) return;
+  calSelectedTs = null; // user is manually scrolling — clear any explicit selection
   const scrollEl = document.getElementById('calendar-scroll-area');
   if (!scrollEl) return;
   const containerTop = scrollEl.getBoundingClientRect().top;
@@ -3045,6 +3048,7 @@ function calInitScrollHighlight() {
 
 // ── Current-time red line ──
 let _calTimeMarkerTimer = null;
+let _calSelectTime = 0; // timestamp of last calSelectDay call — used to pause calOnScroll during animation
 function calInjectTimeMarker() {
   const scrollEl = document.getElementById('calendar-scroll-area');
   if (!scrollEl) return;
@@ -3107,6 +3111,7 @@ function calSmoothScrollTo(el, targetY, duration) {
 // jump the events list below to the day card that was clicked
 function calSelectDay(ts) {
   calSelectedTs = ts;
+  _calSelectTime = performance.now(); // lock calOnScroll for animation duration
   const scrollEl = document.getElementById('calendar-scroll-area');
   if (!scrollEl) return;
   const dk = calDateKey(new Date(ts));
@@ -3115,7 +3120,7 @@ function calSelectDay(ts) {
     const targetY = target.getBoundingClientRect().top - scrollEl.getBoundingClientRect().top + scrollEl.scrollTop;
     calSmoothScrollTo(scrollEl, targetY, 560);
   }
-  // Always update card highlight immediately (even when scroll delta is too small to animate)
+  // Immediately highlight the clicked card; calOnScroll will not override during animation
   const wkStart = calWeekStart(calWeekOffset);
   document.querySelectorAll('#calendar-week-cards button').forEach((btn, i) => {
     btn.classList.toggle('cal-day-viewing', calDateKey(calAddDays(wkStart, i)) === dk);
