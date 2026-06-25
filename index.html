@@ -3190,23 +3190,42 @@ async function renderNextEvent(key) {
   const el = document.getElementById('calendar-next-event');
   if (!el) return;
 
-  if (!calNextEventOpen) {
-    el.style.display = 'none';
-    updateNextEventToggle();
-    return;
-  }
-
   el.style.removeProperty('display');
   const data = await fetchNextEventData(key);
 
   if (currentAsset !== key) return;
 
   const ev = data && data.next;
-  if (!ev) { el.innerHTML = ''; return; }
+  if (!ev) { el.innerHTML = ''; updateNextEventToggle(); return; }
 
+  const asset = ASSETS[key];
+  const logoColor = asset ? asset.icoColor : '#666';
+  const logoLabel = asset ? asset.icoLabel : key[0];
+  const isEmoji = logoLabel && /\p{Emoji}/u.test(logoLabel);
+  const logoStyle = isEmoji
+    ? `width:14px;height:14px;border-radius:50%;background:${logoColor};font-size:9px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;line-height:1`
+    : `width:14px;height:14px;border-radius:50%;background:${logoColor};font-size:${logoLabel.length>1?'6px':'8px'};display:inline-flex;align-items:center;justify-content:center;color:#fff;font-weight:700;flex-shrink:0;line-height:1`;
+  const logoHtml = `<span style="${logoStyle}">${logoLabel}</span>`;
   const impactDot = ev.impact === 'high'
     ? `<span style="width:5px;height:5px;border-radius:50%;background:var(--red);flex-shrink:0;display:inline-block"></span>`
     : `<span style="width:5px;height:5px;border-radius:50%;background:var(--orange);flex-shrink:0;display:inline-block"></span>`;
+
+  if (!calNextEventOpen) {
+    el.innerHTML = `
+      <div class="rounded-lg border cal-line1-50">
+        <button onclick="toggleNextEvent()" class="w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-bg2 transition-colors rounded-lg">
+          <span class="text-[10px] font-semibold text-text2 uppercase tracking-wider whitespace-nowrap flex-shrink-0">Next</span>
+          ${logoHtml}
+          ${impactDot}
+          <span class="text-text1 text-[11px] truncate flex-1">${ev.title}</span>
+          <span class="text-text2 text-[10px] whitespace-nowrap flex-shrink-0">${ev.day} ${ev.month}</span>
+          <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-text2 flex-shrink-0"></i>
+        </button>
+      </div>`;
+    lucide.createIcons();
+    updateNextEventToggle();
+    return;
+  }
 
   {
     const upcoming = (data && data.upcoming) || [];
@@ -3255,6 +3274,8 @@ async function renderNextEvent(key) {
 function updateNextEventToggle() {
   const icon = document.getElementById('cal-next-evt-icon');
   if (icon) icon.style.transform = calNextEventOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+  const btn = document.getElementById('cal-next-evt-btn');
+  if (btn) btn.style.display = calNextEventOpen ? '' : 'none';
 }
 
 function toggleNextEvent() {
