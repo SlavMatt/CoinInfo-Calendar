@@ -352,9 +352,9 @@ body{
 .mi-stat-date{font-size:11px;color:var(--t4);text-align:right;margin-top:1px}
 .has-tip{border-bottom:1px dashed var(--t4);cursor:help}
 .mi-tip-wrap{position:relative;display:inline-flex;align-items:center}
-.mi-tip-pop{position:absolute;left:0;bottom:calc(100% + 6px);z-index:200;background:#1A1D26;border:1px solid var(--line1);color:var(--t1);font-size:11px;line-height:1.5;padding:5px 9px;border-radius:6px;width:180px;white-space:normal;pointer-events:none;opacity:0;transition:opacity .15s;font-family:var(--font)}
+.mi-tip-pop{position:absolute;left:0;bottom:calc(100% + 6px);z-index:200;background:#1A1D26;border:1px solid var(--line1);color:var(--t1);font-size:11px;line-height:1.5;padding:5px 9px;border-radius:6px;width:180px;white-space:normal;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .15s;font-family:var(--font);user-select:none}
 .mi-tip-pop::after{content:'';position:absolute;top:100%;left:10px;border:4px solid transparent;border-top-color:#1A1D26}
-.mi-tip-wrap:hover .mi-tip-pop{opacity:1}
+.mi-tip-wrap:hover .mi-tip-pop{opacity:1;visibility:visible}
 .mi-sec-title{font-size:14px;font-weight:700;color:var(--t1);margin-bottom:0}
 .mi-about-text{font-size:13px;line-height:1.65;color:var(--t2);display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
 .mi-about-text.exp{display:block;-webkit-line-clamp:unset}
@@ -1978,19 +1978,19 @@ function _miCrypto(a, key) {
   (a.marketData||[]).forEach(({k,v})=>{ md[k]=v; });
   const stats = [
     {k:'排名', v: md['Rank']||a.rank||'—', cls:'grn'},
-    {k:'市值', v: md['Market Cap']||'—'},
+    {k:'市值', v: md['Market Cap']||'—', tip:'所有流通供应量的总市场价值'},
     {k:'完全稀释市值', v: md['FDV']||'—', tip:'按最大供应量计算的总市值，反映完全稀释后的估值'},
     {k:'交易额 / 市值', v: md['Vol / MCap']||'—', tip:'24 小时交易量与市值之比，衡量市场流动性'},
     {k:'市场占有率', v: md['Market Dominance']||a.dominance||'—', tip:'该资产市值占加密总市值的比例'},
     'sep',
     {k:'发行时间', v: a.launchDate||'—'},
-    {k:'历史最高价', v: a.ath||'—', sub: a.athDate||'', tip:'该资产有记录以来的最高成交价'},
-    {k:'历史最低价', v: a.atl||'—', sub: a.atlDate||'', tip:'该资产有记录以来的最低成交价'},
+    {k:'历史最高价', v: a.ath||'—', sub: a.athDate||''},
+    {k:'历史最低价', v: a.atl||'—', sub: a.atlDate||''},
     {k:'所属公链', v: a.chain||'—'},
     'sep',
-    {k:'流通供应量', v: md['Circulating Supply']||'—'},
-    {k:'最大供应量', v: md['Max Supply']||'—'},
-    {k:'总供应量', v: a.totalSupply||md['Circulating Supply']||'—'},
+    {k:'流通供应量', v: md['Circulating Supply']||'—', tip:'在市场中流通的代币数量，不含锁仓或未发行部分'},
+    {k:'最大供应量', v: md['Max Supply']||'—', tip:'该资产可以存在的代币总上限'},
+    {k:'总供应量', v: a.totalSupply||md['Circulating Supply']||'—', tip:'当前已创建的代币总量，包含锁仓部分'},
     {k:'流通率', v: a.circulatingRate||'—', tip:'已流通供应量占最大供应量的比例'},
   ];
   const statsHtml = stats.map(s=>{
