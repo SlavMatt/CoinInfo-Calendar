@@ -132,20 +132,22 @@ body{
    ASSET BAR  h=52px
 ───────────────────────────────────── */
 .abar{
-  height:52px;background:var(--bg1);
+  height:64px;background:var(--bg1);
   border-bottom:1px solid var(--line1);
   display:flex;align-items:center;padding:0;
   position:relative;
 }
 .asset-id{
-  display:flex;align-items:center;gap:8px;
-  padding:0 14px;cursor:pointer;flex-shrink:0;
+  display:flex;align-items:center;gap:10px;
+  padding:0 16px;cursor:pointer;flex-shrink:0;
   border-right:1px solid var(--line1);height:100%;
 }
-.asset-ico{width:26px;height:26px;flex-shrink:0}
-.asset-name-col{display:flex;flex-direction:column;gap:1px}
-.asset-name{font-size:16px;font-weight:700;color:var(--t1);display:flex;align-items:center;gap:6px}
+.asset-ico{width:36px;height:36px;flex-shrink:0}
+.asset-name-col{display:flex;flex-direction:column;gap:3px}
+.asset-name{font-size:18px;font-weight:700;color:var(--t1);display:flex;align-items:center;gap:6px}
 .asset-sub{font-size:11px;color:var(--t2);display:flex;align-items:center;gap:5px}
+.abar-star{color:var(--t3);cursor:pointer;font-size:14px;line-height:1;margin-left:2px}
+.abar-star:hover{color:#f0c040}
 .holiday-tag{
   padding:1px 5px;border-radius:3px;
   background:rgba(246,159,30,.15);border:1px solid rgba(246,159,30,.35);
@@ -156,7 +158,7 @@ body{
   display:flex;flex-direction:column;gap:1px;
   padding:0 14px;border-right:1px solid var(--line1);flex-shrink:0;
 }
-.price-main{font-size:18px;font-weight:700;color:var(--red);line-height:1.3;display:flex;align-items:center;gap:4px}
+.price-main{font-size:22px;font-weight:700;color:var(--red);line-height:1.25;display:flex;align-items:center;gap:4px}
 .price-sub{font-size:11px;color:var(--t2);line-height:1.3}
 .stat{
   display:flex;flex-direction:column;gap:2px;
@@ -709,10 +711,17 @@ body{
 .fright span{cursor:pointer}.fright span:hover{color:var(--t2)}
 
 /* Asset hover panel */
-.ap-wrap{position:relative;display:inline-block}
+.ap-wrap{position:relative}
+/* Icon circle in the asset bar trigger */
+.asset-opt-ico{
+  width:36px;height:36px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;color:#fff;overflow:hidden;
+}
+.asset-opt-ico img{width:100%;height:100%;object-fit:cover;border-radius:50%}
 .ap-panel{
   display:none;position:absolute;top:calc(100% + 6px);left:0;z-index:1200;
-  width:320px;background:#1A1D26;border:1px solid var(--line1);
+  width:520px;background:#1A1D26;border:1px solid var(--line1);
   border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.6);
   padding:12px 0 8px;
 }
@@ -746,7 +755,7 @@ body{
   font-size:10px;font-weight:600;color:var(--t3);text-align:left;
   padding:4px 12px;text-transform:uppercase;letter-spacing:.4px;
 }
-.ap-list{max-height:280px;overflow-y:auto}
+.ap-list{max-height:380px;overflow-y:auto}
 .ap-list::-webkit-scrollbar{width:4px}
 .ap-list::-webkit-scrollbar-thumb{background:var(--line1);border-radius:2px}
 .ap-row{
@@ -924,6 +933,7 @@ body{
       <div class="asset-name" id="abar-name">
         BTC-PERP
         <svg width="10" height="7" fill="none" viewBox="0 0 10 7"><path d="M1 1l4 4 4-4" stroke="#858A93" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span class="abar-star" title="Add to favorites">☆</span>
       </div>
       <div class="asset-sub" id="abar-sub">Bitcoin</div>
     </div>
@@ -966,7 +976,7 @@ body{
       <div class="stat-val" id="abar-mid">96,643.2</div>
     </div>
     <div class="stat">
-      <div class="stat-lbl">Funding/Countdown</div>
+      <div class="stat-lbl">Funding(1h)/Countdown</div>
       <div class="stat-val o" id="abar-funding">0.01%/<span id="bar-cd">06:35</span></div>
     </div>
     <div class="stat">
@@ -2625,7 +2635,7 @@ function updateAssetBar(key) {
   if (LOGOS[key]) {
     ico.style.background = 'transparent';
     ico.style.fontSize = '';
-    ico.innerHTML = icoHtml(key, 28);
+    ico.innerHTML = icoHtml(key, 36);
   } else {
     ico.style.background = a.icoColor;
     ico.style.fontSize = a.icoSize;
