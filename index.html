@@ -1298,7 +1298,7 @@ body{
       </div>
       <div class="flex items-center gap-0.5" id="calendar-week-nav">
         <button onclick="calendarShiftWeek(-1)" class="w-7 h-7 flex items-center justify-center rounded text-text2 hover:text-text1 hover:bg-bg2 transition-colors"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
-        <span id="calendar-date-range" class="text-text1 text-xs font-medium px-1 whitespace-nowrap">Jun 15 — 21</span>
+        <span id="calendar-date-range" class="text-text1 text-xs font-medium px-1 whitespace-nowrap"></span>
         <button onclick="calendarShiftWeek(1)" class="w-7 h-7 flex items-center justify-center rounded text-text2 hover:text-text1 hover:bg-bg2 transition-colors"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
       </div>
       <div class="relative">
@@ -1318,44 +1318,8 @@ body{
       </button>
     </div>
 
-    <!-- Week day cards (sticky) -->
-    <div class="flex gap-2 px-4 sm:px-[42px] py-3 overflow-x-auto scrollbar-none flex-shrink-0" id="calendar-week-cards">
-      <button class="flex flex-col items-start gap-2 px-2.5 py-3 rounded-lg border border-line1 hover:border-text2/40 transition-colors">
-        <span class="text-text2 text-[10px] leading-none">Mon</span>
-        <span class="text-[15px] font-bold leading-none text-text1 border-b-2 border-text1">15</span>
-        <div class="w-full flex flex-col gap-[5px] mt-0.5"><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Economic</span><span class="text-text1 text-[10px] leading-none font-medium">3</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Stocks</span><span class="text-text1 text-[10px] leading-none font-medium">8</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Crypto</span><span class="text-text1 text-[10px] leading-none font-medium">1</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Commodities</span><span class="text-text1 text-[10px] leading-none font-medium">2</span></div></div>
-      </button>
-      <button class="flex flex-col items-start gap-2 px-2.5 py-3 rounded-lg border border-line1 hover:border-text2/40 transition-colors">
-        <span class="text-text2 text-[10px] leading-none">Tue</span>
-        <span class="text-[15px] font-bold leading-none text-text1 border-b-2 border-transparent">16</span>
-        <div class="w-full flex flex-col gap-[5px] mt-0.5"><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Economic</span><span class="text-text1 text-[10px] leading-none font-medium">2</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Stocks</span><span class="text-text1 text-[10px] leading-none font-medium">5</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Crypto</span><span class="text-text2/30 text-[10px] leading-none font-medium">0</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Commodities</span><span class="text-text1 text-[10px] leading-none font-medium">1</span></div></div>
-      </button>
-      <button class="flex flex-col items-start gap-2 px-2.5 py-3 rounded-lg border border-line1 hover:border-text2/40 transition-colors">
-        <span class="text-text2 text-[10px] leading-none">Wed</span>
-        <span class="text-[15px] font-bold leading-none text-text1 border-b-2 border-transparent">17</span>
-        <div class="w-full flex flex-col gap-[5px] mt-0.5"><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Economic</span><span class="text-text1 text-[10px] leading-none font-medium">1</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Stocks</span><span class="text-text1 text-[10px] leading-none font-medium">6</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Crypto</span><span class="text-text2/30 text-[10px] leading-none font-medium">0</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Commodities</span><span class="text-text1 text-[10px] leading-none font-medium">2</span></div></div>
-      </button>
-      <button class="flex flex-col items-start gap-2 px-2.5 py-3 rounded-lg border border-line1 hover:border-text2/40 transition-colors">
-        <span class="text-text2 text-[10px] leading-none">Thu</span>
-        <span class="text-[15px] font-bold leading-none text-text1 border-b-2 border-transparent">18</span>
-        <div class="w-full flex flex-col gap-[5px] mt-0.5"><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Economic</span><span class="text-text1 text-[10px] leading-none font-medium">2</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Stocks</span><span class="text-text1 text-[10px] leading-none font-medium">4</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Crypto</span><span class="text-text2/30 text-[10px] leading-none font-medium">0</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Commodities</span><span class="text-text1 text-[10px] leading-none font-medium">1</span></div></div>
-      </button>
-      <button class="flex flex-col items-start gap-2 px-2.5 py-3 rounded-lg border border-line1 hover:border-text2/40 transition-colors">
-        <span class="text-text2 text-[10px] leading-none">Fri</span>
-        <span class="text-[15px] font-bold leading-none text-text1 border-b-2 border-transparent">19</span>
-        <div class="w-full flex flex-col gap-[5px] mt-0.5"><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Economic</span><span class="text-text1 text-[10px] leading-none font-medium">1</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Stocks</span><span class="text-text1 text-[10px] leading-none font-medium">3</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Crypto</span><span class="text-text2/30 text-[10px] leading-none font-medium">0</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Commodities</span><span class="text-text1 text-[10px] leading-none font-medium">1</span></div></div>
-      </button>
-      <button class="flex flex-col items-start gap-2 px-2.5 py-3 rounded-lg border border-line1 hover:border-text2/40 transition-colors">
-        <span class="text-text2 text-[10px] leading-none">Sat</span>
-        <span class="text-[15px] font-bold leading-none text-text1 border-b-2 border-transparent">20</span>
-        <div class="w-full flex flex-col gap-[5px] mt-0.5"><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Economic</span><span class="text-text2/30 text-[10px] leading-none font-medium">0</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Stocks</span><span class="text-text2/30 text-[10px] leading-none font-medium">0</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Crypto</span><span class="text-text1 text-[10px] leading-none font-medium">1</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Commodities</span><span class="text-text2/30 text-[10px] leading-none font-medium">0</span></div></div>
-      </button>
-      <button class="flex flex-col items-start gap-2 px-2.5 py-3 rounded-lg border border-line1 hover:border-text2/40 transition-colors">
-        <span class="text-text2 text-[10px] leading-none">Sun</span>
-        <span class="text-[15px] font-bold leading-none text-text1 border-b-2 border-transparent">21</span>
-        <div class="w-full flex flex-col gap-[5px] mt-0.5"><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Economic</span><span class="text-text2/30 text-[10px] leading-none font-medium">0</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Stocks</span><span class="text-text2/30 text-[10px] leading-none font-medium">0</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Crypto</span><span class="text-text2/30 text-[10px] leading-none font-medium">0</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Commodities</span><span class="text-text2/30 text-[10px] leading-none font-medium">0</span></div></div>
-      </button>
-    </div>
+    <!-- Week day cards (sticky) — populated by renderCalendarWeek() -->
+    <div class="flex gap-2 px-4 sm:px-[42px] py-3 overflow-x-auto scrollbar-none flex-shrink-0" id="calendar-week-cards"></div>
 
     <!-- Category filter pills (sticky, separates header from scrollable events) -->
     <div class="flex items-center flex-shrink-0 border-b border-line1">
@@ -1372,367 +1336,8 @@ body{
 
   <!-- Scrollable events area only -->
   <div class="flex-1 overflow-y-auto" id="calendar-scroll-area">
-    <!-- Tab content: Economic -->
-    <div id="calendar-content-economic">
-      <div class="grid items-center gap-0 mx-4 sm:mx-[42px] py-2 cal-bg2-50 border-b border-line1" data-date="2026-06-15" style="grid-template-columns:48px 28px 1fr 64px 64px 64px;border-left:3px solid var(--t1)">
-        <span class="text-text1 text-xs font-bold" style="grid-column:1/4">Monday, June 15</span>
-        <span class="text-text2 text-[11px] text-right">Actual</span>
-        <span class="text-text2 text-[11px] text-right">Forecast</span>
-        <span class="text-text2 text-[11px] text-right">Prior</span>
-      </div>
-      <div class="mx-4 sm:mx-[42px] border-b cal-line1-30">
-      <div onclick="toggleEconRow(this)" class="w-full flex items-stretch cursor-pointer">
-        <div class="grid items-center gap-0 py-2.5 flex-shrink-0" style="grid-template-columns:48px 28px">
-            <span></span>
-            <span class="text-base leading-none text-center">🇩🇪</span>
-            
-        </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-2 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
-            <div class="flex items-center gap-1 pr-2 min-w-0">
-              <span class="text-text1 text-xs leading-tight truncate" title="6-Month Bubill Auction">6-Month Bubill Auction</span>
-              <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
-            </div>
-            <span class="text-xs text-right self-center text-text1 font-semibold">2.331%</span>
-            <span class="text-text2 text-xs text-right self-center">—</span>
-            <span class="text-text2 text-xs text-right self-center">2.257%</span>
-        </div>
-      </div>
-        <div class="econ-detail hidden">
-          <div class="mx-4 sm:mx-[42px] mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
-            <p class="text-text1 text-[11px] leading-relaxed">German 6-month Treasury bill (Bubill) auction result, a short-term funding cost benchmark for the Eurozone's largest economy.</p>
-            <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
-              <a href="#" class="order-last ml-auto text-text2 text-[10px] hover:text-text1 transition-colors">Source: <span class="text-text1">Link</span></a>
-              <span class="text-text2 text-[10px]">Actual: <span class="text-text1">2.331%</span></span>
-              <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">—</span></span>
-              <span class="text-text2 text-[10px]">Prior: <span class="text-text1">2.257%</span></span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="mx-4 sm:mx-[42px] border-b cal-line1-30">
-      <div onclick="toggleEconRow(this)" class="w-full flex items-stretch cursor-pointer">
-        <div class="grid items-center gap-0 py-2.5 flex-shrink-0" style="grid-template-columns:48px 28px">
-            <span></span>
-            <span class="text-base leading-none text-center">🇿🇦</span>
-            
-        </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-2 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
-            <div class="flex items-center gap-1 pr-2 min-w-0">
-              <span class="text-text1 text-xs leading-tight truncate" title="91-Day T-Bill Auction">91-Day T-Bill Auction</span>
-              <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
-            </div>
-            <span class="text-xs text-right self-center text-text1 font-semibold">7.26%</span>
-            <span class="text-text2 text-xs text-right self-center">—</span>
-            <span class="text-text2 text-xs text-right self-center">7.26%</span>
-        </div>
-      </div>
-        <div class="econ-detail hidden">
-          <div class="mx-4 sm:mx-[42px] mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
-            <p class="text-text1 text-[11px] leading-relaxed">South African 91-day Treasury bill auction yield, a short-term government funding cost benchmark for the local market.</p>
-            <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
-              <a href="#" class="order-last ml-auto text-text2 text-[10px] hover:text-text1 transition-colors">Source: <span class="text-text1">Link</span></a>
-              <span class="text-text2 text-[10px]">Actual: <span class="text-text1">7.26%</span></span>
-              <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">—</span></span>
-              <span class="text-text2 text-[10px]">Prior: <span class="text-text1">7.26%</span></span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="mx-4 sm:mx-[42px] border-b cal-line1-30">
-      <div onclick="toggleEconRow(this)" class="w-full flex items-stretch cursor-pointer">
-        <div class="grid items-center gap-0 py-2.5 flex-shrink-0" style="grid-template-columns:48px 28px">
-            <span></span>
-            <span class="text-base leading-none text-center">🇮🇳</span>
-            
-        </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-2 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
-            <div class="flex items-center gap-1 pr-2 min-w-0">
-              <span class="text-text1 text-xs leading-tight truncate" title="Balance of Trade">Balance of Trade</span>
-              <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
-            </div>
-            <span class="text-xs text-right self-center text-text1 font-semibold">-28.21B $</span>
-            <span class="text-text2 text-xs text-right self-center">-27B $</span>
-            <span class="text-text2 text-xs text-right self-center">-28.38B $</span>
-        </div>
-      </div>
-        <div class="econ-detail hidden">
-          <div class="mx-4 sm:mx-[42px] mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
-            <p class="text-text1 text-[11px] leading-relaxed">Difference between India's exports and imports of goods and services. A narrowing deficit is generally currency-positive for the rupee.</p>
-            <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
-              <a href="#" class="order-last ml-auto text-text2 text-[10px] hover:text-text1 transition-colors">Source: <span class="text-text1">Link</span></a>
-              <span class="text-text2 text-[10px]">Actual: <span class="text-text1">-28.21B $</span></span>
-              <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">-27B $</span></span>
-              <span class="text-text2 text-[10px]">Prior: <span class="text-text1">-28.38B $</span></span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="mx-4 sm:mx-[42px] border-b cal-line1-30">
-      <div onclick="toggleEconRow(this)" class="w-full flex items-stretch cursor-pointer">
-        <div class="grid items-center gap-0 py-2.5 flex-shrink-0" style="grid-template-columns:48px 28px">
-            <span></span>
-            <span></span>
-            
-        </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-2 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
-            <div class="flex items-center gap-1 pr-2 min-w-0">
-              <span class="text-text1 text-xs leading-tight truncate" title="Exports">Exports</span>
-              <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
-            </div>
-            <span class="text-xs text-right self-center text-text1 font-semibold">45.2B $</span>
-            <span class="text-text2 text-xs text-right self-center">—</span>
-            <span class="text-text2 text-xs text-right self-center">43.56B $</span>
-        </div>
-      </div>
-        <div class="econ-detail hidden">
-          <div class="mx-4 sm:mx-[42px] mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
-            <p class="text-text1 text-[11px] leading-relaxed">Total value of India's exported goods and services for the period.</p>
-            <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
-              <a href="#" class="order-last ml-auto text-text2 text-[10px] hover:text-text1 transition-colors">Source: <span class="text-text1">Link</span></a>
-              <span class="text-text2 text-[10px]">Actual: <span class="text-text1">45.2B $</span></span>
-              <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">—</span></span>
-              <span class="text-text2 text-[10px]">Prior: <span class="text-text1">43.56B $</span></span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="mx-4 sm:mx-[42px] border-b cal-line1-30">
-      <div onclick="toggleEconRow(this)" class="w-full flex items-stretch cursor-pointer">
-        <div class="grid items-center gap-0 py-2.5 flex-shrink-0" style="grid-template-columns:48px 28px">
-            <span></span>
-            <span></span>
-            
-        </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-2 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
-            <div class="flex items-center gap-1 pr-2 min-w-0">
-              <span class="text-text1 text-xs leading-tight truncate" title="Imports">Imports</span>
-              <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
-            </div>
-            <span class="text-xs text-right self-center text-text1 font-semibold">73.41B $</span>
-            <span class="text-text2 text-xs text-right self-center">—</span>
-            <span class="text-text2 text-xs text-right self-center">71.94B $</span>
-        </div>
-      </div>
-        <div class="econ-detail hidden">
-          <div class="mx-4 sm:mx-[42px] mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
-            <p class="text-text1 text-[11px] leading-relaxed">Total value of India's imported goods and services for the period.</p>
-            <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
-              <a href="#" class="order-last ml-auto text-text2 text-[10px] hover:text-text1 transition-colors">Source: <span class="text-text1">Link</span></a>
-              <span class="text-text2 text-[10px]">Actual: <span class="text-text1">73.41B $</span></span>
-              <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">—</span></span>
-              <span class="text-text2 text-[10px]">Prior: <span class="text-text1">71.94B $</span></span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="mx-4 sm:mx-[42px] border-b cal-line1-30" style="border-top:2px solid var(--red)">
-      <div onclick="toggleEconRow(this)" class="w-full flex items-stretch cursor-pointer">
-        <div class="grid items-center gap-0 py-2.5 flex-shrink-0" style="grid-template-columns:48px 28px">
-            <span data-time-utc="19:30" class="inline-flex items-center justify-center h-5 px-1.5 rounded text-[10px] font-semibold text-white" style="background:var(--red)">19:30</span>
-            <span class="text-base leading-none text-center">🇮🇳</span>
-            
-        </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-2 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
-            <div class="flex items-center gap-1 pr-2 min-w-0">
-              <span class="text-text1 text-xs leading-tight truncate" title="Unemployment Rate">Unemployment Rate</span>
-              <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
-            </div>
-            <span class="text-xs text-right font-semibold self-center" style="color:var(--red)" id="calendar-coming-in">Coming in 11:41</span>
-            <span class="text-text2 text-xs text-right self-center">5.3%</span>
-            <span class="text-text2 text-xs text-right self-center">5.2%</span>
-        </div>
-      </div>
-        <div class="econ-detail hidden">
-          <div class="mx-4 sm:mx-[42px] mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
-            <p class="text-text1 text-[11px] leading-relaxed">India's unemployment rate, a key labor-market indicator that can influence central bank policy expectations.</p>
-            <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
-              <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">5.3%</span></span>
-              <span class="text-text2 text-[10px]">Prior: <span class="text-text1">5.2%</span></span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="mx-4 sm:mx-[42px] border-b cal-line1-30">
-      <div onclick="toggleEconRow(this)" class="w-full flex items-stretch cursor-pointer">
-        <div class="grid items-center gap-0 py-2.5 flex-shrink-0" style="grid-template-columns:48px 28px">
-            <span data-time-utc="20:30" class="text-text2 text-[11px]">20:30</span>
-            <span class="text-base leading-none text-center">🇧🇷</span>
-            
-        </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-2 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
-            <div class="flex items-center gap-1 pr-2 min-w-0">
-              <span class="text-text1 text-xs leading-tight truncate" title="BCB Focus Market Readout">BCB Focus Market Readout</span>
-              <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
-            </div>
-            <span class="text-xs text-right self-center text-text2">—</span>
-            <span class="text-text2 text-xs text-right self-center">—</span>
-            <span class="text-text2 text-xs text-right self-center">—</span>
-        </div>
-      </div>
-        <div class="econ-detail hidden">
-          <div class="mx-4 sm:mx-[42px] mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
-            <p class="text-text1 text-[11px] leading-relaxed">Brazilian Central Bank's weekly survey of market economists' expectations for inflation, GDP growth, and the policy rate.</p>
-            <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
-              <a href="#" class="order-last ml-auto text-text2 text-[10px] hover:text-text1 transition-colors">Source: <span class="text-text1">Link</span></a>
-              <span class="text-text2 text-[10px]">Actual: <span class="text-text1">—</span></span>
-              <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">—</span></span>
-              <span class="text-text2 text-[10px]">Prior: <span class="text-text1">—</span></span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="mx-4 sm:mx-[42px] border-b cal-line1-30">
-      <div onclick="toggleEconRow(this)" class="w-full flex items-stretch cursor-pointer">
-        <div class="grid items-center gap-0 py-2.5 flex-shrink-0" style="grid-template-columns:48px 28px">
-            <span data-time-utc="21:15" class="text-text2 text-[11px]">21:15</span>
-            <span class="text-base leading-none text-center">🇨🇦</span>
-            
-        </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-2 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
-            <div class="flex items-center gap-1 pr-2 min-w-0">
-              <span class="text-text1 text-xs leading-tight truncate" title="Housing Starts">Housing Starts</span>
-              <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
-            </div>
-            <span class="text-xs text-right self-center text-text1 font-semibold">255.1K</span>
-            <span class="text-text2 text-xs text-right self-center">—</span>
-            <span class="text-text2 text-xs text-right self-center">279.3K</span>
-        </div>
-      </div>
-        <div class="econ-detail hidden">
-          <div class="mx-4 sm:mx-[42px] mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
-            <p class="text-text1 text-[11px] leading-relaxed">Annualized number of new residential construction projects started in Canada during the month.</p>
-            <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
-              <a href="#" class="order-last ml-auto text-text2 text-[10px] hover:text-text1 transition-colors">Source: <span class="text-text1">Link</span></a>
-              <span class="text-text2 text-[10px]">Actual: <span class="text-text1">255.1K</span></span>
-              <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">—</span></span>
-              <span class="text-text2 text-[10px]">Prior: <span class="text-text1">279.3K</span></span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="mx-4 sm:mx-[42px] border-b cal-line1-30">
-      <div onclick="toggleEconRow(this)" class="w-full flex items-stretch cursor-pointer">
-        <div class="grid items-center gap-0 py-2.5 flex-shrink-0" style="grid-template-columns:48px 28px">
-            <span data-time-utc="21:30" class="text-text2 text-[11px]">21:30</span>
-            <span class="text-base leading-none text-center">🇨🇦</span>
-            
-        </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-2 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
-            <div class="flex items-center gap-1 pr-2 min-w-0">
-              <span class="text-text1 text-xs leading-tight truncate" title="Manufacturing Sales MoM Final">Manufacturing Sales MoM Final</span>
-              <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
-            </div>
-            <span class="text-xs text-right self-center text-text1 font-semibold">4.5%</span>
-            <span class="text-text2 text-xs text-right self-center">—</span>
-            <span class="text-text2 text-xs text-right self-center">3%</span>
-        </div>
-      </div>
-        <div class="econ-detail hidden">
-          <div class="mx-4 sm:mx-[42px] mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
-            <p class="text-text1 text-[11px] leading-relaxed">Month-over-month change in the total value of sales reported by Canadian manufacturers.</p>
-            <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
-              <a href="#" class="order-last ml-auto text-text2 text-[10px] hover:text-text1 transition-colors">Source: <span class="text-text1">Link</span></a>
-              <span class="text-text2 text-[10px]">Actual: <span class="text-text1">4.5%</span></span>
-              <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">—</span></span>
-              <span class="text-text2 text-[10px]">Prior: <span class="text-text1">3%</span></span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="mx-4 sm:mx-[42px] border-b cal-line1-30">
-      <div onclick="toggleEconRow(this)" class="w-full flex items-stretch cursor-pointer">
-        <div class="grid items-center gap-0 py-2.5 flex-shrink-0" style="grid-template-columns:48px 28px">
-            <span data-time-utc="21:30" class="text-text2 text-[11px]">21:30</span>
-            <span class="text-base leading-none text-center">🇺🇸</span>
-            
-        </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-2 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
-            <div class="flex items-center gap-1 pr-2 min-w-0">
-              <span class="text-text1 text-xs leading-tight truncate" title="NY Empire State Manufacturing Index">NY Empire State Manufacturing Index</span>
-              <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
-            </div>
-            <span class="text-xs text-right self-center text-text1 font-semibold">14</span>
-            <span class="text-text2 text-xs text-right self-center">—</span>
-            <span class="text-text2 text-xs text-right self-center">19.6</span>
-        </div>
-      </div>
-        <div class="econ-detail hidden">
-          <div class="mx-4 sm:mx-[42px] mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
-            <p class="text-text1 text-[11px] leading-relaxed">Federal Reserve Bank of New York's gauge of manufacturing activity in the state, an early read on the broader US factory sector.</p>
-            <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
-              <a href="#" class="order-last ml-auto text-text2 text-[10px] hover:text-text1 transition-colors">Source: <span class="text-text1">Link</span></a>
-              <span class="text-text2 text-[10px]">Actual: <span class="text-text1">14</span></span>
-              <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">—</span></span>
-              <span class="text-text2 text-[10px]">Prior: <span class="text-text1">19.6</span></span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="grid items-center gap-0 mx-4 sm:mx-[42px] py-2 cal-bg2-50 border-b border-line1" data-date="2026-06-16" style="grid-template-columns:48px 28px 1fr 64px 64px 64px">
-        <span class="text-text1 text-xs font-bold" style="grid-column:1/4">Tuesday, June 16</span>
-        <span class="text-text2 text-[11px] text-right">Actual</span>
-        <span class="text-text2 text-[11px] text-right">Forecast</span>
-        <span class="text-text2 text-[11px] text-right">Prior</span>
-      </div>
-      <div class="mx-4 sm:mx-[42px] border-b cal-line1-30">
-      <div onclick="toggleEconRow(this)" class="w-full flex items-stretch cursor-pointer">
-        <div class="grid items-center gap-0 py-2.5 flex-shrink-0" style="grid-template-columns:48px 28px">
-            <span data-time-utc="14:30" class="text-text2 text-[11px]">14:30</span>
-            <span class="text-base leading-none text-center">🇪🇺</span>
-            
-        </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-2 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
-            <div class="flex items-center gap-1 pr-2 min-w-0">
-              <span class="text-text1 text-xs leading-tight truncate" title="ECB Monetary Policy Meeting">ECB Monetary Policy Meeting</span>
-              <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
-            </div>
-            <span class="text-xs text-right self-center text-text2">—</span>
-            <span class="text-text2 text-xs text-right self-center">3.65%</span>
-            <span class="text-text2 text-xs text-right self-center">3.65%</span>
-        </div>
-      </div>
-        <div class="econ-detail hidden">
-          <div class="mx-4 sm:mx-[42px] mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
-            <p class="text-text1 text-[11px] leading-relaxed">European Central Bank policy rate decision and statement. Shifts in the rate path are a major driver of EUR and risk-asset volatility.</p>
-            <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
-              <a href="#" class="order-last ml-auto text-text2 text-[10px] hover:text-text1 transition-colors">Source: <span class="text-text1">Link</span></a>
-              <span class="text-text2 text-[10px]">Actual: <span class="text-text1">—</span></span>
-              <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">3.65%</span></span>
-              <span class="text-text2 text-[10px]">Prior: <span class="text-text1">3.65%</span></span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="mx-4 sm:mx-[42px] border-b cal-line1-30">
-      <div onclick="toggleEconRow(this)" class="w-full flex items-stretch cursor-pointer">
-        <div class="grid items-center gap-0 py-2.5 flex-shrink-0" style="grid-template-columns:48px 28px">
-            <span data-time-utc="20:00" class="text-text2 text-[11px]">20:00</span>
-            <span class="text-base leading-none text-center">🇺🇸</span>
-            
-        </div>
-        <div class="flex-1 grid items-center gap-0 py-2.5 pr-2 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
-            <div class="flex items-center gap-1 pr-2 min-w-0">
-              <span class="text-text1 text-xs leading-tight truncate" title="FOMC Meeting Minutes">FOMC Meeting Minutes</span>
-              <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
-            </div>
-            <span class="text-xs text-right self-center text-text2">—</span>
-            <span class="text-text2 text-xs text-right self-center">—</span>
-            <span class="text-text2 text-xs text-right self-center">—</span>
-        </div>
-      </div>
-        <div class="econ-detail hidden">
-          <div class="mx-4 sm:mx-[42px] mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50">
-            <p class="text-text1 text-[11px] leading-relaxed">Detailed record of the Federal Open Market Committee's most recent meeting. Markets parse the minutes for forward guidance on rate policy.</p>
-            <div class="flex items-center gap-4 mt-2.5 pt-2.5 border-t cal-line1-50">
-              <a href="#" class="order-last ml-auto text-text2 text-[10px] hover:text-text1 transition-colors">Source: <span class="text-text1">Link</span></a>
-              <span class="text-text2 text-[10px]">Actual: <span class="text-text1">—</span></span>
-              <span class="text-text2 text-[10px]">Forecast: <span class="text-text1">—</span></span>
-              <span class="text-text2 text-[10px]">Prior: <span class="text-text1">—</span></span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- Tab content: Economic / Crypto — populated by renderCalendarTabContent() -->
+    <div id="calendar-content-economic"></div>
 
     <!-- Tab content: Earnings / Crypto / Commodities (rendered by renderCalendarTabContent) -->
     <div id="calendar-content-other" class="hidden"></div>
@@ -3325,12 +2930,13 @@ async function fetchWeekCounts(start) {
     Object.assign(calCountsCache, data);
     if (calDateKey(calWeekStart(calWeekOffset)) !== from) return;
     // Rebuild just the cards HTML
-    const nextEv = NEXT_EVENTS[currentAsset];
+    const _ncd = calNextEventCache[currentAsset];
+    const _ncdDate = _ncd?.next?.date ?? null;
     let cardsHtml = '';
     for (let i = 0; i < 7; i++) {
       const d = calAddDays(start, i);
       const isToday = calSameDay(d, CAL_TODAY);
-      const isNextEvent = nextEv && calSameDay(d, new Date(nextEv.ts));
+      const isNextEvent = _ncdDate && calDateKey(d) === _ncdDate;
       const counts = calCountsFor(d, i, calWeekOffset);
       const catRows = CAT_ORDER.map(cat => {
         const v = counts[cat]||0;
@@ -3351,12 +2957,13 @@ function renderCalendarWeek() {
 
   document.getElementById('calendar-date-range').textContent = calFormatRange(start, end);
 
-  const nextEv = NEXT_EVENTS[currentAsset];
+  const _nextEvData = calNextEventCache[currentAsset];
+  const _nextEvDate = _nextEvData?.next?.date ?? null;
   let cardsHtml = '';
   for (let i = 0; i < 7; i++) {
     const d = calAddDays(start, i);
     const isToday = calSameDay(d, CAL_TODAY);
-    const isNextEvent = nextEv && calSameDay(d, new Date(nextEv.ts));
+    const isNextEvent = _nextEvDate && calDateKey(d) === _nextEvDate;
     const counts = calCountsFor(d, i, calWeekOffset);
     const catRows = CAT_ORDER.map(cat => {
       const v = counts[cat];
