@@ -708,28 +708,64 @@ body{
 .fright{margin-left:auto;display:flex;gap:16px;color:var(--t3)}
 .fright span{cursor:pointer}.fright span:hover{color:var(--t2)}
 
-/* Asset dropdown */
-.asset-dropdown-wrap{position:relative}
-.asset-dropdown{
-  position:absolute;top:calc(100% + 8px);left:0;z-index:999;
-  background:#1A1D26;border:1px solid var(--line1);
-  border-radius:10px;overflow:hidden;min-width:200px;
-  box-shadow:0 8px 24px rgba(0,0,0,.5);
+/* Asset hover panel */
+.ap-wrap{position:relative;display:inline-block}
+.ap-panel{
+  display:none;position:absolute;top:calc(100% + 6px);left:0;z-index:1200;
+  width:320px;background:#1A1D26;border:1px solid var(--line1);
+  border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.6);
+  padding:12px 0 8px;
 }
-.asset-option{
-  display:flex;align-items:center;gap:10px;
-  padding:10px 14px;cursor:pointer;
-  transition:background .12s;
+.ap-wrap:hover .ap-panel,
+.ap-panel:hover,
+.ap-panel.open{display:block}
+.ap-search{
+  display:flex;align-items:center;gap:8px;
+  margin:0 12px 10px;padding:7px 10px;
+  background:var(--bg2);border:1px solid var(--line1);border-radius:8px;
 }
-.asset-option:hover{background:var(--bg2)}
-.asset-option.selected{background:rgba(47,188,138,.08)}
-.asset-opt-ico{
-  width:24px;height:24px;border-radius:50%;
+.ap-search svg{flex-shrink:0;opacity:.45}
+.ap-search input{
+  flex:1;background:none;border:none;outline:none;
+  color:var(--t1);font-size:13px;
+}
+.ap-search input::placeholder{color:var(--t3)}
+.ap-tabs{
+  display:flex;gap:4px;padding:0 12px;margin-bottom:8px;overflow-x:auto;
+}
+.ap-tabs::-webkit-scrollbar{display:none}
+.ap-tab{
+  flex-shrink:0;padding:4px 10px;border-radius:20px;
+  font-size:11px;font-weight:600;cursor:pointer;
+  background:transparent;border:1px solid transparent;color:var(--t3);
+  transition:all .15s;
+}
+.ap-tab.active,.ap-tab:hover{background:var(--bg2);color:var(--t1);border-color:var(--line1)}
+.ap-table{width:100%;border-collapse:collapse}
+.ap-thead th{
+  font-size:10px;font-weight:600;color:var(--t3);text-align:left;
+  padding:4px 12px;text-transform:uppercase;letter-spacing:.4px;
+}
+.ap-list{max-height:280px;overflow-y:auto}
+.ap-list::-webkit-scrollbar{width:4px}
+.ap-list::-webkit-scrollbar-thumb{background:var(--line1);border-radius:2px}
+.ap-row{
+  display:grid;grid-template-columns:28px 1fr auto auto;
+  align-items:center;gap:8px;
+  padding:8px 12px;cursor:pointer;transition:background .1s;
+}
+.ap-row:hover{background:var(--bg2)}
+.ap-row.sel{background:rgba(47,188,138,.08)}
+.ap-ico{
+  width:26px;height:26px;border-radius:50%;
   display:flex;align-items:center;justify-content:center;
-  font-size:12px;font-weight:700;color:#fff;flex-shrink:0;
+  font-size:12px;font-weight:700;color:#fff;flex-shrink:0;overflow:hidden;
 }
-.asset-opt-name{font-size:13px;font-weight:600;color:var(--t1)}
-.asset-opt-sub{font-size:11px;color:var(--t3)}
+.ap-ico img{width:100%;height:100%;object-fit:cover}
+.ap-name{font-size:13px;font-weight:600;color:var(--t1)}
+.ap-sub{font-size:10px;color:var(--t3)}
+.ap-lev{font-size:10px;color:var(--t3);text-align:right;white-space:nowrap}
+.ap-cat{font-size:10px;color:var(--t3);text-align:right;white-space:nowrap}
 
 /* non-trading banner */
 .nt-banner{
@@ -877,7 +913,7 @@ body{
 
 <!-- ── ASSET BAR ── -->
 <div class="abar">
-  <div class="asset-id asset-dropdown-wrap" onclick="toggleDropdown(event)">
+  <div class="asset-id ap-wrap" id="ap-trigger">
     <div class="asset-opt-ico" id="abar-ico" style="background:#F7931A;font-size:14px">₿</div>
     <div class="asset-name-col">
       <div class="asset-name" id="abar-name">
@@ -886,9 +922,32 @@ body{
       </div>
       <div class="asset-sub" id="abar-sub">Bitcoin</div>
     </div>
-    <!-- Dropdown -->
-    <div class="asset-dropdown" id="asset-dropdown" style="display:none" onclick="event.stopPropagation()">
-      <!-- filled by buildDropdown() on init -->
+  </div>
+  <!-- Hover asset panel -->
+  <div class="ap-panel" id="ap-panel">
+    <div class="ap-search">
+      <svg width="14" height="14" fill="none" viewBox="0 0 16 16"><circle cx="7" cy="7" r="5" stroke="#858A93" stroke-width="1.5"/><path d="M11 11l3 3" stroke="#858A93" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <input type="text" id="ap-search-input" placeholder="Search markets…" oninput="filterAssetPanel(this.value)">
+    </div>
+    <div class="ap-tabs" id="ap-tabs">
+      <div class="ap-tab active" data-tab="all" onclick="setApTab('all')">All</div>
+      <div class="ap-tab" data-tab="crypto" onclick="setApTab('crypto')">Crypto</div>
+      <div class="ap-tab" data-tab="stocks" onclick="setApTab('stocks')">Stocks</div>
+      <div class="ap-tab" data-tab="indices" onclick="setApTab('indices')">Indices</div>
+      <div class="ap-tab" data-tab="commodities" onclick="setApTab('commodities')">Commodities</div>
+    </div>
+    <table class="ap-table">
+      <thead class="ap-thead">
+        <tr>
+          <th style="width:28px"></th>
+          <th>Market</th>
+          <th style="text-align:right">Leverage</th>
+          <th style="text-align:right">Category</th>
+        </tr>
+      </thead>
+    </table>
+    <div class="ap-list" id="ap-list">
+      <!-- filled by buildAssetPanel() -->
     </div>
   </div>
   <div class="abar-sep"></div>
@@ -1790,17 +1849,47 @@ function ticks(){
 }
 setInterval(ticks,1000);
 
-// ── Asset logos (base64 from Figma) ──
+// ── Asset logos ──
 const LOGOS = {
-  'BTC-PERP':  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAYAAAA5ZDbSAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAOdEVYdFNvZnR3YXJlAEZpZ21hnrGWYwAAC61JREFUeAHtnVtsFNcZx7+ZWds81OsXTCQwrkLTYgdHtIXaDUSVCkQE+lAWNUClYtxGUSWIpV4eStKHkj4gIjWkgjRVlSCBE4lQmpi8cKlxkSpwsR1LSbjYESSo2EatTaV6yQNee2Zy/rOM8Xpndmdm53JmfX7Sau21dy3vf7/vfLdzRqqvr9cp5lRX6dS4iGhJEvc6+56oroZ9X2P+nCi5IP/fHJ2QKD1JdO8+Ufq+ToPjsnE/xO4Hx9jjkxLFHSluAptiNtRq1LKUff2IxIQM5l8YYR+Aof/q1DssGaL3DcdP8FgIDFFTKzR6+hsQ1toawyB9X6K+2zp13cyKfSfNv+DcCjxb1OalfH4G+25L9N5ViWuxuRMYYraugvuNzlK90HlFovev8efGuREYwrav1bi1VqeYVn2Kic0DkQsMN9y+Vg8sUIoKBGiHL0UvdGQCl4vFFgNCv3gmOtcdusCLWa76yubyF3YuWKMP9cihB2OhCty6SqX2NfEKnvwERZXDl2TqGAjPbYci8Hy1Wjvgtne+G441By7wfLdaO8Ky5sAERqHiBRZEta0Swhbi2Icy7b8QnMiBCAyX/EZKMwr/guIE6bJ9/+gsr9XpnR1CXDfUsRrA2+w9g2H4ja8Cb2nSDHHLrWgRBhD5gzaV1j/m73vnm8AQ95VNmgimSiDJ+tZvpFRKsffSL3wR2BRX4A8H2Hvpl8glCyzEDQa/RC5JYKwXQtzggMilrsmeBUa0fECIGzgHNqvGeJJXPAmMcP7PKRFQhQECrz+ldM8plOtCBypUH+ziJxVSHt1IVJXMe1zPpEn7/Fze4/KSJ0mqrrN8Le3W30mfnCAeGRzLFkPcTnomyCUoP/KU5ya+93tLwfT0ME1aCKw0biOlYZvla2U6vsutwCgcta/RWVnTncCuXDQaB6K2HB27VmvGvJobHAuMNQBdIUG0YArGzXrsWGCUIEVQFT0Iutykpo4E3rNWFfVljmiu1x276qICwx20fZsEnOHUVRcVGC8kXDN/wFX/9vtq0d8rKPCGxzTa2iTE5ZUNDrb1FBT4pXVCXN5pX1N4LbYVGDsORGDFPwi4ClmxbSUL20lCpaqGJIuSYyGkSvb7lTbPYa+lNDxLUnJp7nMWrrB/QVTEJtPsxmc1yw5Y8c4TiuXPLGvRsN4Dm8PtFCWaf8VuvyYe0JnI+t2rpI9fI+1/10kb/ZdR+uSZne8qlttjLC24bfX8ds3wJNISVrZjN9MuNCaw/vlZmv7kCJdi21lx3hqMYxEaxERkHjJz9co3n6eq1stUsf5gnuuPGru1OE/gLU2iiV8MpXE7VW4/ZwjOE0hr55IjMCojIu91hsSCwoqn9pHCYgdeSD2hG/362eQI3CI2h7mmggWGvFgyqlupptzHcgTe+gQJPJD4zi+5WZOfnuOmZ9IkuOcLPy9e2wwV5MbJOpIf3WhYilumP3qTKJPOe1yqrGEf9zrDzSIvdpt/2/2t6Yv7iAdWH1JmRntm0iQu3TMrOOjjE6SyfJRYalKx4Y+unq6xlEZzkNJItSsosXwbSV97hmSbea1iYBRI7X+Ni5EfuOmOgezXMy6ad/esDp0k/d4IBQEKGlMXf0eZYy001fcqeSHrDR4nHmipe+imZwRuXMR/eqSnb1PQqH0HPYuMiU0eaP7qQ29sCAz3jAM7BVkgsjbaQ26RPLp3v0E0bRY9DIGXi8pVHupHRyjONCzK3s9YsCAXjTUb4oy5DmcFjv+R0b6jW6RXRZ8z6f45QdH4yAMXjbVXrL/5SNXuCxf6F8FE+V7AYegoW8qPi/XXErnQYIAN+shl4gmcgC+LAMsCtAZb3FXOUFDhbd3GafhyUrjnXJi4FZuPuK5oqf0HiTcaazVKiOOOHsAqUYmVz5Gy8nnXtWl18K/GjTcQWyWSC1CUnn8io/uDoT1jvzArMcrLNnlqOqh3UebcRzyCK88kklXlK25F6qTl414iZCumB0+wDtLL3E5hYuw5Uc4pkl9CzgUdI7QGeXTLc5HFcLt7jHGd9a9R5Y5zRpuQtwE8k+oFAZxVOZ+QFzYZQldsOcndAB5AhiQE9gGM1GIAr5Kt+bxZsxDYR+QlawxrhgvnBden7MSJQhMgQfVuYc2J9Qdp6vRzxAOJe5Pl22yY6vxR0ZksIx9mYqP2LCEnrm3yPJdloix7hlT2WtjTFDUJXHCxuoxz4WJgnxFuhhgfv2U8huIHNsKVMoKDzXSZzmcpSkYnxBpsCcTOMOufOv8Lzz1erMdRr8XpSdZsGI3BJVKjApOcU6d/Rl6JeggPF76WR+K11zl0YM3TD1y3a5LRDuGlITCu3yMojIodEh6QvhKtwIPjzEUPjQkXXQykW17WYj+2xJSCsQbfES7aGRl+BuqcMjjGXPR1YcGO8FIYCWqrjVOGIDAKHaMTQuRCeI2G9QitfoRlR9hhaOTBMGWBPcpKb2VHbGqLiqH/ZO8NgXuHhQXbgSMalGWbyAv63esUFb0j2RqW0Wz4VKzD+RhN/Vc9i2ucrRXhKI/plQ2BEWhx33RAU2BhEwUN1ltc6ENu3F5SmqMORTfOg9pG//CsHf4Qd3BMpualEe8RtjnOEFOPCiv+u37DWeRr55uMYxBxjAMmK7GLoXaFMaHhR+5qDMGPRrfLoe/fD//rmX5w1w3sKaVIURY/SRU/8G/bZmXqbxQF6idvhbJZ3Y6uzx72kGa+6rwafWNJquXjCIRSUEd7WGnTY+3aJ/pnfbZmVIWb7huOVmQvG754Aq55ujvaA1X7bks0u0OYoyjcdKRwOn7qBFhu5sTGSF0zeO9arpHmfAc3fS/C7lIcLRhNCJzQM4XpDQ52OHTPMdKcoTuI28tMfMPXwx/hkWImLoRVP36T9YqPcLN1pfOKlHdtw7ypyo4BmQkc/ol3cjX/7hnNA+2zs6TeOksaqlSc7Uk6OuDgQHCULRFshZ0T48hCx90XlrsG1WvN9n4nsod+Gye/XzO+Vu9c5vqofwRXQ+P5QbLlkf44dadjB2fnVtpQtavX9uqjmVP5U40VT71M8rKNlq+Fq49qHJ7m7oTfnFHo1FWHR/rDihFqL0nGe5zW6uh9PVN+Ew5oDVqJC2wT3/3dogERFw5fsq9f2P7k/E058sKHoDiFrBcUVPD1S8KKeWfv6cJGWPCnZkQt4BPkvf1FhjWKqrf3tBRpdUtgDUZiD/cUN76iv4Fo+lCPQgK+QGDlZNuRI//b8aFw1TyBwKpjwFl85Fg14ar5AK659bhzY3P8m8JV84FT12xiWaosxIvrNGpbxc/1HeyG0jF0bjWXXOgyOjzsyC/EMbZU7r/gzshcC4zJy3dYnVpcwDJcsO6u/4t7D+o6csI6vLvTnZsQlAbEdbPuzsbTsyDu7vdlEXSFgBlUeTUoz7nP0LhUtEwmKJ29rA1YircsSSE0JPaeESIHBXq83SUOQpasDgb1hMj+Y9fAd4svygiR/cUvcYFvqkDkPZ0i8CoFBFS7TyV8Exf4anZYk39yXBEplAeQCu1k0XK3z5sPfPeriK53Hhd5shtw3BFSIbx3fhPIwglxf3hUoaMDYl0uBsqPrQEahFJTU7OPAiCjEl28JVE6I9G3FutUVdYHF7sH6+0f/qnQ66xpP6kG5+1c16K9gPHbt3+sxX4M1y/6hrNFojCWsVAENtmzVqOfsk7UfL0YpjFmw9p9Tpv1fhCqwABW/AITemvT/LLm8zdYq+8f4QefoQtsgh2ML60rf7cNd3yIWW1/REdVRSawSYpZcvva8hM6amFNIhfYBEJjUiTugwS8CGvCjcAmzUt1Jna81mgET51XiLpu8iOsCXcCm8BlN9eTIXTk53fZAGvtupHdG5Se5LNyx63As5ktNlx4VFdMhYg4opd3UWcTC4HnAjcOoXHfUk+BCY5jlq+PZS11cEzizv06IZYCzwUCNyyiB9adva9ZIBmPo6hidYVVWB+uSgKQm478X88e6TguEy5U8ukYxcJCi/ElCwmUMo0biYUAAAAASUVORK5CYII=',
-  'TSLA-PERP': 'data:image/png;base64,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',
-  'WTI-PERP':  'data:image/png;base64,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',
+  'BTC-PERP':     'assets/logos/BTC.png',
+  'ETH-PERP':     'assets/logos/ETH.png',
+  'SOL-PERP':     'assets/logos/SOL.png',
+  'BNB-PERP':     'assets/logos/BNB.png',
+  'XRP-PERP':     'assets/logos/XRP.png',
+  'SUI-PERP':     'assets/logos/SUI.png',
+  'HYPE-PERP':    'assets/logos/HYPE.png',
+  'LTC-PERP':     'assets/logos/LTC.png',
+  'DOGE-PERP':    'assets/logos/DOGE.png',
+  'TSLA-PERP':    'assets/logos/TSLA.png',
+  'MU-PERP':      'assets/logos/MU.png',
+  'AMD-PERP':     'assets/logos/AMD.png',
+  'CRCL-PERP':    'assets/logos/CRCL.png',
+  'INTC-PERP':    'assets/logos/INTC.png',
+  'SNDK-PERP':    'assets/logos/SNDK.png',
+  'SAMSUNG-PERP': 'assets/logos/SAMSUNG.png',
+  'SKHYNIX-PERP': 'assets/logos/SKHYNIX.png',
+  'AAPL-PERP':    'assets/logos/AAPL.png',
+  'AMZN-PERP':    'assets/logos/AMZN.png',
+  'GOOGL-PERP':   'assets/logos/GOOGL.png',
+  'META-PERP':    'assets/logos/META.png',
+  'MSTR-PERP':    'assets/logos/MSTR.png',
+  'MSFT-PERP':    'assets/logos/MSFT.png',
+  'NVDA-PERP':    'assets/logos/NVDA.png',
+  'SPCX-PERP':    'assets/logos/SPCX.png',
+  'STX-PERP':     'assets/logos/STX.png',
+  'WDC-PERP':     'assets/logos/WDC.png',
+  'NDX100-PERP':  'assets/logos/NDX100.png',
+  'SP500-PERP':   'assets/logos/SP500.png',
+  'XAU-PERP':     'assets/logos/XAU.png',
+  'CL-PERP':      'assets/logos/CL.png',
+  'BZ-PERP':      'assets/logos/BZ.png',
+  'XAG-PERP':     'assets/logos/XAG.png',
 };
 
 // ── Asset data ──
 const ASSETS = {
   'BTC-PERP': {
-    name:'BTC-PERP', sub:'Bitcoin', category:'Crypto', icoColor:'#F7931A', icoLabel:'₿', icoSize:'14px',
+    name:'BTC-PERP', sub:'Bitcoin', category:'Crypto', tabCat:'crypto', leverage:'40x', icoColor:'#F7931A', icoLabel:'₿', icoSize:'14px',
     price:'96,789.08', priceColor:'var(--red)',
     oracle:'96,643.2', funding:'+0.01%', fundingSign:1,
     high:'97,250.0', low:'94,810.5', change:'+2979.5/+3.53%', changePos:true, vol:'87.68 M', oi:'312.40M',
@@ -1846,7 +1935,7 @@ const ASSETS = {
     },
   },
   'TSLA-PERP': {
-    name:'TSLA-PERP', sub:'Tesla, Inc.', category:'Equity', icoColor:'#CC0000', icoLabel:'T', icoSize:'12px',
+    name:'TSLA-PERP', sub:'Tesla, Inc.', category:'Equity', tabCat:'stocks', leverage:'20x', icoColor:'#CC0000', icoLabel:'T', icoSize:'12px',
     price:'248.50', priceColor:'var(--green)',
     oracle:'248.20', funding:'+0.01%', fundingSign:1,
     high:'252.80', low:'244.10', change:'+3.40/+1.39%', changePos:true, vol:'12.43 M', oi:'8.02M',
@@ -1879,8 +1968,8 @@ const ASSETS = {
       ],
     },
   },
-  'WTI-PERP': {
-    name:'WTI-PERP', sub:'WTI Crude Oil', category:'Commodity', icoColor:'#1E4D6B', icoLabel:'🛢', icoSize:'13px',
+  'CL-PERP': {
+    name:'CL-PERP', sub:'WTI Crude Oil', category:'Commodity', tabCat:'commodities', leverage:'20x', icoColor:'#1E4D6B', icoLabel:'🛢', icoSize:'13px',
     price:'74.82', priceColor:'var(--red)',
     oracle:'74.78', funding:'-0.01%', fundingSign:-1,
     high:'76.40', low:'73.95', change:'-0.58/-0.77%', changePos:false, vol:'2.14 M', oi:'3.18M',
@@ -1899,7 +1988,7 @@ const ASSETS = {
     ],
     contractInfo:{
       left:[
-        {k:'Symbol',v:'WTI-PERP'},{k:'Margin Asset',v:'USDC'},
+        {k:'Symbol',v:'CL-PERP'},{k:'Margin Asset',v:'USDC'},
         {k:'Tick Size',v:'0.01 USDC'},{k:'Max Leverage',v:'20X'},
       ],
       right:[
@@ -1914,7 +2003,7 @@ const ASSETS = {
     },
   },
   'SP500-PERP': {
-    name:'SP500-PERP', sub:'S&P 500 Index', category:'Index', icoColor:'#1A3A6B', icoLabel:'S', icoSize:'13px',
+    name:'SP500-PERP', sub:'S&P 500 Index', category:'Index', tabCat:'indices', leverage:'20x', icoColor:'#1A3A6B', icoLabel:'S', icoSize:'13px',
     price:'5,482.87', priceColor:'var(--green)',
     oracle:'5,480.10', funding:'+0.01%', fundingSign:1,
     high:'5,510.20', low:'5,455.30', change:'+28.40/+0.52%', changePos:true, vol:'4.82 M', oi:'12.45M',
@@ -1947,7 +2036,7 @@ const ASSETS = {
     },
   },
   'NDX100-PERP': {
-    name:'NDX100-PERP', sub:'Nasdaq-100 Index', category:'Index', icoColor:'#0C3B8C', icoLabel:'N', icoSize:'13px',
+    name:'NDX100-PERP', sub:'Nasdaq-100 Index', category:'Index', tabCat:'indices', leverage:'30x', icoColor:'#0C3B8C', icoLabel:'N', icoSize:'13px',
     price:'19,284.52', priceColor:'var(--green)',
     oracle:'19,278.30', funding:'+0.01%', fundingSign:1,
     high:'19,420.10', low:'19,180.60', change:'+186.40/+0.98%', changePos:true, vol:'3.24 M', oi:'9.87M',
@@ -1980,10 +2069,10 @@ const ASSETS = {
     },
   },
   'SAMSUNG-PERP': {
-    name:'SAMSUNG-PERP', sub:'Samsung Electronics', category:'KR Stock', icoColor:'#1428A0', icoLabel:'S', icoSize:'11px',
-    price:'42.80', priceColor:'var(--green)',
-    oracle:'42.65', funding:'+0.01%', fundingSign:1,
-    high:'43.20', low:'42.10', change:'+0.55/+1.30%', changePos:true, vol:'890 K', oi:'2.34M',
+    name:'SAMSUNG-PERP', sub:'Samsung Electronics', category:'KR Stock', tabCat:'stocks', leverage:'20x', icoColor:'#1428A0', icoLabel:'S', icoSize:'11px',
+    price:'232.65', priceColor:'var(--green)',
+    oracle:'232.40', funding:'+0.0211%', fundingSign:-1,
+    high:'43.20', low:'42.10', change:'+5.70/+5.70%', changePos:true, vol:'$17.65M', oi:'2.34M',
     isTradFi:true, basePrice:42, priceRange:3,
     tradingHours:'KRX · Mon–Fri  09:00–15:30 KST  (UTC+9)',
     about:'Samsung Electronics Co., Ltd. is a global leader in consumer electronics and semiconductor manufacturing. The oracle converts the underlying Korean stock\'s KRW price to USD at the prevailing USD/KRW FX rate.',
@@ -2013,10 +2102,10 @@ const ASSETS = {
     },
   },
   'SKHYNIX-PERP': {
-    name:'SKHYNIX-PERP', sub:'SK Hynix Inc.', category:'KR Stock', icoColor:'#005BAC', icoLabel:'H', icoSize:'12px',
-    price:'134.20', priceColor:'var(--red)',
-    oracle:'133.90', funding:'-0.01%', fundingSign:-1,
-    high:'136.80', low:'132.50', change:'-1.80/-1.32%', changePos:false, vol:'450 K', oi:'1.12M',
+    name:'SKHYNIX-PERP', sub:'SK Hynix Inc.', category:'KR Stock', tabCat:'stocks', leverage:'20x', icoColor:'#005BAC', icoLabel:'H', icoSize:'12px',
+    price:'1,900.81', priceColor:'var(--green)',
+    oracle:'1,898.50', funding:'+0.0248%', fundingSign:1,
+    high:'136.80', low:'132.50', change:'+11.50/+11.50%', changePos:true, vol:'$32.44M', oi:'1.12M',
     isTradFi:true, basePrice:133, priceRange:6,
     tradingHours:'KRX · Mon–Fri  09:00–15:30 KST  (UTC+9)',
     about:'SK Hynix Inc. provides products and services for the electronics components industries. The company manufactures semiconductors such as dynamic random access memory (DRAM), NAND flash memory, and static random access memory (SRAM) chips.',
@@ -2044,6 +2133,376 @@ const ASSETS = {
         {lev:'3X',max:'5.00M'},
       ],
     },
+  },
+  // ── Crypto ──
+  'ETH-PERP': {
+    name:'ETH-PERP', sub:'Ethereum', category:'Crypto', tabCat:'crypto', leverage:'40x',
+    icoColor:'#627EEA', icoLabel:'Ξ', icoSize:'14px',
+    price:'1,656.43', priceColor:'var(--red)',
+    oracle:'1,654.80', funding:'-0.0057%', fundingSign:-1,
+    high:'1,690.20', low:'1,640.10', change:'-0.95/-0.95%', changePos:false, vol:'$65.47M', oi:'45.2M',
+    isTradFi:true, basePrice:1640, priceRange:60,
+    tradingHours:'24/7',
+    about:'Ethereum is the world\'s leading programmable blockchain, enabling smart contracts and decentralized applications across DeFi, NFTs, and more.',
+    links:[
+      {tip:'Website', href:'https://ethereum.org', icon:'globe'},
+      {tip:'Whitepaper', href:'https://ethereum.org/en/whitepaper/', icon:'doc'},
+      {tip:'GitHub', href:'https://github.com/ethereum', icon:'github'},
+      {tip:'Explorer', href:'https://etherscan.io', icon:'grid'},
+    ],
+  },
+  'SOL-PERP': {
+    name:'SOL-PERP', sub:'Solana', category:'Crypto', tabCat:'crypto', leverage:'20x',
+    icoColor:'#9945FF', icoLabel:'S', icoSize:'12px',
+    price:'69.38', priceColor:'var(--green)',
+    oracle:'69.31', funding:'-0.0067%', fundingSign:-1,
+    high:'71.20', low:'68.50', change:'+0.05/+0.05%', changePos:true, vol:'$834.58K', oi:'12.3M',
+    isTradFi:true, basePrice:68, priceRange:4,
+    tradingHours:'24/7',
+    about:'Solana is a high-performance Layer 1 blockchain designed for fast, low-cost transactions and a growing ecosystem of DeFi, NFT, and consumer applications.',
+    links:[
+      {tip:'Website', href:'https://solana.com', icon:'globe'},
+      {tip:'Whitepaper', href:'https://solana.com/solana-whitepaper.pdf', icon:'doc'},
+      {tip:'GitHub', href:'https://github.com/solana-labs', icon:'github'},
+      {tip:'Explorer', href:'https://solscan.io', icon:'grid'},
+    ],
+  },
+  'BNB-PERP': {
+    name:'BNB-PERP', sub:'BNB', category:'Crypto', tabCat:'crypto', leverage:'20x',
+    icoColor:'#F3BA2F', icoLabel:'B', icoSize:'12px',
+    price:'570.11', priceColor:'var(--red)',
+    oracle:'569.80', funding:'-0.0047%', fundingSign:-1,
+    high:'582.40', low:'564.20', change:'-1.17/-1.17%', changePos:false, vol:'$1.03M', oi:'8.4M',
+    isTradFi:true, basePrice:564, priceRange:20,
+    tradingHours:'24/7',
+    about:'BNB powers the BNB Chain ecosystem, used for transaction fees, trading, and accessing services across Binance and BNB Chain applications.',
+    links:[
+      {tip:'Website', href:'https://www.bnbchain.org', icon:'globe'},
+      {tip:'GitHub', href:'https://github.com/bnb-chain', icon:'github'},
+      {tip:'Explorer', href:'https://bscscan.com', icon:'grid'},
+    ],
+  },
+  'XRP-PERP': {
+    name:'XRP-PERP', sub:'XRP', category:'Crypto', tabCat:'crypto', leverage:'20x',
+    icoColor:'#00AAE4', icoLabel:'X', icoSize:'12px',
+    price:'1.0861', priceColor:'var(--red)',
+    oracle:'1.0845', funding:'-0.0061%', fundingSign:-1,
+    high:'1.1050', low:'1.0720', change:'-1.12/-1.12%', changePos:false, vol:'$1.15M', oi:'9.8M',
+    isTradFi:true, basePrice:1.07, priceRange:0.05,
+    tradingHours:'24/7',
+    about:'XRP is the native currency of the XRP Ledger, designed for fast, low-cost cross-border payments and financial institution integrations.',
+    links:[
+      {tip:'Website', href:'https://xrpl.org', icon:'globe'},
+      {tip:'GitHub', href:'https://github.com/XRPLF', icon:'github'},
+      {tip:'Explorer', href:'https://xrpscan.com', icon:'grid'},
+    ],
+  },
+  'SUI-PERP': {
+    name:'SUI-PERP', sub:'Sui', category:'Crypto', tabCat:'crypto', leverage:'20x',
+    icoColor:'#4DA2FF', icoLabel:'S', icoSize:'12px',
+    price:'0.7007', priceColor:'var(--red)',
+    oracle:'0.6998', funding:'+0.0012%', fundingSign:1,
+    high:'0.7120', low:'0.6940', change:'-0.01/-0.01%', changePos:false, vol:'$439.02K', oi:'4.2M',
+    isTradFi:true, basePrice:0.69, priceRange:0.03,
+    tradingHours:'24/7',
+    about:'Sui is a Layer 1 blockchain designed for high throughput and low latency, built on Move, with a focus on asset ownership and parallel execution.',
+    links:[
+      {tip:'Website', href:'https://sui.io', icon:'globe'},
+      {tip:'GitHub', href:'https://github.com/MystenLabs', icon:'github'},
+      {tip:'Explorer', href:'https://suiscan.xyz', icon:'grid'},
+    ],
+  },
+  'HYPE-PERP': {
+    name:'HYPE-PERP', sub:'Hyperliquid', category:'Crypto', tabCat:'crypto', leverage:'20x',
+    icoColor:'#00B4D8', icoLabel:'H', icoSize:'12px',
+    price:'63.802', priceColor:'var(--green)',
+    oracle:'63.750', funding:'-0.0002%', fundingSign:-1,
+    high:'65.100', low:'62.400', change:'+1.84/+1.84%', changePos:true, vol:'$997.91K', oi:'6.1M',
+    isTradFi:true, basePrice:62, priceRange:4,
+    tradingHours:'24/7',
+    about:'HYPE is the native token of Hyperliquid, a high-performance decentralized perpetuals exchange built on its own L1 optimized for trading.',
+    links:[
+      {tip:'Website', href:'https://hyperliquid.xyz', icon:'globe'},
+    ],
+  },
+  'LTC-PERP': {
+    name:'LTC-PERP', sub:'Litecoin', category:'Crypto', tabCat:'crypto', leverage:'20x',
+    icoColor:'#BFBBBB', icoLabel:'Ł', icoSize:'13px',
+    price:'41.711', priceColor:'var(--red)',
+    oracle:'41.680', funding:'-0.0023%', fundingSign:-1,
+    high:'42.500', low:'41.200', change:'-0.80/-0.80%', changePos:false, vol:'$780.78K', oi:'3.5M',
+    isTradFi:true, basePrice:41, priceRange:2,
+    tradingHours:'24/7',
+    about:'Litecoin is a peer-to-peer cryptocurrency designed for fast, low-cost payments, built as a lighter and faster alternative to Bitcoin.',
+    links:[
+      {tip:'Website', href:'https://litecoin.org', icon:'globe'},
+      {tip:'GitHub', href:'https://github.com/litecoin-project', icon:'github'},
+      {tip:'Explorer', href:'https://blockchair.com/litecoin', icon:'grid'},
+    ],
+  },
+  'DOGE-PERP': {
+    name:'DOGE-PERP', sub:'Dogecoin', category:'Crypto', tabCat:'crypto', leverage:'20x',
+    icoColor:'#C2A633', icoLabel:'D', icoSize:'12px',
+    price:'0.07729', priceColor:'var(--red)',
+    oracle:'0.07718', funding:'+0.0012%', fundingSign:1,
+    high:'0.07920', low:'0.07650', change:'-1.95/-1.95%', changePos:false, vol:'$706.34K', oi:'5.2M',
+    isTradFi:true, basePrice:0.076, priceRange:0.004,
+    tradingHours:'24/7',
+    about:'Dogecoin is a cryptocurrency that began as an internet meme and has grown into a widely used digital currency with one of the largest and most active communities.',
+    links:[
+      {tip:'Website', href:'https://dogecoin.com', icon:'globe'},
+      {tip:'GitHub', href:'https://github.com/dogecoin', icon:'github'},
+    ],
+  },
+  // ── US Stocks ──
+  'MU-PERP': {
+    name:'MU-PERP', sub:'Micron Technology Inc', category:'US Stock', tabCat:'stocks', leverage:'20x',
+    icoColor:'#1C4E8A', icoLabel:'M', icoSize:'12px',
+    price:'1,234.36', priceColor:'var(--green)',
+    oracle:'1,232.80', funding:'+0.0088%', fundingSign:1,
+    high:'1,256.00', low:'1,210.00', change:'+14.00/+14.00%', changePos:true, vol:'$26.80M', oi:'18.4M',
+    isTradFi:true, basePrice:1200, priceRange:60,
+    tradingHours:'NYSE · Mon–Fri  09:30–16:00 ET  (UTC−5)',
+    about:'MU-PERP tracks the value of 1 share of common stock in Micron Technology, Inc. Micron Technology manufactures DRAM and NAND flash memory for data centers, client computing, mobile, and automotive markets.',
+    links:[
+      {tip:'Micron IR', href:'https://investors.micron.com', icon:'globe'},
+      {tip:'TradingView', href:'https://www.tradingview.com/symbols/NASDAQ-MU/', icon:'chart'},
+    ],
+  },
+  'AMD-PERP': {
+    name:'AMD-PERP', sub:'Advanced Micro Devices, Inc.', category:'US Stock', tabCat:'stocks', leverage:'20x',
+    icoColor:'#ED1C24', icoLabel:'A', icoSize:'12px',
+    price:'538.64', priceColor:'var(--green)',
+    oracle:'537.90', funding:'+0.0006%', fundingSign:1,
+    high:'542.00', low:'528.40', change:'+2.11/+2.11%', changePos:true, vol:'$8.98M', oi:'9.2M',
+    isTradFi:true, basePrice:528, priceRange:16,
+    tradingHours:'NASDAQ · Mon–Fri  09:30–16:00 ET  (UTC−5)',
+    about:'AMD-PERP tracks the value of 1 share of common stock in Advanced Micro Devices, Inc. AMD designs high-performance processors and graphics chips for gaming, data centers, and embedded systems.',
+    links:[
+      {tip:'AMD IR', href:'https://ir.amd.com', icon:'globe'},
+      {tip:'TradingView', href:'https://www.tradingview.com/symbols/NASDAQ-AMD/', icon:'chart'},
+    ],
+  },
+  'CRCL-PERP': {
+    name:'CRCL-PERP', sub:'Circle Internet Group', category:'US Stock', tabCat:'stocks', leverage:'20x',
+    icoColor:'#00D395', icoLabel:'C', icoSize:'12px',
+    price:'72.97', priceColor:'var(--red)',
+    oracle:'72.80', funding:'-0.0003%', fundingSign:-1,
+    high:'76.20', low:'72.10', change:'-4.01/-4.01%', changePos:false, vol:'$16.90M', oi:'7.8M',
+    isTradFi:true, basePrice:72, priceRange:5,
+    tradingHours:'NYSE · Mon–Fri  09:30–16:00 ET  (UTC−5)',
+    about:'CRCL-PERP tracks the value of 1 share of common stock in Circle Internet Group. Circle issues USDC stablecoin and provides digital asset infrastructure for financial services.',
+    links:[
+      {tip:'Circle IR', href:'https://www.circle.com/investors', icon:'globe'},
+      {tip:'TradingView', href:'https://www.tradingview.com/symbols/NYSE-CRCL/', icon:'chart'},
+    ],
+  },
+  'INTC-PERP': {
+    name:'INTC-PERP', sub:'Intel Corporation', category:'US Stock', tabCat:'stocks', leverage:'20x',
+    icoColor:'#0071C5', icoLabel:'i', icoSize:'14px',
+    price:'138.975', priceColor:'var(--green)',
+    oracle:'138.700', funding:'+0.0006%', fundingSign:1,
+    high:'140.200', low:'135.800', change:'+3.05/+3.05%', changePos:true, vol:'$14.20M', oi:'11.6M',
+    isTradFi:true, basePrice:135, priceRange:7,
+    tradingHours:'NASDAQ · Mon–Fri  09:30–16:00 ET  (UTC−5)',
+    about:'INTC-PERP tracks the value of 1 share of common stock in Intel Corporation. Intel designs, manufactures, and sells semiconductors and computing platforms for diverse end markets.',
+    links:[
+      {tip:'Intel IR', href:'https://www.intc.com', icon:'globe'},
+      {tip:'TradingView', href:'https://www.tradingview.com/symbols/NASDAQ-INTC/', icon:'chart'},
+    ],
+  },
+  'SNDK-PERP': {
+    name:'SNDK-PERP', sub:'SanDisk Corporation', category:'US Stock', tabCat:'stocks', leverage:'20x',
+    icoColor:'#E31837', icoLabel:'S', icoSize:'12px',
+    price:'2,147.27', priceColor:'var(--green)',
+    oracle:'2,145.00', funding:'-0.0042%', fundingSign:-1,
+    high:'2,180.00', low:'2,100.00', change:'+7.25/+7.25%', changePos:true, vol:'$47.88M', oi:'14.2M',
+    isTradFi:true, basePrice:2100, priceRange:100,
+    tradingHours:'NASDAQ · Mon–Fri  09:30–16:00 ET  (UTC−5)',
+    about:'SNDK-PERP tracks the value of 1 share of common stock in SanDisk Corporation. SanDisk develops flash memory storage solutions for consumer, enterprise, and industrial applications.',
+    links:[
+      {tip:'SanDisk IR', href:'https://investors.sandisk.com', icon:'globe'},
+      {tip:'TradingView', href:'https://www.tradingview.com/symbols/NASDAQ-SNDK/', icon:'chart'},
+    ],
+  },
+  'AAPL-PERP': {
+    name:'AAPL-PERP', sub:'Apple Inc', category:'US Stock', tabCat:'stocks', leverage:'20x',
+    icoColor:'#555555', icoLabel:'', icoSize:'12px',
+    price:'292.49', priceColor:'var(--red)',
+    oracle:'292.20', funding:'+0.0006%', fundingSign:1,
+    high:'294.80', low:'290.00', change:'-0.55/-0.55%', changePos:false, vol:'$14.44M', oi:'22.6M',
+    isTradFi:true, basePrice:289, priceRange:8,
+    tradingHours:'NASDAQ · Mon–Fri  09:30–16:00 ET  (UTC−5)',
+    about:'AAPL-PERP tracks the value of 1 share of common stock in Apple Inc. Apple designs consumer electronics including iPhone, Mac, iPad, and Apple Watch, supported by a global software and services ecosystem.',
+    links:[
+      {tip:'Apple IR', href:'https://investor.apple.com', icon:'globe'},
+      {tip:'TradingView', href:'https://www.tradingview.com/symbols/NASDAQ-AAPL/', icon:'chart'},
+    ],
+  },
+  'AMZN-PERP': {
+    name:'AMZN-PERP', sub:'Amazon.com, Inc.', category:'US Stock', tabCat:'stocks', leverage:'20x',
+    icoColor:'#FF9900', icoLabel:'a', icoSize:'14px',
+    price:'234.06', priceColor:'var(--green)',
+    oracle:'233.80', funding:'+0.0006%', fundingSign:1,
+    high:'235.40', low:'232.00', change:'+0.20/+0.20%', changePos:true, vol:'$14.97M', oi:'18.4M',
+    isTradFi:true, basePrice:231, priceRange:6,
+    tradingHours:'NASDAQ · Mon–Fri  09:30–16:00 ET  (UTC−5)',
+    about:'AMZN-PERP tracks the value of 1 share of common stock in Amazon.com, Inc. Amazon operates the world\'s largest e-commerce marketplace and provides cloud infrastructure through Amazon Web Services (AWS).',
+    links:[
+      {tip:'Amazon IR', href:'https://ir.aboutamazon.com', icon:'globe'},
+      {tip:'TradingView', href:'https://www.tradingview.com/symbols/NASDAQ-AMZN/', icon:'chart'},
+    ],
+  },
+  'GOOGL-PERP': {
+    name:'GOOGL-PERP', sub:'Alphabet Inc. Class A', category:'US Stock', tabCat:'stocks', leverage:'20x',
+    icoColor:'#4285F4', icoLabel:'G', icoSize:'12px',
+    price:'341.29', priceColor:'var(--red)',
+    oracle:'340.90', funding:'-0.0063%', fundingSign:-1,
+    high:'348.80', low:'339.00', change:'-2.09/-2.09%', changePos:false, vol:'$11.29M', oi:'16.8M',
+    isTradFi:true, basePrice:338, priceRange:12,
+    tradingHours:'NASDAQ · Mon–Fri  09:30–16:00 ET  (UTC−5)',
+    about:'GOOGL-PERP tracks the value of 1 share of Class A common stock in Alphabet Inc. Alphabet is the parent company of Google, operating search, advertising, cloud, and AI businesses globally.',
+    links:[
+      {tip:'Alphabet IR', href:'https://abc.xyz/investor/', icon:'globe'},
+      {tip:'TradingView', href:'https://www.tradingview.com/symbols/NASDAQ-GOOGL/', icon:'chart'},
+    ],
+  },
+  'META-PERP': {
+    name:'META-PERP', sub:'Meta Platforms, Inc.', category:'US Stock', tabCat:'stocks', leverage:'20x',
+    icoColor:'#0081FB', icoLabel:'f', icoSize:'14px',
+    price:'557.45', priceColor:'var(--red)',
+    oracle:'556.80', funding:'-0.0027%', fundingSign:-1,
+    high:'562.80', low:'552.20', change:'-0.91/-0.91%', changePos:false, vol:'$14.76M', oi:'19.2M',
+    isTradFi:true, basePrice:551, priceRange:14,
+    tradingHours:'NASDAQ · Mon–Fri  09:30–16:00 ET  (UTC−5)',
+    about:'META-PERP tracks the value of 1 share of common stock in Meta Platforms, Inc. Meta operates Facebook, Instagram, and WhatsApp, serving billions of users and investing in AI and the metaverse.',
+    links:[
+      {tip:'Meta IR', href:'https://investor.fb.com', icon:'globe'},
+      {tip:'TradingView', href:'https://www.tradingview.com/symbols/NASDAQ-META/', icon:'chart'},
+    ],
+  },
+  'MSTR-PERP': {
+    name:'MSTR-PERP', sub:'Strategy Inc', category:'US Stock', tabCat:'stocks', leverage:'20x',
+    icoColor:'#F7931A', icoLabel:'M', icoSize:'12px',
+    price:'97.60', priceColor:'var(--red)',
+    oracle:'97.40', funding:'-0.0072%', fundingSign:-1,
+    high:'105.20', low:'96.80', change:'-7.06/-7.06%', changePos:false, vol:'$8.72M', oi:'6.4M',
+    isTradFi:true, basePrice:96, priceRange:10,
+    tradingHours:'NASDAQ · Mon–Fri  09:30–16:00 ET  (UTC−5)',
+    about:'MSTR-PERP tracks the value of 1 share of common stock in Strategy Inc (formerly MicroStrategy). Strategy Inc is the largest corporate Bitcoin treasury holder, holding BTC as a primary reserve asset.',
+    links:[
+      {tip:'Strategy IR', href:'https://www.strategy.com/investors/', icon:'globe'},
+      {tip:'TradingView', href:'https://www.tradingview.com/symbols/NASDAQ-MSTR/', icon:'chart'},
+    ],
+  },
+  'MSFT-PERP': {
+    name:'MSFT-PERP', sub:'Microsoft Corp.', category:'US Stock', tabCat:'stocks', leverage:'20x',
+    icoColor:'#00A4EF', icoLabel:'M', icoSize:'12px',
+    price:'365.39', priceColor:'var(--red)',
+    oracle:'365.00', funding:'+0.0006%', fundingSign:1,
+    high:'373.20', low:'363.00', change:'-2.09/-2.09%', changePos:false, vol:'$9.76M', oi:'20.4M',
+    isTradFi:true, basePrice:362, priceRange:12,
+    tradingHours:'NASDAQ · Mon–Fri  09:30–16:00 ET  (UTC−5)',
+    about:'MSFT-PERP tracks the value of 1 share of common stock in Microsoft Corporation. Microsoft develops software, cloud services, and hardware including Windows, Office, Azure, and Xbox.',
+    links:[
+      {tip:'Microsoft IR', href:'https://www.microsoft.com/en-us/investor', icon:'globe'},
+      {tip:'TradingView', href:'https://www.tradingview.com/symbols/NASDAQ-MSFT/', icon:'chart'},
+    ],
+  },
+  'NVDA-PERP': {
+    name:'NVDA-PERP', sub:'NVIDIA Corporation', category:'US Stock', tabCat:'stocks', leverage:'20x',
+    icoColor:'#76B900', icoLabel:'N', icoSize:'12px',
+    price:'200.92', priceColor:'var(--red)',
+    oracle:'200.70', funding:'+0.0002%', fundingSign:1,
+    high:'201.80', low:'199.20', change:'-0.07/-0.07%', changePos:false, vol:'$21.28M', oi:'28.6M',
+    isTradFi:true, basePrice:199, priceRange:4,
+    tradingHours:'NASDAQ · Mon–Fri  09:30–16:00 ET  (UTC−5)',
+    about:'NVDA-PERP tracks the value of 1 share of common stock in NVIDIA Corporation. NVIDIA designs GPUs and AI computing platforms that power gaming, data centers, and autonomous systems.',
+    links:[
+      {tip:'NVIDIA IR', href:'https://investor.nvidia.com', icon:'globe'},
+      {tip:'TradingView', href:'https://www.tradingview.com/symbols/NASDAQ-NVDA/', icon:'chart'},
+    ],
+  },
+  'SPCX-PERP': {
+    name:'SPCX-PERP', sub:'Space Exploration Technologies', category:'US Stock', tabCat:'stocks', leverage:'20x',
+    icoColor:'#1A1A1A', icoLabel:'X', icoSize:'12px',
+    price:'155.87', priceColor:'var(--red)',
+    oracle:'155.60', funding:'+0.0016%', fundingSign:1,
+    high:'157.20', low:'154.50', change:'-0.61/-0.61%', changePos:false, vol:'$30.15M', oi:'16.2M',
+    isTradFi:true, basePrice:154, priceRange:4,
+    tradingHours:'Private · OTC',
+    about:'SPCX-PERP tracks the value of 1 share of common stock in Space Exploration Technologies Corp. SpaceX designs and manufactures launch vehicles, operates the Starlink satellite internet service, and owns xAI.',
+    links:[
+      {tip:'SpaceX', href:'https://www.spacex.com', icon:'globe'},
+    ],
+  },
+  'STX-PERP': {
+    name:'STX-PERP', sub:'Seagate Technology Holdings', category:'US Stock', tabCat:'stocks', leverage:'20x',
+    icoColor:'#007DB8', icoLabel:'S', icoSize:'12px',
+    price:'1,079.91', priceColor:'var(--green)',
+    oracle:'1,078.50', funding:'+0.0095%', fundingSign:1,
+    high:'1,090.00', low:'1,060.00', change:'+2.71/+2.71%', changePos:true, vol:'$16.37M', oi:'8.4M',
+    isTradFi:true, basePrice:1058, priceRange:36,
+    tradingHours:'NASDAQ · Mon–Fri  09:30–16:00 ET  (UTC−5)',
+    about:'STX-PERP tracks the value of 1 share of common stock in Seagate Technology Holdings plc. Seagate designs and manufactures data storage solutions including hard disk drives and solid-state drives.',
+    links:[
+      {tip:'Seagate IR', href:'https://investors.seagate.com', icon:'globe'},
+      {tip:'TradingView', href:'https://www.tradingview.com/symbols/NASDAQ-STX/', icon:'chart'},
+    ],
+  },
+  'WDC-PERP': {
+    name:'WDC-PERP', sub:'Western Digital Corporation', category:'US Stock', tabCat:'stocks', leverage:'20x',
+    icoColor:'#0076CE', icoLabel:'W', icoSize:'12px',
+    price:'720.41', priceColor:'var(--green)',
+    oracle:'719.20', funding:'-0.0044%', fundingSign:-1,
+    high:'728.00', low:'710.00', change:'+5.37/+5.37%', changePos:true, vol:'$12.42M', oi:'7.6M',
+    isTradFi:true, basePrice:709, priceRange:24,
+    tradingHours:'NASDAQ · Mon–Fri  09:30–16:00 ET  (UTC−5)',
+    about:'WDC-PERP tracks the value of 1 share of common stock in Western Digital Corporation. Western Digital provides data storage products including hard drives, SSDs, and flash memory solutions.',
+    links:[
+      {tip:'WDC IR', href:'https://investor.wdc.com', icon:'globe'},
+      {tip:'TradingView', href:'https://www.tradingview.com/symbols/NASDAQ-WDC/', icon:'chart'},
+    ],
+  },
+  // ── Commodities ──
+  'XAU-PERP': {
+    name:'XAU-PERP', sub:'Gold', category:'Commodity', tabCat:'commodities', leverage:'20x',
+    icoColor:'#C8960C', icoLabel:'Au', icoSize:'10px',
+    price:'3,990.32', priceColor:'var(--red)',
+    oracle:'3,988.00', funding:'-0.0023%', fundingSign:-1,
+    high:'4,080.00', low:'3,960.00', change:'-2.10/-2.10%', changePos:false, vol:'$30.54M', oi:'42.8M',
+    isTradFi:true, basePrice:3960, priceRange:120,
+    tradingHours:'CME Globex · Sun–Fri  18:00–17:00 ET  (23h/day)',
+    about:'XAU-PERP tracks the value of 1 troy ounce of Gold. Gold is widely used as a store of value, inflation hedge, and safe-haven asset in times of economic uncertainty.',
+    links:[
+      {tip:'CME Gold', href:'https://www.cmegroup.com/markets/metals/precious/gold.html', icon:'globe'},
+    ],
+  },
+  'BZ-PERP': {
+    name:'BZ-PERP', sub:'Brent Crude Oil', category:'Commodity', tabCat:'commodities', leverage:'20x',
+    icoColor:'#2C5F8A', icoLabel:'🛢', icoSize:'13px',
+    price:'73.39', priceColor:'var(--red)',
+    oracle:'73.20', funding:'-0.0060%', fundingSign:-1,
+    high:'75.80', low:'72.90', change:'-3.02/-3.02%', changePos:false, vol:'$22.02M', oi:'26.4M',
+    isTradFi:true, basePrice:72, priceRange:4,
+    tradingHours:'ICE · Sun–Fri  20:00–18:00 ET  (22h/day)',
+    about:'BZ-PERP tracks the value of 1 barrel of Brent Crude Oil. Brent crude is the primary international benchmark for oil prices, sourced from the North Sea and used as a reference for two-thirds of global oil trading.',
+    links:[
+      {tip:'CME Brent', href:'https://www.cmegroup.com/markets/energy/crude-oil/brent-crude-oil.html', icon:'globe'},
+    ],
+  },
+  'XAG-PERP': {
+    name:'XAG-PERP', sub:'Silver', category:'Commodity', tabCat:'commodities', leverage:'20x',
+    icoColor:'#9E9E9E', icoLabel:'Ag', icoSize:'10px',
+    price:'57.36', priceColor:'var(--red)',
+    oracle:'57.20', funding:'-0.0012%', fundingSign:-1,
+    high:'61.40', low:'56.80', change:'-6.50/-6.50%', changePos:false, vol:'$17.68M', oi:'18.2M',
+    isTradFi:true, basePrice:56, priceRange:6,
+    tradingHours:'CME Globex · Sun–Fri  18:00–17:00 ET  (23h/day)',
+    about:'XAG-PERP tracks the value of 1 troy ounce of Silver. Silver serves as both a precious metal and an industrial metal with diverse demand across electronics, solar energy, and jewelry.',
+    links:[
+      {tip:'CME Silver', href:'https://www.cmegroup.com/markets/metals/precious/silver.html', icon:'globe'},
+    ],
   },
 };
 
@@ -2236,8 +2695,7 @@ function renderTradingInfo(key) {
 
 function selectAsset(key) {
   currentAsset = key;
-  document.getElementById('asset-dropdown').style.display = 'none';
-  buildDropdown();
+  buildAssetPanel();
   updateAssetBar(key);
   renderMarketInfo(key);
   renderTradingInfo(key);
@@ -2401,7 +2859,7 @@ const NEXT_EVENTS = {
     desc:'Tesla Q2 earnings — analysts forecast EPS $0.68 on revenue $25.8B. Cybertruck ramp pace and energy storage margins are the key swing factors.',
     source:'#',
   },
-  'WTI-PERP': {
+  'CL-PERP': {
     day:'17', month:'Jun', ts: new Date(2026,5,17).getTime(),
     title:'EIA Crude Oil Inventory Report',
     impact:'medium', time:'Jun 17, 2026 · 14:30 UTC',
@@ -2418,7 +2876,7 @@ const EVENT_TABLE_DATA = {
     { country:'📈', label:'EPS (GAAP)',  actual:'—', forecast:'$0.68',  prior:'$0.45' },
     { country:'📈', label:'Revenue',     actual:'—', forecast:'$25.8B', prior:'$22.9B' },
   ],
-  'WTI-PERP': [
+  'CL-PERP': [
     { country:'🇺🇸', label:'Crude Inventories (WoW)', actual:'—', forecast:'−3.0M', prior:'−2.4M' },
   ],
 };
@@ -3183,34 +3641,70 @@ document.addEventListener('click', function (e) {
   el.addEventListener('pointercancel', () => { dragging = false; });
 })();
 
-function toggleDropdown(e) {
-  const dd = document.getElementById('asset-dropdown');
-  dd.style.display = dd.style.display==='none' ? 'block' : 'none';
-}
-document.addEventListener('click', e=>{
-  if(!e.target.closest('.asset-dropdown-wrap')) {
-    const dd=document.getElementById('asset-dropdown');
-    if(dd) dd.style.display='none';
-  }
-});
+let _apCurrentTab = 'all';
 
-function buildDropdown() {
-  const dd = document.getElementById('asset-dropdown');
-  dd.innerHTML = Object.keys(ASSETS).map(key => {
-    const a = ASSETS[key];
-    const icoInner = LOGOS[key]
-      ? `<img src="${LOGOS[key]}" width="24" height="24" style="border-radius:50%;display:block">`
-      : `<span style="font-size:${a.icoSize};font-weight:700;color:#fff">${a.icoLabel}</span>`;
-    const icoBg = LOGOS[key] ? 'transparent' : a.icoColor;
-    return `<div class="asset-option${key===currentAsset?' selected':''}" onclick="selectAsset('${key}')">
-      <div class="asset-opt-ico" style="background:${icoBg}">${icoInner}</div>
-      <div><div class="asset-opt-name">${key}</div><div class="asset-opt-sub">${a.sub}</div></div>
-    </div>`;
-  }).join('');
+function buildAssetPanel(query) {
+  const list = document.getElementById('ap-list');
+  if (!list) return;
+  const q = (query || '').toLowerCase();
+  list.innerHTML = Object.keys(ASSETS)
+    .filter(key => {
+      const a = ASSETS[key];
+      const tabMatch = _apCurrentTab === 'all' || a.tabCat === _apCurrentTab;
+      const searchMatch = !q ||
+        key.toLowerCase().includes(q) ||
+        (a.sub || '').toLowerCase().includes(q) ||
+        (a.category || '').toLowerCase().includes(q);
+      return tabMatch && searchMatch;
+    })
+    .map(key => {
+      const a = ASSETS[key];
+      const icoInner = LOGOS[key]
+        ? `<img src="${LOGOS[key]}" width="26" height="26" style="border-radius:50%;display:block">`
+        : `<span style="font-size:${a.icoSize || '12px'};font-weight:700;color:#fff">${a.icoLabel || ''}</span>`;
+      const icoBg = LOGOS[key] ? 'transparent' : (a.icoColor || '#555');
+      return `<div class="ap-row${key === currentAsset ? ' sel' : ''}" onclick="selectAsset('${key}')">
+        <div class="ap-ico" style="background:${icoBg}">${icoInner}</div>
+        <div><div class="ap-name">${key}</div><div class="ap-sub">${a.sub || ''}</div></div>
+        <div class="ap-lev">${a.leverage || '—'}</div>
+        <div class="ap-cat">${a.tabCat || a.category || '—'}</div>
+      </div>`;
+    }).join('');
 }
+
+function setApTab(tab) {
+  _apCurrentTab = tab;
+  document.querySelectorAll('.ap-tab').forEach(el => {
+    el.classList.toggle('active', el.dataset.tab === tab);
+  });
+  const q = document.getElementById('ap-search-input');
+  buildAssetPanel(q ? q.value : '');
+}
+
+function filterAssetPanel(val) {
+  buildAssetPanel(val);
+}
+
+function closePanel() {
+  const p = document.getElementById('ap-panel');
+  if (p) p.classList.remove('open');
+}
+
+(function () {
+  const trigger = document.getElementById('ap-trigger');
+  const panel   = document.getElementById('ap-panel');
+  if (!trigger || !panel) return;
+  let hideTimer;
+  const show = () => { clearTimeout(hideTimer); panel.classList.add('open'); };
+  const hide = () => { hideTimer = setTimeout(() => panel.classList.remove('open'), 150); };
+  trigger.addEventListener('mouseenter', show);
+  trigger.addEventListener('mouseleave', hide);
+  panel.addEventListener('mouseenter', show);
+  panel.addEventListener('mouseleave', hide);
+})();
 
 // init
-buildDropdown();
+buildAssetPanel();
 renderMarketInfo('BTC-PERP');
 renderTradingInfo('BTC-PERP');
 document.getElementById('calendar-tz-label').textContent = fmtTz(calTzOffset);
