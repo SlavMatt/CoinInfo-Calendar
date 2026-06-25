@@ -344,19 +344,21 @@ body{
 .mi-crypto-wrap{padding:18px 20px 24px;display:flex;gap:0;min-height:0}
 .mi-left{width:248px;min-width:200px;flex-shrink:0;border-right:1px solid var(--line1);padding-right:20px;padding-bottom:8px}
 .mi-right{flex:1;min-width:0;padding-left:24px}
-.mi-stat-row{display:flex;justify-content:space-between;align-items:flex-start;padding:7px 0;border-bottom:1px solid var(--line1);gap:8px}
-.mi-stat-sep{height:10px}
+.mi-stat-row{display:flex;justify-content:space-between;align-items:flex-start;padding:7px 0;gap:8px}
+.mi-group-sep{height:1px;background:var(--line1);margin:4px 0}
 .mi-stat-k{font-size:12px;color:var(--t2);flex-shrink:0}
 .mi-stat-v{font-size:12px;font-weight:500;color:var(--t1)}
 .mi-stat-v.grn{color:var(--green)}
 .mi-stat-date{font-size:11px;color:var(--t4);text-align:right;margin-top:1px}
-.mi-sec-title{font-size:14px;font-weight:700;color:var(--t1);margin-bottom:8px}
+.has-tip{border-bottom:1px dashed var(--t4);cursor:help}
+.mi-tip-wrap{position:relative;display:inline-flex;align-items:center}
+.mi-tip-pop{position:absolute;left:0;bottom:calc(100% + 6px);z-index:200;background:#1A1D26;border:1px solid var(--line1);color:var(--t1);font-size:11px;line-height:1.5;padding:5px 9px;border-radius:6px;width:180px;white-space:normal;pointer-events:none;opacity:0;transition:opacity .15s;font-family:var(--font)}
+.mi-tip-pop::after{content:'';position:absolute;top:100%;left:10px;border:4px solid transparent;border-top-color:#1A1D26}
+.mi-tip-wrap:hover .mi-tip-pop{opacity:1}
+.mi-sec-title{font-size:14px;font-weight:700;color:var(--t1);margin-bottom:0}
 .mi-about-text{font-size:13px;line-height:1.65;color:var(--t2);display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
 .mi-about-text.exp{display:block;-webkit-line-clamp:unset}
 .mi-exp-btn{font-size:13px;color:var(--green);cursor:pointer;margin-top:4px;display:inline-block}
-.mi-community-row{display:flex;flex-wrap:wrap;gap:8px}
-.mi-community-btn{display:inline-flex;align-items:center;gap:7px;padding:6px 14px;border-radius:8px;border:1px solid var(--line1);background:var(--bg2);font-size:13px;color:var(--t1);text-decoration:none;transition:border-color .15s}
-.mi-community-btn:hover{border-color:var(--t2)}
 .mi-res-row{display:flex;flex-wrap:wrap;gap:8px}
 .mi-res-btn{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:8px;border:1px solid var(--line1);background:var(--bg2);font-size:12px;color:var(--t2);text-decoration:none;transition:border-color .15s,color .15s}
 .mi-res-btn:hover{border-color:var(--t2);color:var(--t1)}
@@ -1968,37 +1970,43 @@ function _miCrypto(a, key) {
   const stats = [
     {k:'排名', v: md['Rank']||a.rank||'—', cls:'grn'},
     {k:'市值', v: md['Market Cap']||'—'},
-    {k:'完全稀释市值', v: md['FDV']||'—'},
-    {k:'交易额 / 市值', v: md['Vol / MCap']||'—'},
-    {k:'市场占有率', v: md['Market Dominance']||a.dominance||'—'},
-    null,
+    {k:'完全稀释市值', v: md['FDV']||'—', tip:'按最大供应量计算的总市值，反映完全稀释后的估值'},
+    {k:'交易额 / 市值', v: md['Vol / MCap']||'—', tip:'24 小时交易量与市值之比，衡量市场流动性'},
+    {k:'市场占有率', v: md['Market Dominance']||a.dominance||'—', tip:'该资产市值占加密总市值的比例'},
+    'sep',
     {k:'发行时间', v: a.launchDate||'—'},
-    {k:'历史最高价', v: a.ath||'—', sub: a.athDate||''},
-    {k:'历史最低价', v: a.atl||'—', sub: a.atlDate||''},
+    {k:'历史最高价', v: a.ath||'—', sub: a.athDate||'', tip:'该资产有记录以来的最高成交价'},
+    {k:'历史最低价', v: a.atl||'—', sub: a.atlDate||'', tip:'该资产有记录以来的最低成交价'},
     {k:'所属公链', v: a.chain||'—'},
-    null,
+    'sep',
     {k:'流通供应量', v: md['Circulating Supply']||'—'},
     {k:'最大供应量', v: md['Max Supply']||'—'},
     {k:'总供应量', v: a.totalSupply||md['Circulating Supply']||'—'},
-    {k:'流通率', v: a.circulatingRate||'—'},
+    {k:'流通率', v: a.circulatingRate||'—', tip:'已流通供应量占最大供应量的比例'},
   ];
   const statsHtml = stats.map(s=>{
-    if (!s) return '<div class="mi-stat-sep"></div>';
-    return `<div class="mi-stat-row"><span class="mi-stat-k">${s.k}</span><div style="text-align:right"><div class="mi-stat-v${s.cls?' '+s.cls:''}">${s.v}</div>${s.sub?`<div class="mi-stat-date">${s.sub}</div>`:''}</div></div>`;
+    if (s === 'sep') return '<div class="mi-group-sep"></div>';
+    const kHtml = s.tip
+      ? `<span class="mi-tip-wrap"><span class="mi-stat-k has-tip">${s.k}</span><div class="mi-tip-pop">${s.tip}</div></span>`
+      : `<span class="mi-stat-k">${s.k}</span>`;
+    return `<div class="mi-stat-row">${kHtml}<div style="text-align:right"><div class="mi-stat-v${s.cls?' '+s.cls:''}">${s.v}</div>${s.sub?`<div class="mi-stat-date">${s.sub}</div>`:''}</div></div>`;
   }).join('');
-  const communityHtml = (a.community||[]).map(c=>`<a class="mi-community-btn" href="${c.href}" target="_blank">${ICONS[c.icon]||''}${c.tip}</a>`).join('');
+  const communityHtml = (a.community||[]).map(c=>`<a class="mi-res-btn" href="${c.href}" target="_blank">${ICONS[c.icon]||ICONS.globe}${c.tip}</a>`).join('');
   const resHtml = (a.links||[]).map(l=>`<a class="mi-res-btn" href="${l.href}" target="_blank">${ICONS[l.icon]||ICONS.globe}${LINK_LABEL_CN[l.icon]||l.tip}</a>`).join('');
   const ticker = key.replace('-PERP','');
+  const logoHtml = LOGOS[key]
+    ? `<img src="${LOGOS[key]}" width="26" height="26" style="border-radius:50%;display:block;flex-shrink:0">`
+    : `<div style="width:26px;height:26px;border-radius:50%;background:${a.icoColor};display:flex;align-items:center;justify-content:center;font-size:${a.icoSize};font-weight:700;color:#fff;flex-shrink:0">${a.icoLabel}</div>`;
   return `
     <div class="mi-crypto-wrap">
       <div class="mi-left">${statsHtml}</div>
       <div class="mi-right">
         <div style="margin-bottom:16px">
-          <div class="mi-sec-title">${ticker} 简介</div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">${logoHtml}<div class="mi-sec-title">${ticker} 简介</div></div>
           <div class="mi-about-text" id="mi-desc-text">${a.about}</div>
           <span class="mi-exp-btn" onclick="toggleMiDesc(this)">展开</span>
         </div>
-        ${communityHtml?`<div class="mi-lbl" style="margin-bottom:10px">社区</div><div class="mi-community-row" style="margin-bottom:16px">${communityHtml}</div>`:''}
+        ${communityHtml?`<div class="mi-lbl" style="margin-bottom:10px">社区</div><div class="mi-res-row" style="margin-bottom:16px">${communityHtml}</div>`:''}
         <div class="mi-lbl" style="margin-bottom:10px">资源</div>
         <div class="mi-res-row">${resHtml}</div>
         <div class="mi-disclaimer-txt">免责声明：数据由 CoinMarketCap 及 CoinGecko 提供，不作为投资决策参考。</div>
