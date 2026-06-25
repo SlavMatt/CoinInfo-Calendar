@@ -1262,7 +1262,7 @@ body{
 <!-- ── Economic Calendar Drawer ── -->
 <div id="calendar-backdrop" class="fixed inset-0 z-40 hidden pointer-events-none"></div>
 
-<div id="calendar-drawer" class="fixed top-0 right-0 h-full w-full max-w-[680px] bg-bg1 z-50 flex flex-col shadow-2xl border-l border-line1 transition-transform duration-300 translate-x-full">
+<div id="calendar-drawer" class="fixed top-0 right-0 h-full w-full max-w-[680px] bg-bg1 z-50 flex flex-col shadow-2xl border-l border-line1 transition-transform duration-300 translate-x-full overflow-hidden">
   <!-- Shadow fade on the page side of the drawer's left edge; hidden while the drawer is closed -->
   <div id="calendar-shadow-edge" class="invisible absolute top-0 -left-6 w-6 h-full pointer-events-none" style="background:linear-gradient(to right, transparent, rgba(0,0,0,.35))"></div>
   <!-- Drag-to-resize handle (desktop only; min width = H5): visible vertical bar straddling the drawer's left edge, also separates drawer from page -->
@@ -2542,7 +2542,7 @@ function toggleMiDesc(btn) {
   const el = document.getElementById('mi-desc-text');
   if (!el) return;
   el.classList.toggle('exp');
-  btn.textContent = el.classList.contains('exp') ? '收起' : '展开';
+  btn.textContent = el.classList.contains('exp') ? 'Collapse' : 'Expand';
 }
 
 function _miTradFi(a, key) {
@@ -2567,21 +2567,21 @@ function _miCrypto(a, key) {
   const md = {};
   (a.marketData||[]).forEach(({k,v})=>{ md[k]=v; });
   const stats = [
-    {k:'排名', v: md['Rank']||a.rank||'—', cls:'grn'},
-    {k:'市值', v: md['Market Cap']||'—', tip:'所有流通供应量的总市场价值'},
-    {k:'完全稀释市值', v: md['FDV']||'—', tip:'按最大供应量计算的总市值，反映完全稀释后的估值'},
-    {k:'交易额 / 市值', v: md['Vol / MCap']||'—', tip:'24 小时交易量与市值之比，衡量市场流动性'},
-    {k:'市场占有率', v: md['Market Dominance']||a.dominance||'—', tip:'该资产市值占加密总市值的比例'},
+    {k:'Rank', v: md['Rank']||a.rank||'—', cls:'grn'},
+    {k:'Market Cap', v: md['Market Cap']||'—', tip:'Total market value of all circulating supply'},
+    {k:'Fully Diluted Value', v: md['FDV']||'—', tip:'Total market cap at max supply, reflecting fully diluted valuation'},
+    {k:'Vol / Market Cap', v: md['Vol / MCap']||'—', tip:'24h trading volume divided by market cap, measuring market liquidity'},
+    {k:'Market Dominance', v: md['Market Dominance']||a.dominance||'—', tip:"This asset's share of total crypto market capitalization"},
     'sep',
-    {k:'发行时间', v: a.launchDate||'—'},
-    {k:'历史最高价', v: a.ath||'—', sub: a.athDate||''},
-    {k:'历史最低价', v: a.atl||'—', sub: a.atlDate||''},
-    {k:'所属公链', v: a.chain||'—'},
+    {k:'Launch Date', v: a.launchDate||'—'},
+    {k:'All-Time High', v: a.ath||'—', sub: a.athDate||''},
+    {k:'All-Time Low', v: a.atl||'—', sub: a.atlDate||''},
+    {k:'Blockchain', v: a.chain||'—'},
     'sep',
-    {k:'流通供应量', v: md['Circulating Supply']||'—', tip:'在市场中流通的代币数量，不含锁仓或未发行部分'},
-    {k:'最大供应量', v: md['Max Supply']||'—', tip:'该资产可以存在的代币总上限'},
-    {k:'总供应量', v: a.totalSupply||md['Circulating Supply']||'—', tip:'当前已创建的代币总量，包含锁仓部分'},
-    {k:'流通率', v: a.circulatingRate||'—', tip:'已流通供应量占最大供应量的比例'},
+    {k:'Circulating Supply', v: md['Circulating Supply']||'—', tip:'Number of tokens circulating in the market, excluding locked or unissued'},
+    {k:'Max Supply', v: md['Max Supply']||'—', tip:'Maximum total supply that can ever exist for this asset'},
+    {k:'Total Supply', v: a.totalSupply||md['Circulating Supply']||'—', tip:'Total number of tokens created to date, including locked tokens'},
+    {k:'Circulating Rate', v: a.circulatingRate||'—', tip:'Ratio of circulating supply to maximum supply'},
   ];
   const statsHtml = stats.map(s=>{
     if (s === 'sep') return '<div class="mi-group-sep"></div>';
@@ -2603,7 +2603,7 @@ function _miCrypto(a, key) {
         <div style="margin-bottom:16px">
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">${logoHtml}<div class="mi-sec-title">About ${ticker}</div></div>
           <div class="mi-about-text" id="mi-desc-text">${a.about}</div>
-          <span class="mi-exp-btn" id="mi-exp-btn" style="display:none" onclick="toggleMiDesc(this)">展开</span>
+          <span class="mi-exp-btn" id="mi-exp-btn" style="display:none" onclick="toggleMiDesc(this)">Expand</span>
         </div>
         ${communityHtml?`<div class="mi-lbl" style="margin-bottom:10px">Community</div><div class="mi-res-row" style="margin-bottom:16px">${communityHtml}</div>`:''}
         <div class="mi-lbl" style="margin-bottom:10px">Resources</div>
@@ -3116,6 +3116,7 @@ function buildEventWeekHTML(events, start, category) {
   const byDate = {};
   for (const ev of events) {
     if (ev.event_type === 'price_update' || ev.event_type === 'trending') continue;
+    if (category === 'Economic' && ev.event_type === 'energy') continue;
     if (!byDate[ev.date]) byDate[ev.date]=[];
     byDate[ev.date].push(ev);
   }
@@ -3357,8 +3358,8 @@ function renderNextEvent(key) {
 
   if (!calNextEventOpen) {
     el.innerHTML = `
-      <div class="rounded-lg border cal-line1-50 overflow-hidden">
-        <button onclick="toggleNextEvent()" class="w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-bg2 transition-colors">
+      <div class="rounded-lg border cal-line1-50">
+        <button onclick="toggleNextEvent()" class="w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-bg2 transition-colors rounded-lg">
           <span class="text-[10px] font-semibold text-text2 uppercase tracking-wider whitespace-nowrap flex-shrink-0">Next</span>
           ${logoHtml}
           ${impactDot}
@@ -3370,27 +3371,19 @@ function renderNextEvent(key) {
   } else {
     el.innerHTML = `
       <div class="rounded-lg border cal-line1-50 overflow-hidden">
-        <div class="flex items-center justify-between px-3 py-2 border-b cal-line1-30">
-          <div class="flex items-center gap-1.5">
-            <span class="text-[10px] font-semibold text-text2 uppercase tracking-wider">Next Event</span>
-            ${logoHtml}
-            <span class="text-text2 text-[10px]">· ${assetSub}</span>
+        <div class="flex items-center gap-2 px-3 py-2.5">
+          ${logoHtml}
+          ${impactDot}
+          <div class="flex-1 min-w-0">
+            <div class="text-text1 text-[11px] font-semibold truncate">${ev.title}</div>
+            <div class="text-text2 text-[10px] mt-0.5">${ev.time}</div>
           </div>
-          <button onclick="toggleNextEvent()" class="w-5 h-5 flex items-center justify-center rounded text-text2 hover:text-text1 hover:bg-bg2 transition-colors">
-            <i data-lucide="chevron-up" class="w-3.5 h-3.5"></i>
-          </button>
-        </div>
-        <div class="px-3 py-2.5">
-          <div class="flex items-start justify-between gap-3">
-            <div class="flex items-start gap-1.5 min-w-0">
-              ${impactDot}
-              <span class="text-text1 text-[11px] font-semibold leading-snug">${ev.title}</span>
-            </div>
-            <span class="text-text2 text-[10px] whitespace-nowrap flex-shrink-0">${ev.day} ${ev.month}</span>
+          <div class="flex items-center gap-2 flex-shrink-0">
+            <span class="text-text2 text-[10px]">${ev.day} ${ev.month}</span>
+            <button onclick="toggleNextEvent()" class="w-5 h-5 flex items-center justify-center rounded text-text2 hover:text-text1 hover:bg-bg2 transition-colors">
+              <i data-lucide="chevron-up" class="w-3.5 h-3.5"></i>
+            </button>
           </div>
-          <div class="text-text2 text-[10px] mt-0.5 pl-[11px]">${ev.time}</div>
-          <p class="text-text2 text-[10px] mt-1.5 leading-relaxed pl-[11px] line-clamp-2">${ev.desc}</p>
-          <a href="${ev.source}" target="_blank" rel="noopener" class="text-text2 text-[10px] hover:text-text1 transition-colors mt-1.5 inline-block pl-[11px]">Source ↗</a>
         </div>
       </div>`;
   }
