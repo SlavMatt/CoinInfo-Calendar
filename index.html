@@ -811,7 +811,8 @@ body{
 .scrollbar-none{-ms-overflow-style:none;scrollbar-width:none}
 
 /* ── Calendar day card scroll-active highlight ── */
-#calendar-week-cards button.cal-day-viewing{background:rgba(42,46,55,.7);border-color:rgba(133,138,147,.55)}
+#calendar-week-cards button.cal-day-viewing{background:rgba(42,46,55,.7)}
+.cal-time-line{height:13px;display:flex;align-items:center}
 /* ── Calendar drawer header separator ── */
 #calendar-drawer>div:first-of-type{border-bottom:1px solid var(--line1)}
 
@@ -3110,7 +3111,7 @@ function calEventRow(ev) {
     else detail='No additional details available.';
   }
 
-  return `<div class="mx-4 sm:mx-[42px] border-b cal-line1-30"><div onclick="toggleEconRow(this)" class="w-full flex items-stretch cursor-pointer"><div class="grid items-center gap-0 py-2.5 flex-shrink-0" style="grid-template-columns:48px 28px"><span class="text-text2 text-[11px]">${timeStr}</span><span class="text-sm leading-none text-center">${icon}</span></div><div class="flex-1 grid items-center gap-0 py-2.5 pr-2 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px"><div class="flex items-center gap-1 pr-2 min-w-0"><span class="text-text1 text-xs leading-tight truncate" title="${title}">${title}</span><i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i></div><span class="${c5} text-xs text-right self-center">${v5}</span><span class="text-text2 text-xs text-right self-center">${v6}</span><span class="text-text2 text-xs text-right self-center">${v7}</span></div></div><div class="econ-detail hidden"><div class="mx-4 sm:mx-[42px] mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50"><p class="text-text1 text-[11px] leading-relaxed">${detail}</p></div></div></div>`;
+  return `<div class="mx-4 sm:mx-[42px] border-b cal-line1-30" data-ev-time-utc="${ev.time_utc||''}"><div onclick="toggleEconRow(this)" class="w-full flex items-stretch cursor-pointer"><div class="grid items-center gap-0 py-2.5 flex-shrink-0" style="grid-template-columns:48px 28px"><span class="text-text2 text-[11px]">${timeStr}</span><span class="text-sm leading-none text-center">${icon}</span></div><div class="flex-1 grid items-center gap-0 py-2.5 pr-2 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px"><div class="flex items-center gap-1 pr-2 min-w-0"><span class="text-text1 text-xs leading-tight truncate" title="${title}">${title}</span><i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i></div><span class="${c5} text-xs text-right self-center">${v5}</span><span class="text-text2 text-xs text-right self-center">${v6}</span><span class="text-text2 text-xs text-right self-center">${v7}</span></div></div><div class="econ-detail hidden"><div class="mx-4 sm:mx-[42px] mb-2.5 p-3 rounded-lg cal-bg2-60 border cal-line1-50"><p class="text-text1 text-[11px] leading-relaxed">${detail}</p></div></div></div>`;
 }
 
 const CAL_TAB_HEADERS = {
@@ -3168,6 +3169,7 @@ async function fetchAndRenderTab(start, category) {
   lucide.createIcons();
   refreshCalendarTimes();
   calInitScrollHighlight();
+  calStartTimeMarker();
   // re-scroll to selected day if any
   if (calSelectedTs) {
     const target = el.querySelector(`[data-date="${calDateKey(new Date(calSelectedTs))}"]`);
@@ -3199,7 +3201,6 @@ async function fetchWeekCounts(start) {
     for (let i = 0; i < 7; i++) {
       const d = calAddDays(start, i);
       const isToday = calSameDay(d, CAL_TODAY);
-      const isSelected = calSelectedTs !== null && calSameDay(d, new Date(calSelectedTs));
       const isNextEvent = nextEv && calSameDay(d, new Date(nextEv.ts));
       const counts = calCountsFor(d, i, calWeekOffset);
       const catRows = CAT_ORDER.map(cat => {
@@ -3207,9 +3208,8 @@ async function fetchWeekCounts(start) {
         return `<div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">${CAT_LABELS[cat]}</span><span class="${v>0?'text-text1':'text-text2/30'} text-[10px] leading-none font-medium">${v}</span></div>`;
       }).join('');
       const starHtml = isNextEvent ? `<span class="text-yellow text-[8px] leading-none font-bold mt-0.5">★</span>` : '';
-      const ringCls = isSelected ? 'ring-2 ring-inset ring-text1' : '';
       const numCls = isToday ? 'text-text1 border-b-2 border-text1' : 'text-text1 border-b-2 border-transparent';
-      cardsHtml += `<button onclick="calSelectDay(${d.getTime()})" class="flex flex-col items-start gap-2 px-2.5 py-3 rounded-lg border border-solid border-line1 hover:border-text2/40 hover:bg-bg2 ${ringCls} transition-colors"><span class="text-text2 text-[10px] leading-none">${DAY_ABBR[i]}</span><span class="text-[15px] font-bold leading-none ${numCls}">${d.getDate()}</span><div class="w-full flex flex-col gap-[5px] mt-0.5">${catRows}${starHtml}</div></button>`;
+      cardsHtml += `<button onclick="calSelectDay(${d.getTime()})" class="flex flex-col items-start gap-2 px-2.5 py-3 rounded-lg border border-solid border-line1 hover:border-text2/40 hover:bg-bg2 transition-colors"><span class="text-text2 text-[10px] leading-none">${DAY_ABBR[i]}</span><span class="text-[15px] font-bold leading-none ${numCls}">${d.getDate()}</span><div class="w-full flex flex-col gap-[5px] mt-0.5">${catRows}${starHtml}</div></button>`;
     }
     document.getElementById('calendar-week-cards').innerHTML = cardsHtml;
     lucide.createIcons();
@@ -3227,7 +3227,6 @@ function renderCalendarWeek() {
   for (let i = 0; i < 7; i++) {
     const d = calAddDays(start, i);
     const isToday = calSameDay(d, CAL_TODAY);
-    const isSelected = calSelectedTs !== null && calSameDay(d, new Date(calSelectedTs));
     const isNextEvent = nextEv && calSameDay(d, new Date(nextEv.ts));
     const counts = calCountsFor(d, i, calWeekOffset);
     const catRows = CAT_ORDER.map(cat => {
@@ -3238,9 +3237,8 @@ function renderCalendarWeek() {
       </div>`;
     }).join('');
     const starHtml = isNextEvent ? `<span class="text-yellow text-[8px] leading-none font-bold mt-0.5">★</span>` : '';
-    const ringCls = isSelected ? 'ring-2 ring-inset ring-text1' : '';
     const numCls = isToday ? 'text-text1 border-b-2 border-text1' : 'text-text1 border-b-2 border-transparent';
-    cardsHtml += `<button onclick="calSelectDay(${d.getTime()})" class="flex flex-col items-start gap-2 px-2.5 py-3 rounded-lg border border-solid border-line1 hover:border-text2/40 hover:bg-bg2 ${ringCls} transition-colors">
+    cardsHtml += `<button onclick="calSelectDay(${d.getTime()})" class="flex flex-col items-start gap-2 px-2.5 py-3 rounded-lg border border-solid border-line1 hover:border-text2/40 hover:bg-bg2 transition-colors">
         <span class="text-text2 text-[10px] leading-none">${DAY_ABBR[i]}</span>
         <span class="text-[15px] font-bold leading-none ${numCls}">${d.getDate()}</span>
         <div class="w-full flex flex-col gap-[5px] mt-0.5">${catRows}${starHtml}</div>
@@ -3275,6 +3273,7 @@ function renderCalendarTabContent(start) {
     lucide.createIcons();
     refreshCalendarTimes();
     calInitScrollHighlight();
+    calStartTimeMarker();
   } else {
     // Show loading spinner while fetching
     el.innerHTML = `<div class="flex items-center gap-2 mx-4 sm:mx-[42px] py-8 text-text2 text-xs"><svg class="animate-spin w-3 h-3 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>Loading...</div>`;
@@ -3307,13 +3306,78 @@ function calInitScrollHighlight() {
   calOnScroll();
 }
 
+// ── Current-time red line ──
+let _calTimeMarkerTimer = null;
+function calInjectTimeMarker() {
+  const scrollEl = document.getElementById('calendar-scroll-area');
+  if (!scrollEl) return;
+  scrollEl.querySelectorAll('.cal-time-line').forEach(e => e.remove());
+  if (calWeekOffset !== 0) return;
+
+  const now = new Date();
+  const todayKey = calDateKey(new Date(now.getFullYear(), now.getMonth(), now.getDate()));
+  const todayHeader = scrollEl.querySelector(`[data-date="${todayKey}"]`);
+  if (!todayHeader) return;
+
+  const hh = String(now.getHours()).padStart(2,'0');
+  const mm = String(now.getMinutes()).padStart(2,'0');
+  const nowUtcMin = now.getUTCHours() * 60 + now.getUTCMinutes();
+
+  const line = document.createElement('div');
+  line.className = 'cal-time-line mx-4 sm:mx-[42px]';
+  line.innerHTML = `<span style="color:#E84142;font-size:9px;font-weight:700;white-space:nowrap;flex-shrink:0;line-height:1">${hh}:${mm}</span><div style="flex:1;height:1px;background:#E84142;opacity:.65;margin-left:6px"></div>`;
+  line.style.cssText = 'display:flex;align-items:center;position:relative;z-index:5;pointer-events:none;margin-top:-1px;margin-bottom:-1px';
+
+  let insertBefore = null;
+  let cur = todayHeader.nextElementSibling;
+  while (cur && !cur.hasAttribute('data-date')) {
+    const t = cur.getAttribute('data-ev-time-utc') || '';
+    if (t.match(/^\d{2}:\d{2}/)) {
+      const [h, m] = t.split(':').map(Number);
+      if (h * 60 + m > nowUtcMin) { insertBefore = cur; break; }
+    }
+    cur = cur.nextElementSibling;
+  }
+  if (insertBefore) {
+    insertBefore.parentNode.insertBefore(line, insertBefore);
+  } else {
+    let last = todayHeader, c = todayHeader.nextElementSibling;
+    while (c && !c.hasAttribute('data-date')) { last = c; c = c.nextElementSibling; }
+    last.insertAdjacentElement('afterend', line);
+  }
+}
+function calStartTimeMarker() {
+  calInjectTimeMarker();
+  if (!_calTimeMarkerTimer) _calTimeMarkerTimer = setInterval(calInjectTimeMarker, 60000);
+}
+
+// Ease-in-out cubic smooth scroll for the events list
+function calSmoothScrollTo(el, targetY, duration) {
+  const start = el.scrollTop;
+  const delta = targetY - start;
+  if (Math.abs(delta) < 2) return;
+  const t0 = performance.now();
+  function easeInOutCubic(t) { return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2; }
+  function step(now) {
+    const p = Math.min((now - t0) / duration, 1);
+    el.scrollTop = start + delta * easeInOutCubic(p);
+    if (p < 1) requestAnimationFrame(step);
+    else calOnScroll();
+  }
+  requestAnimationFrame(step);
+}
+
 // jump the events list below to the day card that was clicked
 function calSelectDay(ts) {
   calSelectedTs = ts;
-  renderCalendarWeek();
-  const dateKey = calDateKey(new Date(ts));
-  const target = document.querySelector(`#calendar-content-economic [data-date="${dateKey}"], #calendar-content-other [data-date="${dateKey}"]`);
-  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const scrollEl = document.getElementById('calendar-scroll-area');
+  if (!scrollEl) return;
+  const dk = calDateKey(new Date(ts));
+  const target = scrollEl.querySelector(`[data-date="${dk}"]`);
+  if (target) {
+    const targetY = target.getBoundingClientRect().top - scrollEl.getBoundingClientRect().top + scrollEl.scrollTop;
+    calSmoothScrollTo(scrollEl, targetY, 560);
+  }
 }
 
 function calendarShiftWeek(delta) {
@@ -3381,18 +3445,24 @@ function renderNextEvent(key) {
   } else {
     el.innerHTML = `
       <div class="rounded-lg border cal-line1-50 overflow-hidden">
-        <div class="flex items-center gap-2 px-3 py-2.5">
-          ${logoHtml}
-          ${impactDot}
-          <div class="flex-1 min-w-0">
-            <div class="text-text1 text-[11px] font-semibold truncate">${ev.title}</div>
-            <div class="text-text2 text-[10px] mt-0.5">${ev.time}</div>
+        <div class="flex items-stretch">
+          <div class="flex flex-col items-center justify-center bg-bg2 px-3 py-3 min-w-[52px] border-r cal-line1-50 flex-shrink-0">
+            <span class="text-text1 text-[19px] font-bold leading-none">${ev.day}</span>
+            <span class="text-text2 text-[10px] mt-1.5 font-medium leading-none">${ev.month}</span>
           </div>
-          <div class="flex items-center gap-2 flex-shrink-0">
-            <span class="text-text2 text-[10px]">${ev.day} ${ev.month}</span>
-            <button onclick="toggleNextEvent()" class="w-5 h-5 flex items-center justify-center rounded text-text2 hover:text-text1 hover:bg-bg2 transition-colors">
-              <i data-lucide="chevron-up" class="w-3.5 h-3.5"></i>
-            </button>
+          <div class="flex-1 px-3 py-2.5 min-w-0">
+            <div class="flex items-start justify-between gap-1.5">
+              <div class="flex items-center gap-1.5 min-w-0">
+                ${impactDot}
+                <span class="text-text1 text-[11px] font-semibold leading-tight truncate">${ev.title}</span>
+              </div>
+              <button onclick="toggleNextEvent()" class="flex-shrink-0 text-text2 hover:text-text1 transition-colors -mr-0.5 -mt-0.5">
+                <i data-lucide="chevron-up" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+            <div class="text-text2 text-[10px] mt-1 leading-none">${ev.time}</div>
+            <p class="text-text2 text-[10px] mt-1.5 leading-relaxed line-clamp-2">${ev.desc}</p>
+            <a href="${ev.source}" target="_blank" rel="noopener" class="text-text2 text-[10px] hover:text-text1 transition-colors mt-1 inline-block">Source ↗</a>
           </div>
         </div>
       </div>`;
