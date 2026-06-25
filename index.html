@@ -2993,27 +2993,44 @@ function calFormatRange(start, end) {
 // ── Market / region filter ──
 // ── Next Event per asset ──
 const NEXT_EVENTS = {
-  'BTC-PERP': {
-    day:'27', month:'Jun', ts: new Date(2026,5,27).getTime(),
-    title:'BTC/ETH Monthly Options Expiry',
-    impact:'high', time:'Jun 27, 2026 · 08:00 UTC',
-    desc:'Deribit monthly options expiry — BTC and ETH contracts settle at the DBIT Index price at 08:00 UTC. Large open interest at key strikes can create pin risk around expiry.',
-    source:'https://www.deribit.com/statistics/BTC/options-statistics',
-  },
-  'TSLA-PERP': {
-    day:'23', month:'Jul', ts: new Date(2026,6,23).getTime(),
-    title:'TSLA Q2 2026 Earnings Release',
-    impact:'high', time:'Jul 23, 2026 · AMC',
-    desc:'Tesla Q2 earnings — analysts forecast EPS $0.68 on revenue $25.8B. Cybertruck ramp pace and energy storage margins are the key swing factors.',
-    source:'https://ir.tesla.com/',
-  },
-  'CL-PERP': {
-    day:'2', month:'Jul', ts: new Date(2026,6,2).getTime(),
-    title:'EIA Crude Oil Inventory Report',
-    impact:'medium', time:'Jul 2, 2026 · 14:30 UTC',
-    desc:'Weekly U.S. crude inventory data from the EIA. A draw above 3 MB could push WTI above key resistance. Report postponed by one day due to Jul 4 holiday.',
-    source:'https://www.eia.gov/petroleum/supply/weekly/',
-  },
+  // Crypto
+  'BTC-PERP':  { day:'27', month:'Jun', ts:new Date(2026,5,27,8,0).getTime(),   title:'BTC/ETH Monthly Options Expiry', impact:'high',   time:'Jun 27, 2026 · 08:00 UTC', desc:'Deribit monthly BTC/ETH options settle at 08:00 UTC. Large OI at key strikes creates pin risk; watch for vol crush and direction break post-expiry.', source:'https://www.deribit.com/statistics/BTC/options-statistics' },
+  'ETH-PERP':  { day:'27', month:'Jun', ts:new Date(2026,5,27,8,0).getTime(),   title:'BTC/ETH Monthly Options Expiry', impact:'high',   time:'Jun 27, 2026 · 08:00 UTC', desc:'Deribit monthly ETH options settle at 08:00 UTC. ETH gamma exposure at key strikes can amplify BTC-correlated swings around settlement.', source:'https://www.deribit.com/statistics/ETH/options-statistics' },
+  'SOL-PERP':  { day:'27', month:'Jun', ts:new Date(2026,5,27,12,30).getTime(), title:'US PCE Price Index',              impact:'high',   time:'Jun 27, 2026 · 12:30 UTC', desc:"Fed's preferred inflation gauge — a hot reading pushes back rate-cut expectations and pressures risk assets. SOL is highly sensitive to macro liquidity shifts.", source:'https://www.bea.gov/data/personal-consumption-expenditures-price-index' },
+  'BNB-PERP':  { day:'27', month:'Jun', ts:new Date(2026,5,27,8,0).getTime(),   title:'BTC/ETH Monthly Options Expiry', impact:'high',   time:'Jun 27, 2026 · 08:00 UTC', desc:'BTC options expiry is the dominant crypto risk event — correlated moves across large-caps including BNB are typical around settlement.', source:'https://www.deribit.com/statistics/BTC/options-statistics' },
+  'DOGE-PERP': { day:'27', month:'Jun', ts:new Date(2026,5,27,12,30).getTime(), title:'US PCE Price Index',              impact:'high',   time:'Jun 27, 2026 · 12:30 UTC', desc:'DOGE is a high-beta risk asset — PCE data shapes Fed rate expectations, directly driving the macro sentiment that moves meme coins.', source:'https://www.bea.gov/data/personal-consumption-expenditures-price-index' },
+  'XRP-PERP':  { day:'27', month:'Jun', ts:new Date(2026,5,27,12,30).getTime(), title:'US PCE Price Index',              impact:'high',   time:'Jun 27, 2026 · 12:30 UTC', desc:'PCE influences the Fed rate path — the key input for risk appetite. XRP trades as a large-cap macro risk asset; dovish prints drive inflows.', source:'https://www.bea.gov/data/personal-consumption-expenditures-price-index' },
+  'LTC-PERP':  { day:'27', month:'Jun', ts:new Date(2026,5,27,8,0).getTime(),   title:'BTC/ETH Monthly Options Expiry', impact:'medium', time:'Jun 27, 2026 · 08:00 UTC', desc:'LTC closely correlates with BTC post-expiry moves. Monthly options settlement is the key near-term catalyst for the broader crypto market.', source:'https://www.deribit.com/statistics/BTC/options-statistics' },
+  'SUI-PERP':  { day:'27', month:'Jun', ts:new Date(2026,5,27,12,30).getTime(), title:'US PCE Price Index',              impact:'high',   time:'Jun 27, 2026 · 12:30 UTC', desc:'PCE sets the macro tone for risk assets. SUI is a high-beta altcoin — rate expectations directly drive liquidity flows into newer L1 protocols.', source:'https://www.bea.gov/data/personal-consumption-expenditures-price-index' },
+  'HYPE-PERP': { day:'27', month:'Jun', ts:new Date(2026,5,27,12,30).getTime(), title:'US PCE Price Index',              impact:'high',   time:'Jun 27, 2026 · 12:30 UTC', desc:'PCE is the key macro trigger this week. HYPE (Hyperliquid) is highly sensitive to crypto market conditions driven by macro liquidity signals.', source:'https://www.bea.gov/data/personal-consumption-expenditures-price-index' },
+  'STX-PERP':  { day:'27', month:'Jun', ts:new Date(2026,5,27,8,0).getTime(),   title:'BTC/ETH Monthly Options Expiry', impact:'medium', time:'Jun 27, 2026 · 08:00 UTC', desc:'STX (Stacks) is a Bitcoin L2 that correlates directly with BTC price. Monthly BTC options expiry is the dominant near-term risk event.', source:'https://www.deribit.com/statistics/BTC/options-statistics' },
+  // Stocks
+  'TSLA-PERP':    { day:'23', month:'Jul', ts:new Date(2026,6,23).getTime(),    title:'TSLA Q2 2026 Earnings',          impact:'high',   time:'Jul 23, 2026 · AMC',     desc:'Tesla Q2 2026 — analysts forecast EPS $0.68 on revenue $25.8B. Cybertruck ramp and energy storage margins are the key swing factors.', source:'https://ir.tesla.com/' },
+  'NVDA-PERP':    { day:'27', month:'Aug', ts:new Date(2026,7,27).getTime(),    title:'NVDA Q2 FY2027 Earnings',        impact:'high',   time:'Aug 27, 2026 · AMC',     desc:'NVIDIA Q2 FY2027 — Blackwell GPU demand and data center revenue ($40B+ expected) are the primary movers. Supply constraints are the key risk.', source:'https://investor.nvidia.com/financial-info/quarterly-results/default.aspx' },
+  'AMD-PERP':     { day:'28', month:'Jul', ts:new Date(2026,6,28).getTime(),    title:'AMD Q2 2026 Earnings',           impact:'high',   time:'Jul 28, 2026 · AMC',     desc:'AMD Q2 2026 — MI300X AI accelerator sales and data center GPU share gains vs. NVIDIA are the key focus. Consensus EPS ~$0.75.', source:'https://ir.amd.com/' },
+  'AAPL-PERP':    { day:'31', month:'Jul', ts:new Date(2026,6,31).getTime(),    title:'AAPL Q3 FY2026 Earnings',        impact:'high',   time:'Jul 31, 2026 · AMC',     desc:'Apple Q3 FY2026 — Services revenue growth and iPhone 17 early cycle read are the key drivers. India manufacturing expansion offsets China risk.', source:'https://investor.apple.com/' },
+  'MSFT-PERP':    { day:'29', month:'Jul', ts:new Date(2026,6,29).getTime(),    title:'MSFT Q4 FY2026 Earnings',        impact:'high',   time:'Jul 29, 2026 · AMC',     desc:'Microsoft Q4 FY2026 — Azure cloud growth rate and Copilot AI monetization are the key metrics. Consensus Azure growth ~25% YoY.', source:'https://www.microsoft.com/en-us/investor' },
+  'META-PERP':    { day:'30', month:'Jul', ts:new Date(2026,6,30).getTime(),    title:'META Q2 2026 Earnings',          impact:'high',   time:'Jul 30, 2026 · AMC',     desc:'Meta Q2 2026 — Ad revenue growth and Llama AI monetization are the primary focus. Reality Labs losses remain a drag; consensus EPS ~$5.30.', source:'https://investor.fb.com/' },
+  'AMZN-PERP':    { day:'1',  month:'Aug', ts:new Date(2026,7,1).getTime(),     title:'AMZN Q2 2026 Earnings',          impact:'high',   time:'Aug 1, 2026 · AMC',      desc:'Amazon Q2 2026 — AWS growth and advertising segment revenue are the key metrics. Operating margin expansion is the main re-rating catalyst.', source:'https://ir.aboutamazon.com/' },
+  'GOOGL-PERP':   { day:'29', month:'Jul', ts:new Date(2026,6,29).getTime(),    title:'GOOGL Q2 2026 Earnings',         impact:'high',   time:'Jul 29, 2026 · AMC',     desc:'Alphabet Q2 2026 — Search resilience vs. AI disruption risk and YouTube ad growth are the focus. Google Cloud growth expected ~28% YoY.', source:'https://abc.xyz/investor/' },
+  'MU-PERP':      { day:'24', month:'Sep', ts:new Date(2026,8,24).getTime(),    title:'MU Q4 FY2026 Earnings',          impact:'high',   time:'Sep 24, 2026 · AMC',     desc:'Micron Q4 FY2026 — HBM3e memory demand for AI training chips is the critical metric. DRAM pricing cycle recovery drives consensus EPS upside.', source:'https://investors.micron.com/' },
+  'INTC-PERP':    { day:'24', month:'Jul', ts:new Date(2026,6,24).getTime(),    title:'INTC Q2 2026 Earnings',          impact:'high',   time:'Jul 24, 2026 · AMC',     desc:'Intel Q2 2026 — Foundry ramp progress and Gaudi AI GPU traction are key. Turnaround execution under new CEO is closely watched.', source:'https://www.intc.com/investor-relations/' },
+  'MSTR-PERP':    { day:'4',  month:'Aug', ts:new Date(2026,7,4).getTime(),     title:'MSTR Q2 2026 Earnings',          impact:'high',   time:'Aug 4, 2026 · AMC',      desc:'MicroStrategy Q2 2026 — Bitcoin treasury size update and new BTC purchases are the primary market movers. Software results are secondary.', source:'https://www.microstrategy.com/investor-relations' },
+  'ARM-PERP':     { day:'30', month:'Jul', ts:new Date(2026,6,30).getTime(),    title:'ARM Q1 FY2027 Earnings',         impact:'high',   time:'Jul 30, 2026 · AMC',     desc:'Arm Holdings Q1 FY2027 — royalty revenue from Armv9 adoption and AI/data center licensing momentum are the key metrics. Consensus EPS ~$0.45.', source:'https://investors.arm.com/' },
+  'WDC-PERP':     { day:'6',  month:'Aug', ts:new Date(2026,7,6).getTime(),     title:'WDC Q4 FY2026 Earnings',         impact:'medium', time:'Aug 6, 2026 · AMC',      desc:'Western Digital Q4 FY2026 — NAND flash pricing recovery and HDD demand for AI data centers. First standalone results post-SanDisk spinoff.', source:'https://investor.wdc.com/' },
+  'SNDK-PERP':    { day:'6',  month:'Aug', ts:new Date(2026,7,6).getTime(),     title:'SNDK Q2 2026 Earnings',          impact:'medium', time:'Aug 6, 2026 · AMC',      desc:'SanDisk Q2 2026 — NAND flash recovery and consumer/enterprise storage demand in its first standalone quarter post-WDC spinoff.', source:'https://investors.sandisk.com/' },
+  'SKHYNIX-PERP': { day:'24', month:'Jul', ts:new Date(2026,6,24).getTime(),    title:'SK Hynix Q2 2026 Earnings',      impact:'high',   time:'Jul 24, 2026 · KST',     desc:'SK Hynix Q2 2026 — HBM3e shipments to NVIDIA and DRAM pricing dynamics are the primary focus. Key read-through for the global memory upcycle.', source:'https://www.skhynix.com/eng/ir/' },
+  'SAMSUNG-PERP': { day:'31', month:'Jul', ts:new Date(2026,6,31).getTime(),    title:'Samsung Q2 2026 Earnings',       impact:'high',   time:'Jul 31, 2026 · KST',     desc:'Samsung Q2 2026 preliminary results — semiconductor division profitability and HBM3 market share recovery vs. SK Hynix are the key focus.', source:'https://www.samsung.com/global/ir/' },
+  'CRCL-PERP':    { day:'12', month:'Aug', ts:new Date(2026,7,12).getTime(),    title:'CRCL Q2 2026 Earnings',          impact:'high',   time:'Aug 12, 2026 · AMC',     desc:'Circle Internet Group Q2 2026 — USDC reserve yield, stablecoin volume, and post-Genius Act regulatory clarity are key metrics in its first post-IPO earnings.', source:'https://ir.circle.com/' },
+  // Commodities
+  'CL-PERP': { day:'2', month:'Jul', ts:new Date(2026,6,2,14,30).getTime(),  title:'EIA Crude Oil Inventory Report', impact:'medium', time:'Jul 2, 2026 · 14:30 UTC', desc:'Weekly U.S. crude inventory data (Jul 4 holiday shift). A draw above 3 MB could push WTI above key resistance; a build signals demand weakness.', source:'https://www.eia.gov/petroleum/supply/weekly/' },
+  'BZ-PERP':  { day:'2', month:'Jul', ts:new Date(2026,6,2,14,30).getTime(),  title:'EIA Crude Oil Inventory Report', impact:'medium', time:'Jul 2, 2026 · 14:30 UTC', desc:'U.S. crude inventory data drives Brent via arbitrage. Watch for OPEC+ compliance commentary alongside the data for the full supply picture.', source:'https://www.eia.gov/petroleum/supply/weekly/' },
+  'XAU-PERP': { day:'27', month:'Jun', ts:new Date(2026,5,27,12,30).getTime(), title:'US PCE Price Index', impact:'high', time:'Jun 27, 2026 · 12:30 UTC', desc:"Gold is the primary beneficiary of dovish PCE surprises — lower real rates drive XAU higher. A hot print above consensus could trigger a $30–50 pullback.", source:'https://www.bea.gov/data/personal-consumption-expenditures-price-index' },
+  'XAG-PERP': { day:'27', month:'Jun', ts:new Date(2026,5,27,12,30).getTime(), title:'US PCE Price Index', impact:'high', time:'Jun 27, 2026 · 12:30 UTC', desc:'Silver tracks gold on monetary drivers and also reflects industrial demand. PCE data shapes rate expectations — the key macro input for precious metals.', source:'https://www.bea.gov/data/personal-consumption-expenditures-price-index' },
+  // Indices
+  'NDX100-PERP': { day:'10', month:'Jul', ts:new Date(2026,6,10,12,30).getTime(), title:'US CPI', impact:'high', time:'Jul 10, 2026 · 12:30 UTC', desc:'NASDAQ 100 is highly sensitive to real rate changes driven by CPI. A below-consensus print pushes tech multiples higher as rate-cut expectations shift forward.', source:'https://www.bls.gov/cpi/' },
+  'SP500-PERP':  { day:'27', month:'Jun', ts:new Date(2026,5,27,12,30).getTime(), title:'US PCE Price Index', impact:'high', time:'Jun 27, 2026 · 12:30 UTC', desc:"PCE is the Fed's primary inflation benchmark. S&P 500 valuation is tied to rate expectations — a dovish surprise expands multiples across all sectors.", source:'https://www.bea.gov/data/personal-consumption-expenditures-price-index' },
+  'SPCX-PERP':   { day:'27', month:'Jun', ts:new Date(2026,5,27,12,30).getTime(), title:'US PCE Price Index', impact:'high', time:'Jun 27, 2026 · 12:30 UTC', desc:"PCE is the Fed's preferred inflation measure and the key driver of S&P 500 rate-sensitive sectors. Watch core services ex-housing for the policy signal.", source:'https://www.bea.gov/data/personal-consumption-expenditures-price-index' },
 };
 
 // Global upcoming events list — sorted ascending, keep future-only at render time
@@ -3031,15 +3048,15 @@ function calAssetEventCats(key) {
 }
 
 const UPCOMING_EVENTS = [
-  { day:'27', month:'Jun', ts: new Date(2026,5,27,8,0).getTime(),  title:'BTC/ETH Options Expiry',   impact:'high',   time:'Jun 27 · 08:00 UTC', category:'Crypto'      },
-  { day:'27', month:'Jun', ts: new Date(2026,5,27,12,30).getTime(), title:'US PCE Price Index',       impact:'high',   time:'Jun 27 · 12:30 UTC', category:'Economic'    },
-  { day:'2',  month:'Jul', ts: new Date(2026,6,2,12,30).getTime(),  title:'NFP Jobs Report',          impact:'high',   time:'Jul 2 · 12:30 UTC',  category:'Economic'    },
-  { day:'2',  month:'Jul', ts: new Date(2026,6,2,14,30).getTime(),  title:'EIA Crude Oil Inventories',impact:'medium', time:'Jul 2 · 14:30 UTC',  category:'Commodities' },
-  { day:'10', month:'Jul', ts: new Date(2026,6,10,12,30).getTime(), title:'US CPI',                   impact:'high',   time:'Jul 10 · 12:30 UTC', category:'Economic'    },
-  { day:'23', month:'Jul', ts: new Date(2026,6,23).getTime(),       title:'TSLA Q2 2026 Earnings',    impact:'high',   time:'Jul 23 · AMC',       category:'Stocks'      },
-  { day:'25', month:'Jul', ts: new Date(2026,6,25,8,0).getTime(),   title:'BTC/ETH Options Expiry',   impact:'high',   time:'Jul 25 · 08:00 UTC', category:'Crypto'      },
-  { day:'30', month:'Jul', ts: new Date(2026,6,30,12,30).getTime(), title:'US GDP Q2 Advance',        impact:'high',   time:'Jul 30 · 12:30 UTC', category:'Economic'    },
-  { day:'6',  month:'Aug', ts: new Date(2026,7,6,12,30).getTime(),  title:'NFP Jobs Report',          impact:'high',   time:'Aug 6 · 12:30 UTC',  category:'Economic'    },
+  { day:'27', month:'Jun', ts: new Date(2026,5,27,8,0).getTime(),   title:'BTC/ETH Options Expiry',    impact:'high',   time:'Jun 27 · 08:00 UTC', category:'Crypto',      source:'https://www.deribit.com/statistics/BTC/options-statistics' },
+  { day:'27', month:'Jun', ts: new Date(2026,5,27,12,30).getTime(), title:'US PCE Price Index',        impact:'high',   time:'Jun 27 · 12:30 UTC', category:'Economic',    source:'https://www.bea.gov/data/personal-consumption-expenditures-price-index' },
+  { day:'2',  month:'Jul', ts: new Date(2026,6,2,12,30).getTime(),  title:'NFP Jobs Report',           impact:'high',   time:'Jul 2 · 12:30 UTC',  category:'Economic',    source:'https://www.bls.gov/news.release/empsit.toc.htm' },
+  { day:'2',  month:'Jul', ts: new Date(2026,6,2,14,30).getTime(),  title:'EIA Crude Oil Inventories', impact:'medium', time:'Jul 2 · 14:30 UTC',  category:'Commodities', source:'https://www.eia.gov/petroleum/supply/weekly/' },
+  { day:'10', month:'Jul', ts: new Date(2026,6,10,12,30).getTime(), title:'US CPI',                    impact:'high',   time:'Jul 10 · 12:30 UTC', category:'Economic',    source:'https://www.bls.gov/cpi/' },
+  { day:'23', month:'Jul', ts: new Date(2026,6,23).getTime(),       title:'TSLA Q2 2026 Earnings',     impact:'high',   time:'Jul 23 · AMC',       category:'Stocks',      source:'https://ir.tesla.com/' },
+  { day:'25', month:'Jul', ts: new Date(2026,6,25,8,0).getTime(),   title:'BTC/ETH Options Expiry',    impact:'high',   time:'Jul 25 · 08:00 UTC', category:'Crypto',      source:'https://www.deribit.com/statistics/BTC/options-statistics' },
+  { day:'30', month:'Jul', ts: new Date(2026,6,30,12,30).getTime(), title:'US GDP Q2 Advance',         impact:'high',   time:'Jul 30 · 12:30 UTC', category:'Economic',    source:'https://www.bea.gov/data/gdp/gross-domestic-product' },
+  { day:'6',  month:'Aug', ts: new Date(2026,7,6,12,30).getTime(),  title:'NFP Jobs Report',           impact:'high',   time:'Aug 6 · 12:30 UTC',  category:'Economic',    source:'https://www.bls.gov/news.release/empsit.toc.htm' },
 ];
 
 let calNextEventOpen = true;
@@ -3628,6 +3645,7 @@ function renderNextEvent(key) {
         ${dot}
         <span class="text-text1 text-[10px] leading-tight flex-1 truncate">${u.title}</span>
         <span class="text-text2 text-[9px] flex-shrink-0 whitespace-nowrap px-1.5 py-0.5 rounded bg-bg2">${u.category}</span>
+        ${u.source ? `<a href="${u.source}" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="text-text2 text-[9px] hover:text-text1 transition-colors flex-shrink-0 leading-none">↗</a>` : ''}
       </div>`;
     }).join('');
     el.innerHTML = `
