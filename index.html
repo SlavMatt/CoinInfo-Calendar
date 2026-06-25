@@ -3222,6 +3222,9 @@ async function renderNextEvent(key) {
             ${ev.desc ? `<p class="text-text2 text-[10px] mt-1.5 leading-relaxed line-clamp-2">${ev.desc}</p>` : ''}
             ${ev.source ? `<a href="${ev.source}" target="_blank" rel="noopener" class="text-text2 text-[10px] hover:text-text1 transition-colors mt-1 inline-block">Source ↗</a>` : ''}
           </div>
+          <button onclick="toggleNextEvent()" class="flex-shrink-0 w-8 self-stretch flex items-start justify-center pt-2.5 text-text2 hover:text-text1 transition-colors border-l cal-line1-30" title="Collapse">
+            <i data-lucide="chevron-up" class="w-3.5 h-3.5"></i>
+          </button>
         </div>
         ${upcomingHtml}
       </div>`;
