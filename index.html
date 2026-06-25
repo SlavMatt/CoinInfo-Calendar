@@ -2672,6 +2672,15 @@ function renderMarketInfo(key) {
   const a = ASSETS[key];
   document.getElementById('mi-content').innerHTML =
     a.isTradFi ? _miTradFi(a, key) : _miCrypto(a, key);
+  if (!a.isTradFi) {
+    requestAnimationFrame(() => {
+      const el = document.getElementById('mi-desc-text');
+      const btn = document.getElementById('mi-exp-btn');
+      if (el && btn && el.scrollHeight > el.clientHeight) {
+        btn.style.display = 'inline-block';
+      }
+    });
+  }
 }
 
 function toggleMiDesc(btn) {
@@ -2736,6 +2745,11 @@ function _miCrypto(a, key) {
     <div class="mi-crypto-wrap">
       <div class="mi-left">${statsHtml}</div>
       <div class="mi-right">
+        <div style="margin-bottom:16px">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">${logoHtml}<div class="mi-sec-title">${a.sub}</div></div>
+          <div class="mi-about-text" id="mi-desc-text">${a.about}</div>
+          <span class="mi-exp-btn" id="mi-exp-btn" style="display:none" onclick="toggleMiDesc(this)">Expand</span>
+        </div>
         ${communityHtml?`<div class="mi-lbl" style="margin-bottom:10px">Community</div><div class="mi-res-row" style="margin-bottom:16px">${communityHtml}</div>`:''}
         <div class="mi-lbl" style="margin-bottom:10px">Resources</div>
         <div class="mi-res-row">${resHtml}</div>
