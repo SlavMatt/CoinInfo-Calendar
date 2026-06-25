@@ -1358,11 +1358,16 @@ body{
     </div>
 
     <!-- Category filter pills (sticky, separates header from scrollable events) -->
-    <div class="flex items-center gap-1.5 px-4 sm:px-[42px] py-2.5 overflow-x-auto scrollbar-none flex-shrink-0 border-b border-line1" id="calendar-tabs">
-      <button onclick="selectCalendarTab(this,'Crypto')" data-cal-tab="Crypto" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-text1 text-bg1">Crypto</button>
-      <button onclick="selectCalendarTab(this,'Economic')" data-cal-tab="Economic" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-bg2 text-text2 hover:text-text1">Economic</button>
-      <button onclick="selectCalendarTab(this,'Stocks')" data-cal-tab="Stocks" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-bg2 text-text2 hover:text-text1">Stocks</button>
-      <button onclick="selectCalendarTab(this,'Commodities')" data-cal-tab="Commodities" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-bg2 text-text2 hover:text-text1">Commodities</button>
+    <div class="flex items-center flex-shrink-0 border-b border-line1">
+      <div class="flex items-center gap-1.5 px-4 sm:px-[42px] py-2.5 overflow-x-auto scrollbar-none flex-1" id="calendar-tabs">
+        <button onclick="selectCalendarTab(this,'Crypto')" data-cal-tab="Crypto" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-text1 text-bg1">Crypto</button>
+        <button onclick="selectCalendarTab(this,'Economic')" data-cal-tab="Economic" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-bg2 text-text2 hover:text-text1">Economic</button>
+        <button onclick="selectCalendarTab(this,'Stocks')" data-cal-tab="Stocks" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-bg2 text-text2 hover:text-text1">Stocks</button>
+        <button onclick="selectCalendarTab(this,'Commodities')" data-cal-tab="Commodities" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-bg2 text-text2 hover:text-text1">Commodities</button>
+      </div>
+      <button onclick="toggleNextEvent()" id="cal-next-evt-btn" class="flex-shrink-0 pr-4 sm:pr-[42px] pl-2 py-2.5 text-text2 hover:text-text1 transition-colors" title="Toggle upcoming events">
+        <i data-lucide="chevron-down" id="cal-next-evt-icon" class="w-4 h-4 transition-transform duration-200"></i>
+      </button>
     </div>
 
   <!-- Scrollable events area only -->
@@ -2989,27 +2994,40 @@ function calFormatRange(start, end) {
 // ── Next Event per asset ──
 const NEXT_EVENTS = {
   'BTC-PERP': {
-    day:'18', month:'Jun', ts: new Date(2026,5,18).getTime(),
-    title:'FOMC Interest Rate Decision',
-    impact:'high', time:'Jun 18, 2026 · 18:00 UTC',
-    desc:'Fed expected to hold rates at 4.25–4.50%. Watch forward guidance on potential H2 cuts — BTC historically reacts sharply to rate surprises.',
-    source:'https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm',
+    day:'27', month:'Jun', ts: new Date(2026,5,27).getTime(),
+    title:'BTC/ETH Monthly Options Expiry',
+    impact:'high', time:'Jun 27, 2026 · 08:00 UTC',
+    desc:'Deribit monthly options expiry — BTC and ETH contracts settle at the DBIT Index price at 08:00 UTC. Large open interest at key strikes can create pin risk around expiry.',
+    source:'https://www.deribit.com/statistics/BTC/options-statistics',
   },
   'TSLA-PERP': {
     day:'23', month:'Jul', ts: new Date(2026,6,23).getTime(),
-    title:'Q2 2026 Earnings Release',
+    title:'TSLA Q2 2026 Earnings Release',
     impact:'high', time:'Jul 23, 2026 · AMC',
     desc:'Tesla Q2 earnings — analysts forecast EPS $0.68 on revenue $25.8B. Cybertruck ramp pace and energy storage margins are the key swing factors.',
     source:'https://ir.tesla.com/',
   },
   'CL-PERP': {
-    day:'17', month:'Jun', ts: new Date(2026,5,17).getTime(),
+    day:'2', month:'Jul', ts: new Date(2026,6,2).getTime(),
     title:'EIA Crude Oil Inventory Report',
-    impact:'medium', time:'Jun 17, 2026 · 14:30 UTC',
-    desc:'Weekly U.S. crude inventory data from the EIA. A draw above 3 MB could push WTI above the $76/barrel resistance zone.',
+    impact:'medium', time:'Jul 2, 2026 · 14:30 UTC',
+    desc:'Weekly U.S. crude inventory data from the EIA. A draw above 3 MB could push WTI above key resistance. Report postponed by one day due to Jul 4 holiday.',
     source:'https://www.eia.gov/petroleum/supply/weekly/',
   },
 };
+
+// Global upcoming events list — sorted ascending, keep future-only at render time
+const UPCOMING_EVENTS = [
+  { day:'27', month:'Jun', ts: new Date(2026,5,27,8,0).getTime(),  title:'BTC/ETH Options Expiry',   impact:'high',   time:'Jun 27 · 08:00 UTC', category:'Crypto'      },
+  { day:'27', month:'Jun', ts: new Date(2026,5,27,12,30).getTime(), title:'US PCE Price Index',       impact:'high',   time:'Jun 27 · 12:30 UTC', category:'Economic'    },
+  { day:'2',  month:'Jul', ts: new Date(2026,6,2,12,30).getTime(),  title:'NFP Jobs Report',          impact:'high',   time:'Jul 2 · 12:30 UTC',  category:'Economic'    },
+  { day:'2',  month:'Jul', ts: new Date(2026,6,2,14,30).getTime(),  title:'EIA Crude Oil Inventories',impact:'medium', time:'Jul 2 · 14:30 UTC',  category:'Commodities' },
+  { day:'10', month:'Jul', ts: new Date(2026,6,10,12,30).getTime(), title:'US CPI',                   impact:'high',   time:'Jul 10 · 12:30 UTC', category:'Economic'    },
+  { day:'23', month:'Jul', ts: new Date(2026,6,23).getTime(),       title:'TSLA Q2 2026 Earnings',    impact:'high',   time:'Jul 23 · AMC',       category:'Stocks'      },
+  { day:'25', month:'Jul', ts: new Date(2026,6,25,8,0).getTime(),   title:'BTC/ETH Options Expiry',   impact:'high',   time:'Jul 25 · 08:00 UTC', category:'Crypto'      },
+  { day:'30', month:'Jul', ts: new Date(2026,6,30,12,30).getTime(), title:'US GDP Q2 Advance',        impact:'high',   time:'Jul 30 · 12:30 UTC', category:'Economic'    },
+  { day:'6',  month:'Aug', ts: new Date(2026,7,6,12,30).getTime(),  title:'NFP Jobs Report',          impact:'high',   time:'Aug 6 · 12:30 UTC',  category:'Economic'    },
+];
 
 let calNextEventOpen = true;
 
@@ -3563,16 +3581,32 @@ function renderNextEvent(key) {
   if (!calNextEventOpen) {
     el.innerHTML = `
       <div class="rounded-lg border cal-line1-50">
-        <button onclick="toggleNextEvent()" class="w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-bg2 transition-colors rounded-lg">
+        <div class="flex items-center gap-2 px-3 py-2">
           <span class="text-[10px] font-semibold text-text2 uppercase tracking-wider whitespace-nowrap flex-shrink-0">Next</span>
           ${logoHtml}
           ${impactDot}
           <span class="text-text1 text-[11px] truncate flex-1">${ev.title}</span>
           <span class="text-text2 text-[10px] whitespace-nowrap flex-shrink-0">${ev.day} ${ev.month}</span>
-          <i data-lucide="chevron-down" class="w-3 h-3 text-text2 flex-shrink-0 ml-1"></i>
-        </button>
+        </div>
       </div>`;
   } else {
+    // Build upcoming events rows (next 5 after now, excluding the primary event)
+    const nowTs = Date.now();
+    const upcoming = UPCOMING_EVENTS.filter(u => u.ts > nowTs && u.ts !== ev.ts).slice(0,5);
+    const upcomingHtml = upcoming.map(u => {
+      const dot = u.impact === 'high'
+        ? `<span style="width:4px;height:4px;border-radius:50%;background:var(--red);flex-shrink:0;display:inline-block"></span>`
+        : `<span style="width:4px;height:4px;border-radius:50%;background:var(--orange);flex-shrink:0;display:inline-block"></span>`;
+      return `<div class="flex items-center gap-2 px-3 py-1.5 border-t cal-line1-30 hover:bg-bg2 transition-colors">
+        <div class="flex-shrink-0 text-center w-7">
+          <div class="text-text1 text-[11px] font-bold leading-none">${u.day}</div>
+          <div class="text-text2 text-[9px] leading-none mt-[2px]">${u.month}</div>
+        </div>
+        ${dot}
+        <span class="text-text1 text-[10px] leading-tight flex-1 truncate">${u.title}</span>
+        <span class="text-text2 text-[9px] flex-shrink-0 whitespace-nowrap px-1.5 py-0.5 rounded bg-bg2">${u.category}</span>
+      </div>`;
+    }).join('');
     el.innerHTML = `
       <div class="rounded-lg border cal-line1-50 overflow-hidden">
         <div class="flex items-stretch">
@@ -3581,28 +3615,30 @@ function renderNextEvent(key) {
             <span class="text-text2 text-[10px] mt-1.5 font-medium leading-none">${ev.month}</span>
           </div>
           <div class="flex-1 px-3 py-2.5 min-w-0">
-            <div class="flex items-start justify-between gap-1.5">
-              <div class="flex items-center gap-1.5 min-w-0">
-                ${impactDot}
-                <span class="text-text1 text-[11px] font-semibold leading-tight truncate">${ev.title}</span>
-              </div>
-              <button onclick="toggleNextEvent()" class="flex-shrink-0 text-text2 hover:text-text1 transition-colors -mr-0.5 -mt-0.5">
-                <i data-lucide="chevron-up" class="w-3.5 h-3.5"></i>
-              </button>
+            <div class="flex items-center gap-1.5 min-w-0">
+              ${impactDot}
+              <span class="text-text1 text-[11px] font-semibold leading-tight truncate">${ev.title}</span>
             </div>
             <div class="text-text2 text-[10px] mt-1 leading-none">${ev.time}</div>
             <p class="text-text2 text-[10px] mt-1.5 leading-relaxed line-clamp-2">${ev.desc}</p>
             <a href="${ev.source}" target="_blank" rel="noopener" class="text-text2 text-[10px] hover:text-text1 transition-colors mt-1 inline-block">Source ↗</a>
           </div>
         </div>
+        ${upcomingHtml}
       </div>`;
   }
   lucide.createIcons();
 }
 
+function updateNextEventToggle() {
+  const icon = document.getElementById('cal-next-evt-icon');
+  if (icon) icon.style.transform = calNextEventOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+}
+
 function toggleNextEvent() {
   calNextEventOpen = !calNextEventOpen;
   renderNextEvent(currentAsset);
+  updateNextEventToggle();
 }
 
 
@@ -3904,6 +3940,7 @@ renderTradingInfo('BTC-PERP');
 document.getElementById('calendar-tz-label').textContent = fmtTz(calTzOffset);
 renderCalendarWeek();
 renderNextEvent('BTC-PERP');
+updateNextEventToggle();
 
 // ── Slider drag ──
 const track=document.getElementById('sldr');
