@@ -2967,7 +2967,7 @@ function calHash(n) { const x = Math.sin(n) * 10000; return x - Math.floor(x); }
 function calCountsFor(date, dayIdx, offset) {
   const key = calDateKey(date);
   if (calCountsCache[key]) return calCountsCache[key];
-  if (offset === 0) return { crypto: 0, stock: 0, commodities: 0, ipo: 0 };
+  if (offset === 0) return { crypto: 0, economic: 0, stocks: 0, commodities: 0 };
   const seed = date.getFullYear() * 372 + date.getMonth() * 31 + date.getDate();
   const isWeekend = dayIdx >= 5;
   return {
@@ -3017,6 +3017,19 @@ const NEXT_EVENTS = {
 };
 
 // Global upcoming events list — sorted ascending, keep future-only at render time
+// Returns which event categories are relevant for a given asset key
+function calAssetEventCats(key) {
+  if (!key) return ['Crypto','Economic','Stocks','Commodities'];
+  const sym = key.replace(/-PERP$/,'');
+  const CRYPTO = ['BTC','ETH','SOL','BNB','DOGE','XRP','LTC','SUI','HYPE','STX'];
+  const STOCKS = ['TSLA','NVDA','AMD','AAPL','MSFT','META','AMZN','GOOGL','MU','INTC','MSTR','ARM','WDC','SNDK','SKHYNIX','SAMSUNG','CRCL'];
+  const COMMOD = ['CL','BZ','XAU','XAG','NDX100','SP500','SPCX'];
+  if (CRYPTO.includes(sym))  return ['Crypto','Economic'];
+  if (STOCKS.includes(sym))  return ['Stocks','Economic'];
+  if (COMMOD.includes(sym))  return ['Commodities','Economic'];
+  return ['Crypto','Economic','Stocks','Commodities'];
+}
+
 const UPCOMING_EVENTS = [
   { day:'27', month:'Jun', ts: new Date(2026,5,27,8,0).getTime(),  title:'BTC/ETH Options Expiry',   impact:'high',   time:'Jun 27 · 08:00 UTC', category:'Crypto'      },
   { day:'27', month:'Jun', ts: new Date(2026,5,27,12,30).getTime(), title:'US PCE Price Index',       impact:'high',   time:'Jun 27 · 12:30 UTC', category:'Economic'    },
@@ -3335,10 +3348,16 @@ async function fetchWeekCounts(start) {
     const res = await fetch(`${CAL_API}/api/counts?from=${from}&to=${to}`);
     if (!res.ok) return;
     const data = await res.json();
-    // Fill zeros for days with no events so they never fall back to stale placeholders
+    // Normalize API key names + fill zeros for missing days
     for (let i = 0; i < 7; i++) {
       const dk = calDateKey(calAddDays(start, i));
       if (!data[dk]) data[dk] = { crypto: 0, economic: 0, stocks: 0, commodities: 0 };
+      const d = data[dk];
+      // Backend returns 'stock' (no s) and may return 'macro' instead of 'economic'
+      if (d.stocks === undefined) d.stocks = d.stock ?? 0;
+      if (d.economic === undefined) d.economic = d.macro ?? 0;
+      d.crypto = d.crypto ?? 0;
+      d.commodities = d.commodities ?? 0;
     }
     Object.assign(calCountsCache, data);
     if (calDateKey(calWeekStart(calWeekOffset)) !== from) return;
@@ -3578,21 +3597,25 @@ function renderNextEvent(key) {
     ? `<span style="width:5px;height:5px;border-radius:50%;background:var(--red);flex-shrink:0;display:inline-block"></span>`
     : `<span style="width:5px;height:5px;border-radius:50%;background:var(--orange);flex-shrink:0;display:inline-block"></span>`;
 
+  const assetCats = calAssetEventCats(key);
+
   if (!calNextEventOpen) {
     el.innerHTML = `
       <div class="rounded-lg border cal-line1-50">
-        <div class="flex items-center gap-2 px-3 py-2">
+        <button onclick="toggleNextEvent()" class="w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-bg2 transition-colors rounded-lg">
           <span class="text-[10px] font-semibold text-text2 uppercase tracking-wider whitespace-nowrap flex-shrink-0">Next</span>
           ${logoHtml}
           ${impactDot}
           <span class="text-text1 text-[11px] truncate flex-1">${ev.title}</span>
           <span class="text-text2 text-[10px] whitespace-nowrap flex-shrink-0">${ev.day} ${ev.month}</span>
-        </div>
+        </button>
       </div>`;
   } else {
-    // Build upcoming events rows (next 5 after now, excluding the primary event)
+    // Build upcoming events rows — filter to asset-relevant categories, max 5
     const nowTs = Date.now();
-    const upcoming = UPCOMING_EVENTS.filter(u => u.ts > nowTs && u.ts !== ev.ts).slice(0,5);
+    const upcoming = UPCOMING_EVENTS
+      .filter(u => u.ts > nowTs && u.ts !== ev.ts && assetCats.includes(u.category))
+      .slice(0, 5);
     const upcomingHtml = upcoming.map(u => {
       const dot = u.impact === 'high'
         ? `<span style="width:4px;height:4px;border-radius:50%;background:var(--red);flex-shrink:0;display:inline-block"></span>`
