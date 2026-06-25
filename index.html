@@ -1952,11 +1952,7 @@ function toggleMiDesc(btn) {
 }
 
 function _miTradFi(a, key) {
-  const linkBtns = a.links.map(l=>`
-    <a class="link-ico-btn" href="${l.href}" target="_blank">
-      ${ICONS[l.icon]||ICONS.globe}
-      <span class="link-tooltip">${l.tip}</span>
-    </a>`).join('');
+  const resHtml = (a.links||[]).map(l=>`<a class="mi-res-btn" href="${l.href}" target="_blank">${ICONS[l.icon]||ICONS.globe}${LINK_LABEL_CN[l.icon]||l.tip}</a>`).join('');
   return `
     <div class="mi-wrap">
       <div class="mi-top-row">
@@ -1969,7 +1965,7 @@ function _miTradFi(a, key) {
           <p class="about-p" style="margin-bottom:0">${a.about}</p>
         </div>
       </div>
-      ${linkBtns ? `<div class="mi-sec"><div class="mi-lbl">Links</div><div class="link-icons">${linkBtns}</div></div>` : ''}
+      ${resHtml ? `<div class="mi-sec"><div class="mi-lbl">Resources</div><div class="mi-res-row">${resHtml}</div></div>` : ''}
     </div>`;
 }
 
