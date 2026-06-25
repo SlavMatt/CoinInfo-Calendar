@@ -340,6 +340,28 @@ body{
 }
 .link-ico-btn:hover .link-tooltip{opacity:1}
 
+/* ── Market Info — Crypto full layout ── */
+.mi-crypto-wrap{padding:18px 20px 24px;display:flex;gap:0;min-height:0}
+.mi-left{width:248px;min-width:200px;flex-shrink:0;border-right:1px solid var(--line1);padding-right:20px;padding-bottom:8px}
+.mi-right{flex:1;min-width:0;padding-left:24px}
+.mi-stat-row{display:flex;justify-content:space-between;align-items:flex-start;padding:7px 0;border-bottom:1px solid var(--line1);gap:8px}
+.mi-stat-sep{height:10px}
+.mi-stat-k{font-size:12px;color:var(--t2);flex-shrink:0}
+.mi-stat-v{font-size:12px;font-weight:500;color:var(--t1)}
+.mi-stat-v.grn{color:var(--green)}
+.mi-stat-date{font-size:11px;color:var(--t4);text-align:right;margin-top:1px}
+.mi-sec-title{font-size:14px;font-weight:700;color:var(--t1);margin-bottom:8px}
+.mi-about-text{font-size:13px;line-height:1.65;color:var(--t2);display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+.mi-about-text.exp{display:block;-webkit-line-clamp:unset}
+.mi-exp-btn{font-size:13px;color:var(--green);cursor:pointer;margin-top:4px;display:inline-block}
+.mi-community-row{display:flex;flex-wrap:wrap;gap:8px}
+.mi-community-btn{display:inline-flex;align-items:center;gap:7px;padding:6px 14px;border-radius:8px;border:1px solid var(--line1);background:var(--bg2);font-size:13px;color:var(--t1);text-decoration:none;transition:border-color .15s}
+.mi-community-btn:hover{border-color:var(--t2)}
+.mi-res-row{display:flex;flex-wrap:wrap;gap:8px}
+.mi-res-btn{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:8px;border:1px solid var(--line1);background:var(--bg2);font-size:12px;color:var(--t2);text-decoration:none;transition:border-color .15s,color .15s}
+.mi-res-btn:hover{border-color:var(--t2);color:var(--t1)}
+.mi-disclaimer-txt{font-size:11px;color:var(--t4);line-height:1.55;margin-top:16px}
+
 /* ── Contract Info ── */
 .ci-wrap{padding:20px 24px}
 .ci-row{
@@ -1789,10 +1811,20 @@ const ASSETS = {
       {k:'Circulating Supply',v:'20,028,200'},{k:'Max Supply',v:'21,000,000'},
     ],
     dataSrc:'Data: CoinMarketCap',
+    rank:'#1', dominance:'60.44%',
+    launchDate:'2009-01-03',
+    ath:'$108,268', athDate:'Jan 20, 2025',
+    atl:'$0.04865', atlDate:'Jul 14, 2010',
+    chain:'BTC',
+    totalSupply:'20,028,200', circulatingRate:'95.37%',
+    community:[
+      {tip:'Reddit', href:'https://reddit.com/r/bitcoin', icon:'reddit'},
+    ],
     fundingRate:'+0.0100%', fundingPos:true, interval:'8h', annualized:'+10.95%', annualizedPos:true,
     links:[
       {tip:'Official Website', href:'https://bitcoin.org', icon:'globe'},
       {tip:'Whitepaper',       href:'https://bitcoin.org/bitcoin.pdf', icon:'doc'},
+      {tip:'GitHub',           href:'https://github.com/bitcoin/bitcoin', icon:'github'},
       {tip:'Block Explorer',   href:'https://mempool.space', icon:'grid'},
     ],
     contractInfo:{
@@ -1888,42 +1920,88 @@ const ICONS = {
   github:`<svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1C5.03 1 1 5.03 1 10c0 3.98 2.58 7.36 6.16 8.55.45.08.61-.2.61-.44v-1.54c-2.5.54-3.03-1.2-3.03-1.2-.41-1.04-1-1.32-1-1.32-.82-.56.06-.55.06-.55.9.06 1.38.93 1.38.93.8 1.37 2.1.97 2.62.74.08-.58.31-.97.57-1.19-2-.23-4.1-1-4.1-4.44 0-.98.35-1.78.93-2.41-.09-.23-.4-1.14.09-2.37 0 0 .76-.24 2.48.93A8.6 8.6 0 0110 5.7c.77 0 1.54.1 2.26.31 1.72-1.17 2.48-.93 2.48-.93.49 1.23.18 2.14.09 2.37.58.63.93 1.43.93 2.41 0 3.45-2.1 4.2-4.1 4.44.32.28.61.82.61 1.66v2.47c0 .24.16.52.62.44A9.01 9.01 0 0019 10c0-4.97-4.03-9-9-9z"/></svg>`,
   chart:`<svg width="18" height="18" fill="none" viewBox="0 0 20 20"><path d="M3 14l4-5 4 3 4-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="2" y="2" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.5"/></svg>`,
   shield:`<svg width="18" height="18" fill="none" viewBox="0 0 20 20"><path d="M10 2l7 3v5c0 4-3 7-7 8-4-1-7-4-7-8V5l7-3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M7 10l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  reddit:`<svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1C5.03 1 1 5.03 1 10s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm4.97 9.5c.02-.17.03-.33.03-.5 0-1.1-.9-2-2-2-.49 0-.93.18-1.27.47A7.19 7.19 0 0010 7.99a7.19 7.19 0 00-1.73.48A2 2 0 005.03 10c0 .17.01.33.03.5C4.4 10.96 4 11.7 4 12.5c0 1.93 2.69 3.5 6 3.5s6-1.57 6-3.5c0-.8-.4-1.54-1.03-2zm-7.47.88c0-.47.38-.85.85-.85.47 0 .85.38.85.85s-.38.85-.85.85a.85.85 0 01-.85-.85zm4.33 2.42a2.8 2.8 0 01-1.83.6 2.8 2.8 0 01-1.83-.6.3.3 0 01.42-.42c.36.36 1.02.58 1.41.58.39 0 1.05-.22 1.41-.58a.3.3 0 01.42.42zm-.18-1.57a.85.85 0 110-1.7.85.85 0 010 1.7zm2.27-4.1a.9.9 0 110 1.8.9.9 0 010-1.8z"/></svg>`,
 };
 
 let currentAsset = 'BTC-PERP';
 
+const LINK_LABEL_CN = {globe:'官网', doc:'白皮书', github:'GitHub', grid:'区块链浏览器', chart:'TradingView'};
+
 function renderMarketInfo(key) {
   const a = ASSETS[key];
-  const rows = a.marketData.map(({k,v})=>`<div class="dr"><span class="dk">${k}</span><span class="dv">${v}</span></div>`).join('');
+  document.getElementById('mi-content').innerHTML =
+    a.isTradFi ? _miTradFi(a, key) : _miCrypto(a, key);
+}
+
+function toggleMiDesc(btn) {
+  const el = document.getElementById('mi-desc-text');
+  if (!el) return;
+  el.classList.toggle('exp');
+  btn.textContent = el.classList.contains('exp') ? '收起' : '展开';
+}
+
+function _miTradFi(a, key) {
   const linkBtns = a.links.map(l=>`
     <a class="link-ico-btn" href="${l.href}" target="_blank">
       ${ICONS[l.icon]||ICONS.globe}
       <span class="link-tooltip">${l.tip}</span>
     </a>`).join('');
-  document.getElementById('mi-content').innerHTML = `
+  return `
     <div class="mi-wrap">
       <div class="mi-top-row">
         <div class="mi-asset-header">
           <div class="mi-asset-ico" style="background:${LOGOS[key]?'transparent':a.icoColor};font-size:${a.icoSize}">${LOGOS[key]?`<img src="${LOGOS[key]}" width="40" height="40" style="border-radius:50%;display:block">`:a.icoLabel}</div>
-          <div class="mi-asset-info">
-            <div class="mi-asset-ticker">${a.sub}</div>
-          </div>
+          <div class="mi-asset-info"><div class="mi-asset-ticker">${a.sub}</div></div>
         </div>
         <div class="mi-about-inline">
           <div class="mi-lbl">About</div>
           <p class="about-p" style="margin-bottom:0">${a.about}</p>
         </div>
       </div>
-      <hr class="mi-div"/>
-      <div class="mi-sec">
-        <div class="mi-lbl">Market Data</div>
-        <div class="dgrid">${rows}</div>
-        <div class="dsrc">${a.dataSrc}</div>
-      </div>
-      <hr class="mi-div"/>
-      <div class="mi-sec">
-        <div class="mi-lbl">Links</div>
-        <div class="link-icons">${linkBtns}</div>
+      ${linkBtns ? `<hr class="mi-div"/><div class="mi-sec"><div class="mi-lbl">Links</div><div class="link-icons">${linkBtns}</div></div>` : ''}
+    </div>`;
+}
+
+function _miCrypto(a, key) {
+  const md = {};
+  (a.marketData||[]).forEach(({k,v})=>{ md[k]=v; });
+  const stats = [
+    {k:'排名', v: md['Rank']||a.rank||'—', cls:'grn'},
+    {k:'市值', v: md['Market Cap']||'—'},
+    {k:'完全稀释市值', v: md['FDV']||'—'},
+    {k:'交易额 / 市值', v: md['Vol / MCap']||'—'},
+    {k:'市场占有率', v: md['Market Dominance']||a.dominance||'—'},
+    null,
+    {k:'发行时间', v: a.launchDate||'—'},
+    {k:'历史最高价', v: a.ath||'—', sub: a.athDate||''},
+    {k:'历史最低价', v: a.atl||'—', sub: a.atlDate||''},
+    {k:'所属公链', v: a.chain||'—'},
+    null,
+    {k:'流通供应量', v: md['Circulating Supply']||'—'},
+    {k:'最大供应量', v: md['Max Supply']||'—'},
+    {k:'总供应量', v: a.totalSupply||md['Circulating Supply']||'—'},
+    {k:'流通率', v: a.circulatingRate||'—'},
+  ];
+  const statsHtml = stats.map(s=>{
+    if (!s) return '<div class="mi-stat-sep"></div>';
+    return `<div class="mi-stat-row"><span class="mi-stat-k">${s.k}</span><div style="text-align:right"><div class="mi-stat-v${s.cls?' '+s.cls:''}">${s.v}</div>${s.sub?`<div class="mi-stat-date">${s.sub}</div>`:''}</div></div>`;
+  }).join('');
+  const communityHtml = (a.community||[]).map(c=>`<a class="mi-community-btn" href="${c.href}" target="_blank">${ICONS[c.icon]||''}${c.tip}</a>`).join('');
+  const resHtml = (a.links||[]).map(l=>`<a class="mi-res-btn" href="${l.href}" target="_blank">${ICONS[l.icon]||ICONS.globe}${LINK_LABEL_CN[l.icon]||l.tip}</a>`).join('');
+  const ticker = key.replace('-PERP','');
+  return `
+    <div class="mi-crypto-wrap">
+      <div class="mi-left">${statsHtml}</div>
+      <div class="mi-right">
+        <div style="margin-bottom:16px">
+          <div class="mi-sec-title">${ticker} 简介</div>
+          <div class="mi-about-text" id="mi-desc-text">${a.about}</div>
+          <span class="mi-exp-btn" onclick="toggleMiDesc(this)">展开</span>
+        </div>
+        ${communityHtml?`<div class="mi-lbl" style="margin-bottom:10px">社区</div><div class="mi-community-row" style="margin-bottom:16px">${communityHtml}</div>`:''}
+        <div class="mi-lbl" style="margin-bottom:10px">资源</div>
+        <div class="mi-res-row">${resHtml}</div>
+        <div class="mi-disclaimer-txt">免责声明：数据由 CoinMarketCap 及 CoinGecko 提供，不作为投资决策参考。</div>
       </div>
     </div>`;
 }
