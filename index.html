@@ -1920,7 +1920,7 @@ const ASSETS = {
     high:'5,510.20', low:'5,455.30', change:'+28.40/+0.52%', changePos:true, vol:'4.82 M', oi:'12.45M',
     isTradFi:true, basePrice:5450, priceRange:80,
     tradingHours:'CME · Mon–Fri  09:30–16:15 ET  (UTC−5)',
-    about:'SP500 tracks the performance of 500 leading publicly traded companies listed in the United States. The index represents large capitalization U.S. equities across all major sectors, including technology, healthcare, financials, consumer discretionary, energy, and industrials, and accounts for approximately 80% of total U.S. market capitalization.',
+    about:'S&P 500 is a stock market index tracking the stock performance of 500 leading companies listed on stock exchanges in the United States, representing approximately 80% of total U.S. market capitalization.',
     marketData:[
       {k:'Components',v:'503'},{k:'P/E Ratio (TTM)',v:'26.8'},
       {k:'Sector Coverage',v:'11 Sectors'},{k:'Rebalance',v:'Quarterly'},
@@ -1934,6 +1934,39 @@ const ASSETS = {
     contractInfo:{
       left:[
         {k:'Symbol',v:'SP500-PERP'},{k:'Margin Asset',v:'USDC'},
+        {k:'Tick Size',v:'0.01 USDC'},{k:'Max Leverage',v:'20X'},
+      ],
+      right:[
+        {k:'IMR',v:'5.00%'},{k:'MMR',v:'1.25%'},
+        {k:'Min Order Qty',v:'0.01'},{k:'Max Market / Limit Qty',v:'100 / 200'},
+      ],
+      tiers:[
+        {lev:'20X',max:'1.00M'},{lev:'15X',max:'2.00M'},{lev:'12X',max:'3.00M'},
+        {lev:'10X',max:'5.00M'},{lev:'8X',max:'8.00M'},{lev:'5X',max:'15.00M'},
+      ],
+    },
+  },
+  'NDX100-PERP': {
+    name:'NDX100-PERP', sub:'Nasdaq-100 Index', category:'Index', icoColor:'#0C3B8C', icoLabel:'N', icoSize:'13px',
+    price:'19,284.52', priceColor:'var(--green)',
+    oracle:'19,278.30', funding:'+0.01%', fundingSign:1,
+    high:'19,420.10', low:'19,180.60', change:'+186.40/+0.98%', changePos:true, vol:'3.24 M', oi:'9.87M',
+    isTradFi:true, basePrice:19200, priceRange:300,
+    tradingHours:'CME · Mon–Fri  09:30–16:15 ET  (UTC−5)',
+    about:'The Nasdaq-100 Index® includes 100 of the largest domestic and international non-financial companies listed on The Nasdaq Stock Market based on market capitalization.',
+    marketData:[
+      {k:'Components',v:'100'},{k:'Index Type',v:'Modified Cap-Weighted'},
+      {k:'Sector Focus',v:'Technology-heavy'},{k:'Rebalance',v:'Annual'},
+      {k:'Launched',v:'Jan 31, 1985'},{k:'Index Sponsor',v:'Nasdaq'},
+    ],
+    dataSrc:'Data: Nasdaq',
+    fundingRate:'+0.0100%', fundingPos:true, interval:'8h', annualized:'+10.95%', annualizedPos:true,
+    links:[
+      {tip:'Nasdaq Index', href:'https://indexes.nasdaqomx.com/Index/Overview/NDX', icon:'globe'},
+    ],
+    contractInfo:{
+      left:[
+        {k:'Symbol',v:'NDX100-PERP'},{k:'Margin Asset',v:'USDC'},
         {k:'Tick Size',v:'0.01 USDC'},{k:'Max Leverage',v:'20X'},
       ],
       right:[
