@@ -765,6 +765,11 @@ body{
 .scrollbar-none::-webkit-scrollbar{display:none}
 .scrollbar-none{-ms-overflow-style:none;scrollbar-width:none}
 
+/* ── Calendar day card scroll-active highlight ── */
+#calendar-week-cards button.cal-day-viewing{background:rgba(42,46,55,.7);border-color:rgba(133,138,147,.55)}
+/* ── Calendar drawer header separator ── */
+#calendar-drawer>div:first-of-type{border-bottom:1px solid var(--line1)}
+
 /* ── Economic Calendar trigger ── */
 .abar-right{
   position:absolute;right:8px;top:50%;transform:translateY(-50%);
@@ -1211,15 +1216,11 @@ body{
     </button>
   </div>
 
-  <!-- Next Event card (pinned below header, above toolbar) -->
-  <div id="calendar-next-event" class="px-4 sm:px-[42px] pt-2 pb-2 flex-shrink-0"></div>
+  <!-- Next Event card -->
+  <div id="calendar-next-event" class="px-4 sm:px-[42px] py-2 flex-shrink-0"></div>
 
-  <!-- Event time table (below Next Event, above calendar) -->
-  <div id="calendar-event-table" class="px-4 sm:px-[42px] pb-4 flex-shrink-0"></div>
-
-  <div class="flex-1 overflow-y-auto">
-    <!-- Date Nav Toolbar -->
-    <div id="calendar-toolbar" class="flex items-center gap-1 px-4 sm:px-[42px] py-3">
+  <!-- Date Nav Toolbar (sticky) -->
+  <div id="calendar-toolbar" class="flex items-center gap-1 px-4 sm:px-[42px] py-3 flex-shrink-0">
       <button onclick="calendarGoToday()" class="px-2 py-1 rounded text-xs font-medium text-text1 bg-bg2 hover:bg-line1 transition-colors">Today</button>
       <div class="relative">
         <button data-cal-popup-trigger onclick="toggleCalendarDatePicker(event)" class="w-7 h-7 flex items-center justify-center rounded text-text2 hover:text-text1 hover:bg-bg2 transition-colors"><i data-lucide="calendar-days" class="w-3.5 h-3.5"></i></button>
@@ -1247,53 +1248,55 @@ body{
       </button>
     </div>
 
-    <!-- Week day cards -->
-    <div class="flex gap-2 px-4 sm:px-[42px] py-4 overflow-x-auto scrollbar-none" id="calendar-week-cards">
+    <!-- Week day cards (sticky) -->
+    <div class="flex gap-2 px-4 sm:px-[42px] py-3 overflow-x-auto scrollbar-none flex-shrink-0" id="calendar-week-cards">
       <button class="flex flex-col items-start gap-2 px-2.5 py-3 rounded-lg border border-line1 hover:border-text2/40 transition-colors">
         <span class="text-text2 text-[10px] leading-none">Mon</span>
         <span class="text-[15px] font-bold leading-none text-text1 border-b-2 border-text1">15</span>
-        <div class="w-full flex flex-col gap-[5px] mt-0.5"><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Crypto</span><span class="text-text1 text-[10px] leading-none font-medium">3</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Stock</span><span class="text-text1 text-[10px] leading-none font-medium">110</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Commodities</span><span class="text-text1 text-[10px] leading-none font-medium">43</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">IPO</span><span class="text-text1 text-[10px] leading-none font-medium">1</span></div></div>
+        <div class="w-full flex flex-col gap-[5px] mt-0.5"><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Macro</span><span class="text-text1 text-[10px] leading-none font-medium">3</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Earnings</span><span class="text-text1 text-[10px] leading-none font-medium">8</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Crypto</span><span class="text-text1 text-[10px] leading-none font-medium">1</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Commodities</span><span class="text-text1 text-[10px] leading-none font-medium">2</span></div></div>
       </button>
       <button class="flex flex-col items-start gap-2 px-2.5 py-3 rounded-lg border border-line1 hover:border-text2/40 transition-colors">
         <span class="text-text2 text-[10px] leading-none">Tue</span>
         <span class="text-[15px] font-bold leading-none text-text1 border-b-2 border-transparent">16</span>
-        <div class="w-full flex flex-col gap-[5px] mt-0.5"><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Crypto</span><span class="text-text1 text-[10px] leading-none font-medium">2</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Stock</span><span class="text-text1 text-[10px] leading-none font-medium">67</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Commodities</span><span class="text-text1 text-[10px] leading-none font-medium">48</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">IPO</span><span class="text-text1 text-[10px] leading-none font-medium">1</span></div></div>
+        <div class="w-full flex flex-col gap-[5px] mt-0.5"><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Macro</span><span class="text-text1 text-[10px] leading-none font-medium">2</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Earnings</span><span class="text-text1 text-[10px] leading-none font-medium">5</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Crypto</span><span class="text-text2/30 text-[10px] leading-none font-medium">0</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Commodities</span><span class="text-text1 text-[10px] leading-none font-medium">1</span></div></div>
       </button>
       <button class="flex flex-col items-start gap-2 px-2.5 py-3 rounded-lg border border-line1 hover:border-text2/40 transition-colors">
         <span class="text-text2 text-[10px] leading-none">Wed</span>
         <span class="text-[15px] font-bold leading-none text-text1 border-b-2 border-transparent">17</span>
-        <div class="w-full flex flex-col gap-[5px] mt-0.5"><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Crypto</span><span class="text-text1 text-[10px] leading-none font-medium">5</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Stock</span><span class="text-text1 text-[10px] leading-none font-medium">50</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Commodities</span><span class="text-text1 text-[10px] leading-none font-medium">68</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">IPO</span><span class="text-text2/30 text-[10px] leading-none font-medium">0</span></div></div>
+        <div class="w-full flex flex-col gap-[5px] mt-0.5"><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Macro</span><span class="text-text1 text-[10px] leading-none font-medium">1</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Earnings</span><span class="text-text1 text-[10px] leading-none font-medium">6</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Crypto</span><span class="text-text2/30 text-[10px] leading-none font-medium">0</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Commodities</span><span class="text-text1 text-[10px] leading-none font-medium">2</span></div></div>
       </button>
       <button class="flex flex-col items-start gap-2 px-2.5 py-3 rounded-lg border border-line1 hover:border-text2/40 transition-colors">
         <span class="text-text2 text-[10px] leading-none">Thu</span>
         <span class="text-[15px] font-bold leading-none text-text1 border-b-2 border-transparent">18</span>
-        <div class="w-full flex flex-col gap-[5px] mt-0.5"><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Crypto</span><span class="text-text1 text-[10px] leading-none font-medium">8</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Stock</span><span class="text-text1 text-[10px] leading-none font-medium">73</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Commodities</span><span class="text-text1 text-[10px] leading-none font-medium">63</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">IPO</span><span class="text-text1 text-[10px] leading-none font-medium">1</span></div></div>
+        <div class="w-full flex flex-col gap-[5px] mt-0.5"><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Macro</span><span class="text-text1 text-[10px] leading-none font-medium">2</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Earnings</span><span class="text-text1 text-[10px] leading-none font-medium">4</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Crypto</span><span class="text-text2/30 text-[10px] leading-none font-medium">0</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Commodities</span><span class="text-text1 text-[10px] leading-none font-medium">1</span></div></div>
       </button>
       <button class="flex flex-col items-start gap-2 px-2.5 py-3 rounded-lg border border-line1 hover:border-text2/40 transition-colors">
         <span class="text-text2 text-[10px] leading-none">Fri</span>
         <span class="text-[15px] font-bold leading-none text-text1 border-b-2 border-transparent">19</span>
-        <div class="w-full flex flex-col gap-[5px] mt-0.5"><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Crypto</span><span class="text-text1 text-[10px] leading-none font-medium">2</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Stock</span><span class="text-text1 text-[10px] leading-none font-medium">29</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Commodities</span><span class="text-text1 text-[10px] leading-none font-medium">45</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">IPO</span><span class="text-text1 text-[10px] leading-none font-medium">1</span></div></div>
+        <div class="w-full flex flex-col gap-[5px] mt-0.5"><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Macro</span><span class="text-text1 text-[10px] leading-none font-medium">1</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Earnings</span><span class="text-text1 text-[10px] leading-none font-medium">3</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Crypto</span><span class="text-text2/30 text-[10px] leading-none font-medium">0</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Commodities</span><span class="text-text1 text-[10px] leading-none font-medium">1</span></div></div>
       </button>
       <button class="flex flex-col items-start gap-2 px-2.5 py-3 rounded-lg border border-line1 hover:border-text2/40 transition-colors">
         <span class="text-text2 text-[10px] leading-none">Sat</span>
         <span class="text-[15px] font-bold leading-none text-text1 border-b-2 border-transparent">20</span>
-        <div class="w-full flex flex-col gap-[5px] mt-0.5"><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Crypto</span><span class="text-text1 text-[10px] leading-none font-medium">1</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Stock</span><span class="text-text2/30 text-[10px] leading-none font-medium">0</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Commodities</span><span class="text-text1 text-[10px] leading-none font-medium">3</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">IPO</span><span class="text-text2/30 text-[10px] leading-none font-medium">0</span></div></div>
+        <div class="w-full flex flex-col gap-[5px] mt-0.5"><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Macro</span><span class="text-text2/30 text-[10px] leading-none font-medium">0</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Earnings</span><span class="text-text2/30 text-[10px] leading-none font-medium">0</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Crypto</span><span class="text-text1 text-[10px] leading-none font-medium">1</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Commodities</span><span class="text-text2/30 text-[10px] leading-none font-medium">0</span></div></div>
       </button>
       <button class="flex flex-col items-start gap-2 px-2.5 py-3 rounded-lg border border-line1 hover:border-text2/40 transition-colors">
         <span class="text-text2 text-[10px] leading-none">Sun</span>
         <span class="text-[15px] font-bold leading-none text-text1 border-b-2 border-transparent">21</span>
-        <div class="w-full flex flex-col gap-[5px] mt-0.5"><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Crypto</span><span class="text-text2/30 text-[10px] leading-none font-medium">0</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Stock</span><span class="text-text2/30 text-[10px] leading-none font-medium">0</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Commodities</span><span class="text-text2/30 text-[10px] leading-none font-medium">0</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">IPO</span><span class="text-text2/30 text-[10px] leading-none font-medium">0</span></div></div>
+        <div class="w-full flex flex-col gap-[5px] mt-0.5"><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Macro</span><span class="text-text2/30 text-[10px] leading-none font-medium">0</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Earnings</span><span class="text-text2/30 text-[10px] leading-none font-medium">0</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Crypto</span><span class="text-text2/30 text-[10px] leading-none font-medium">0</span></div><div class="flex items-center justify-between w-full gap-1"><span class="text-text2 text-[10px] leading-none">Commodities</span><span class="text-text2/30 text-[10px] leading-none font-medium">0</span></div></div>
       </button>
     </div>
 
-    <!-- Category filter pills -->
-    <div class="flex items-center gap-1.5 px-4 sm:px-[42px] py-3 overflow-x-auto scrollbar-none" id="calendar-tabs">
-      <button onclick="selectCalendarTab(this,'Crypto')" data-cal-tab="Crypto" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-text1 text-bg1">Crypto</button>
-      <button onclick="selectCalendarTab(this,'Stock')" data-cal-tab="Stock" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-bg2 text-text2 hover:text-text1">Stock</button>
+    <!-- Category filter pills (sticky, separates header from scrollable events) -->
+    <div class="flex items-center gap-1.5 px-4 sm:px-[42px] py-2.5 overflow-x-auto scrollbar-none flex-shrink-0 border-b border-line1" id="calendar-tabs">
+      <button onclick="selectCalendarTab(this,'Macro')" data-cal-tab="Macro" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-text1 text-bg1">Macro</button>
+      <button onclick="selectCalendarTab(this,'Earnings')" data-cal-tab="Earnings" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-bg2 text-text2 hover:text-text1">Earnings</button>
+      <button onclick="selectCalendarTab(this,'Crypto')" data-cal-tab="Crypto" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-bg2 text-text2 hover:text-text1">Crypto</button>
       <button onclick="selectCalendarTab(this,'Commodities')" data-cal-tab="Commodities" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-bg2 text-text2 hover:text-text1">Commodities</button>
-      <button onclick="selectCalendarTab(this,'IPO')" data-cal-tab="IPO" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-bg2 text-text2 hover:text-text1">IPO</button>
     </div>
 
+  <!-- Scrollable events area only -->
+  <div class="flex-1 overflow-y-auto" id="calendar-scroll-area">
     <!-- Tab content: Economic -->
     <div id="calendar-content-economic">
       <div class="grid items-center gap-0 mx-4 sm:mx-[42px] py-2 cal-bg2-50 border-b border-line1" data-date="2026-06-15" style="grid-template-columns:48px 28px 1fr 64px 64px 64px;border-left:3px solid var(--t1)">
@@ -1656,10 +1659,10 @@ body{
       </div>
     </div>
 
-    <!-- Tab content: Earnings / Revenue / Dividends / IPO (rendered by renderCalendarTabContent) -->
+    <!-- Tab content: Earnings / Crypto / Commodities (rendered by renderCalendarTabContent) -->
     <div id="calendar-content-other" class="hidden"></div>
-  </div>
-</div>
+  </div><!-- /calendar-scroll-area -->
+</div><!-- /calendar-drawer -->
 <script src="https://unpkg.com/lightweight-charts@4.1.3/dist/lightweight-charts.standalone.production.js"></script>
 <script>
 // ── Chart ──
@@ -2336,14 +2339,14 @@ const CAL_TODAY = new Date(_calNow.getFullYear(), _calNow.getMonth(), _calNow.ge
 let calWeekOffset = 0;
 let calEconHTML = null;
 let calSelectedTs = null;
-let calActiveTab = 'Crypto';
+let calActiveTab = 'Macro';
 
 const MONTH_ABBR = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const MONTH_FULL = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 const DAY_ABBR = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 const WEEKDAY_FULL = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
-const CAT_ORDER = ['crypto','stock','commodities','ipo'];
-const CAT_LABELS = { crypto:'Crypto', stock:'Stock', ipo:'IPO', commodities:'Commodities' };
+const CAT_ORDER = ['macro','earnings','crypto','commodities'];
+const CAT_LABELS = { macro:'Macro', earnings:'Earnings', crypto:'Crypto', commodities:'Commodities' };
 const CAL_API = 'https://coininfo-api.vercel.app';
 let calCountsCache = {};  // { 'YYYY-MM-DD': { crypto, stock, commodities, ipo } }
 let calEventsCache = {};  // { 'from-to-cat': Event[] | null }
@@ -2365,10 +2368,10 @@ function calCountsFor(date, dayIdx, offset) {
   const seed = date.getFullYear() * 372 + date.getMonth() * 31 + date.getDate();
   const isWeekend = dayIdx >= 5;
   return {
-    crypto:      Math.floor(calHash(seed * 1.3) * (isWeekend ? 3 : 12)) + (isWeekend ? 0 : 1),
-    stock:       isWeekend ? 0 : Math.floor(calHash(seed * 2.3) * 140) + 10,
-    ipo:         isWeekend ? 0 : (calHash(seed * 4.9) > 0.7 ? 1 : 0),
-    commodities: Math.floor(calHash(seed * 3.1) * (isWeekend ? 10 : 75)) + (isWeekend ? 0 : 20),
+    macro:       isWeekend ? 0 : Math.floor(calHash(seed * 1.3) * 5) + 1,
+    earnings:    isWeekend ? 0 : Math.floor(calHash(seed * 2.3) * 6) + (calHash(seed * 5.1) > 0.3 ? 1 : 0),
+    crypto:      Math.floor(calHash(seed * 3.7) * (isWeekend ? 2 : 4)) + (isWeekend ? 0 : 0),
+    commodities: isWeekend ? 0 : Math.floor(calHash(seed * 3.1) * 3) + 1,
   };
 }
 
@@ -2410,18 +2413,6 @@ const NEXT_EVENTS = {
   },
 };
 
-const EVENT_TABLE_DATA = {
-  'BTC-PERP': [
-    { country:'🇺🇸', label:'Fed Interest Rate', actual:'—', forecast:'4.25%', prior:'4.25%' },
-  ],
-  'TSLA-PERP': [
-    { country:'📈', label:'EPS (GAAP)',  actual:'—', forecast:'$0.68',  prior:'$0.45' },
-    { country:'📈', label:'Revenue',     actual:'—', forecast:'$25.8B', prior:'$22.9B' },
-  ],
-  'WTI-PERP': [
-    { country:'🇺🇸', label:'Crude Inventories (WoW)', actual:'—', forecast:'−3.0M', prior:'−2.4M' },
-  ],
-};
 let calNextEventOpen = true;
 
 const MARKET_OPTIONS = [
@@ -2448,7 +2439,7 @@ function calBuildPlaceholderHTML(start) {
   for (let i = 0; i < 7; i++) {
     const d = calAddDays(start, i);
     const counts = calCountsFor(d, i, calWeekOffset);
-    const rowCount = counts.crypto > 0 ? Math.min(4, Math.max(1, counts.crypto)) : 0;
+    const rowCount = counts.macro > 0 ? Math.min(4, Math.max(1, counts.macro)) : 0;
     if (rowCount === 0) continue;
     any = true;
     html += `<div class="grid items-center gap-0 mx-4 sm:mx-[42px] py-2 cal-bg2-50 border-b border-line1" data-date="${calDateKey(d)}" style="grid-template-columns:48px 28px 1fr 64px 64px 64px">
@@ -2467,7 +2458,7 @@ function calBuildPlaceholderHTML(start) {
           </div>
           <div class="flex-1 grid items-center gap-0 py-2.5 pr-2 sm:pl-2 cal-row-back" style="grid-template-columns:1fr 64px 64px 64px">
             <div class="flex items-center gap-1 pr-2 min-w-0">
-              <span class="text-text1 text-xs leading-tight truncate" title="Economic Event">Economic Event</span>
+              <span class="text-text1 text-xs leading-tight truncate" title="Macro Event">Macro Event</span>
               <i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i>
             </div>
             <span class="text-text2 text-xs text-right self-center">TBD</span>
@@ -2488,26 +2479,25 @@ function calBuildPlaceholderHTML(start) {
 }
 
 // Per-tab field sets: which counts to drive row volume, the right-column headers,
-// the placeholder row title/icon/detail copy. Mirrors the Economic tab's 7-col grid
-// (time | flag/exchange | importance | title | col1 | col2 | col3) for visual consistency.
+// and placeholder row config. Macro is the primary tab (uses calBuildPlaceholderHTML).
 const CAL_CATEGORY_CONFIG = {
-  Stock: {
-    countKey: 'stock', perRow: 35, icon: '🏢',
+  Earnings: {
+    countKey: 'earnings', perRow: 1, icon: '🏢',
     rowTitle: 'Earnings Report',
-    headers: ['EPS Actual', 'EPS Forecast', 'EPS Prior'],
-    detail: 'Quarterly EPS — actual vs. consensus estimate and prior period. Reporting session (pre/post market) shown alongside the company name.',
+    headers: ['EPS Act.', 'EPS Est.', 'Prior'],
+    detail: 'Quarterly EPS — actual vs. consensus estimate and prior period. Reporting session (BMO / AMC) shown alongside the company name.',
+  },
+  Crypto: {
+    countKey: 'crypto', perRow: 1, icon: '₿',
+    rowTitle: 'Options Expiry',
+    headers: ['OI', 'Max Pain', '—'],
+    detail: 'BTC / ETH options expiry on Deribit at 08:00 UTC. OI in underlying contracts; max pain is the strike at which most options expire worthless.',
   },
   Commodities: {
-    countKey: 'commodities', perRow: 30, icon: '🛢️',
-    rowTitle: 'Commodity Event',
-    headers: ['Actual', 'Forecast', 'Prior'],
-    detail: 'Key commodity market event — EIA inventory data, OPEC decisions, and agricultural reports with Actual vs. Forecast vs. Prior.',
-  },
-  IPO: {
-    countKey: 'ipo', perRow: 1, icon: '🚀',
-    rowTitle: 'IPO Listing',
-    headers: ['Price Range', 'Deal Size', 'Exchange'],
-    detail: 'Expected listing date, indicative price range, deal size and target exchange (NASDAQ only). Figures are estimates until priced.',
+    countKey: 'commodities', perRow: 1, icon: '🛢️',
+    rowTitle: 'EIA Inventory Report',
+    headers: ['WoW Chg', 'Prior', '—'],
+    detail: 'EIA Weekly Petroleum Status Report — crude oil inventory change vs. prior week. A draw (negative) is bullish for WTI/Brent; a build is bearish.',
   },
 };
 
@@ -2656,10 +2646,10 @@ function calEventRow(ev) {
 }
 
 const CAL_TAB_HEADERS = {
-  Crypto:      ['24h% / OI','Price','—'],
-  Stock:       ['EPS Act.','EPS Est.','Prior'],
-  Commodities: ['Actual','Forecast','Prior'],
-  IPO:         ['Price Rng','Size','Exchange'],
+  Macro:       ['Actual','Forecast','Prior'],
+  Earnings:    ['EPS Act.','EPS Est.','Prior'],
+  Crypto:      ['OI','Max Pain','—'],
+  Commodities: ['WoW Chg','Prior','—'],
 };
 
 function buildEventWeekHTML(events, start, category) {
@@ -2697,17 +2687,18 @@ async function fetchAndRenderTab(start, category) {
     calEventsCache[ck] = null; // mark failed
   }
   if (calDateKey(calWeekStart(calWeekOffset)) !== from || calActiveTab !== category) return;
-  const el = category==='Crypto'
+  const el = category==='Macro'
     ? document.getElementById('calendar-content-economic')
     : document.getElementById('calendar-content-other');
   const cached = calEventsCache[ck];
   if (cached) {
     el.innerHTML = buildEventWeekHTML(cached, start, category);
   } else {
-    el.innerHTML = category==='Crypto' ? calBuildPlaceholderHTML(start) : calBuildCategoryPlaceholderHTML(start, category);
+    el.innerHTML = category==='Macro' ? calBuildPlaceholderHTML(start) : calBuildCategoryPlaceholderHTML(start, category);
   }
   lucide.createIcons();
   refreshCalendarTimes();
+  calInitScrollHighlight();
   // re-scroll to selected day if any
   if (calSelectedTs) {
     const target = el.querySelector(`[data-date="${calDateKey(new Date(calSelectedTs))}"]`);
@@ -2729,7 +2720,7 @@ async function fetchWeekCounts(start) {
     // Fill zeros for days with no events so they never fall back to stale placeholders
     for (let i = 0; i < 7; i++) {
       const dk = calDateKey(calAddDays(start, i));
-      if (!data[dk]) data[dk] = { crypto: 0, stock: 0, commodities: 0, ipo: 0 };
+      if (!data[dk]) data[dk] = { macro: 0, earnings: 0, crypto: 0, commodities: 0 };
     }
     Object.assign(calCountsCache, data);
     if (calDateKey(calWeekStart(calWeekOffset)) !== from) return;
@@ -2798,27 +2789,53 @@ function renderCalendarTabContent(start) {
   const to = calDateKey(calAddDays(start, 6));
   const cat = calActiveTab.toLowerCase();
   const ck = `${from}-${to}-${cat}`;
-  const el = calActiveTab === 'Crypto'
+  const el = calActiveTab === 'Macro'
     ? document.getElementById('calendar-content-economic')
     : document.getElementById('calendar-content-other');
   // Hide the other container
-  document.getElementById('calendar-content-economic').classList.toggle('hidden', calActiveTab !== 'Crypto');
-  document.getElementById('calendar-content-other').classList.toggle('hidden', calActiveTab === 'Crypto');
+  document.getElementById('calendar-content-economic').classList.toggle('hidden', calActiveTab !== 'Macro');
+  document.getElementById('calendar-content-other').classList.toggle('hidden', calActiveTab === 'Macro');
 
   if (calEventsCache[ck] !== undefined) {
     if (calEventsCache[ck]) {
       el.innerHTML = buildEventWeekHTML(calEventsCache[ck], start, calActiveTab);
     } else {
       // fetch had failed — show placeholder
-      el.innerHTML = calActiveTab === 'Crypto' ? calBuildPlaceholderHTML(start) : calBuildCategoryPlaceholderHTML(start, calActiveTab);
+      el.innerHTML = calActiveTab === 'Macro' ? calBuildPlaceholderHTML(start) : calBuildCategoryPlaceholderHTML(start, calActiveTab);
     }
     lucide.createIcons();
     refreshCalendarTimes();
+    calInitScrollHighlight();
   } else {
     // Show loading spinner while fetching
     el.innerHTML = `<div class="flex items-center gap-2 mx-4 sm:mx-[42px] py-8 text-text2 text-xs"><svg class="animate-spin w-3 h-3 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>Loading...</div>`;
     fetchAndRenderTab(start, calActiveTab);
   }
+}
+
+// ── Scroll-based day card highlight ──
+function calOnScroll() {
+  const scrollEl = document.getElementById('calendar-scroll-area');
+  if (!scrollEl) return;
+  const containerTop = scrollEl.getBoundingClientRect().top;
+  const headers = scrollEl.querySelectorAll('[data-date]');
+  let activeDate = null;
+  headers.forEach(el => {
+    if (el.getBoundingClientRect().top - containerTop <= 4) activeDate = el.getAttribute('data-date');
+  });
+  if (!activeDate && headers.length) activeDate = headers[0].getAttribute('data-date');
+  if (!activeDate) return;
+  const start = calWeekStart(calWeekOffset);
+  document.querySelectorAll('#calendar-week-cards button').forEach((btn, i) => {
+    btn.classList.toggle('cal-day-viewing', calDateKey(calAddDays(start, i)) === activeDate);
+  });
+}
+function calInitScrollHighlight() {
+  const scrollEl = document.getElementById('calendar-scroll-area');
+  if (!scrollEl) return;
+  scrollEl.removeEventListener('scroll', calOnScroll);
+  scrollEl.addEventListener('scroll', calOnScroll, { passive: true });
+  calOnScroll();
 }
 
 // jump the events list below to the day card that was clicked
@@ -2839,7 +2856,7 @@ function calendarShiftWeek(delta) {
 function calendarGoToday() {
   calWeekOffset = 0;
   calSelectedTs = null;
-  const scroller = document.querySelector('#calendar-drawer .flex-1.overflow-y-auto');
+  const scroller = document.getElementById('calendar-scroll-area');
   if (scroller) scroller.scrollTop = 0;
   renderCalendarWeek();
   closeCalendarPopups();
@@ -2855,11 +2872,10 @@ function resetCalendarState() {
   const drawer = document.getElementById('calendar-drawer');
   drawer.style.width = '';
   drawer.style.maxWidth = '';
-  calSetActiveTab('Crypto');
+  calSetActiveTab('Macro');
   closeCalendarPopups();
   renderCalendarWeek();
   renderNextEvent(currentAsset);
-  renderEventTable(currentAsset);
 }
 
 // ── Next Event card ──
@@ -2874,24 +2890,31 @@ function renderNextEvent(key) {
   const logoLabel = asset ? asset.icoLabel : key[0];
   const isEmoji = logoLabel && /\p{Emoji}/u.test(logoLabel);
   const logoStyle = isEmoji
-    ? `width:16px;height:16px;border-radius:50%;background:${logoColor};font-size:10px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;line-height:1`
+    ? `width:14px;height:14px;border-radius:50%;background:${logoColor};font-size:9px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;line-height:1`
     : `width:14px;height:14px;border-radius:50%;background:${logoColor};font-size:${logoLabel.length>1?'6px':'8px'};display:inline-flex;align-items:center;justify-content:center;color:#fff;font-weight:700;flex-shrink:0;line-height:1`;
   const logoHtml = `<span style="${logoStyle}">${logoLabel}</span>`;
+  const impactDot = ev.impact === 'high'
+    ? `<span style="width:5px;height:5px;border-radius:50%;background:var(--red);flex-shrink:0;display:inline-block"></span>`
+    : `<span style="width:5px;height:5px;border-radius:50%;background:var(--orange);flex-shrink:0;display:inline-block"></span>`;
+
   if (!calNextEventOpen) {
     el.innerHTML = `
-      <button onclick="toggleNextEvent()" class="w-full flex items-center gap-2 px-3 py-2 rounded-lg border cal-line1-30 hover:border-text2/40 transition-colors text-left">
-        <span class="text-[10px] font-semibold text-text2 uppercase tracking-wider whitespace-nowrap">Next Event</span>
-        ${logoHtml}
-        <span class="text-[11px] text-text1 truncate flex-1">${ev.title}</span>
-        <span class="text-[10px] text-text2 whitespace-nowrap flex-shrink-0">${ev.day} ${ev.month}</span>
-        <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-text2 flex-shrink-0"></i>
-      </button>`;
+      <div class="rounded-lg border cal-line1-50 overflow-hidden">
+        <button onclick="toggleNextEvent()" class="w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-bg2 transition-colors">
+          <span class="text-[10px] font-semibold text-text2 uppercase tracking-wider whitespace-nowrap flex-shrink-0">Next</span>
+          ${logoHtml}
+          ${impactDot}
+          <span class="text-text1 text-[11px] truncate flex-1">${ev.title}</span>
+          <span class="text-text2 text-[10px] whitespace-nowrap flex-shrink-0">${ev.day} ${ev.month}</span>
+          <i data-lucide="chevron-down" class="w-3 h-3 text-text2 flex-shrink-0 ml-1"></i>
+        </button>
+      </div>`;
   } else {
     el.innerHTML = `
       <div class="rounded-lg border cal-line1-50 overflow-hidden">
         <div class="flex items-center justify-between px-3 py-2 border-b cal-line1-30">
           <div class="flex items-center gap-1.5">
-            <span class="text-[10px] font-semibold text-text1 uppercase tracking-wider">Next Event</span>
+            <span class="text-[10px] font-semibold text-text2 uppercase tracking-wider">Next Event</span>
             ${logoHtml}
             <span class="text-text2 text-[10px]">· ${assetSub}</span>
           </div>
@@ -2899,60 +2922,27 @@ function renderNextEvent(key) {
             <i data-lucide="chevron-up" class="w-3.5 h-3.5"></i>
           </button>
         </div>
-        <div class="flex gap-3 p-3">
-          <div class="flex-shrink-0 w-10 flex flex-col items-center justify-center rounded-lg bg-bg2 border cal-line1-30 py-2.5 gap-0.5">
-            <span class="text-text1 text-sm font-bold leading-none">${ev.day}</span>
-            <span class="text-text2 text-[9px] leading-none">${ev.month}</span>
-          </div>
-          <div class="flex-1 min-w-0">
-            <div class="flex items-start gap-2">
-              <span class="text-text1 text-[11px] font-semibold leading-snug flex-1">${ev.title}</span>
+        <div class="px-3 py-2.5">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex items-start gap-1.5 min-w-0">
+              ${impactDot}
+              <span class="text-text1 text-[11px] font-semibold leading-snug">${ev.title}</span>
             </div>
-            <div class="text-text2 text-[10px] mt-0.5">${ev.time}</div>
-            <p class="text-text2 text-[10px] mt-1.5 leading-relaxed">${ev.desc}</p>
-            <a href="${ev.source}" class="text-text2 text-[10px] hover:text-text1 transition-colors mt-1.5 inline-block">Source ↗</a>
+            <span class="text-text2 text-[10px] whitespace-nowrap flex-shrink-0">${ev.day} ${ev.month}</span>
           </div>
+          <div class="text-text2 text-[10px] mt-0.5 pl-[11px]">${ev.time}</div>
+          <p class="text-text2 text-[10px] mt-1.5 leading-relaxed pl-[11px] line-clamp-2">${ev.desc}</p>
         </div>
       </div>`;
   }
   lucide.createIcons();
-  const tableEl = document.getElementById('calendar-event-table');
-  if (tableEl) tableEl.style.display = calNextEventOpen ? '' : 'none';
 }
 
 function toggleNextEvent() {
   calNextEventOpen = !calNextEventOpen;
   renderNextEvent(currentAsset);
-  const tableEl = document.getElementById('calendar-event-table');
-  if (tableEl) tableEl.style.display = calNextEventOpen ? '' : 'none';
 }
 
-function renderEventTable(key) {
-  const el = document.getElementById('calendar-event-table');
-  if (!el) return;
-  const rows = EVENT_TABLE_DATA[key];
-  if (!rows || rows.length === 0) { el.innerHTML = ''; return; }
-  const rowsHtml = rows.map((r, i) => `
-    <div class="grid items-center gap-0 px-3 py-2${i < rows.length - 1 ? ' border-b cal-line1-30' : ''}" style="grid-template-columns:1fr 52px 66px 52px">
-      <div class="flex items-center gap-1.5 min-w-0">
-        <span class="text-sm leading-none flex-shrink-0">${r.country}</span>
-        <span class="text-text1 text-[11px] truncate">${r.label}</span>
-      </div>
-      <span class="text-text2 text-[11px] text-right font-medium">${r.actual}</span>
-      <span class="text-text2 text-[11px] text-right">${r.forecast}</span>
-      <span class="text-text2 text-[11px] text-right">${r.prior}</span>
-    </div>`).join('');
-  el.innerHTML = `
-    <div class="rounded-lg border cal-line1-50 overflow-hidden">
-      <div class="grid items-center gap-0 px-3 py-1.5 border-b cal-line1-30" style="grid-template-columns:1fr 52px 66px 52px">
-        <span class="text-text2 text-[10px]">Market Consensus</span>
-        <span class="text-text2 text-[10px] text-right">Actual</span>
-        <span class="text-text2 text-[10px] text-right">Forecast</span>
-        <span class="text-text2 text-[10px] text-right">Prior</span>
-      </div>
-      ${rowsHtml}
-    </div>`;
-}
 
 // ── Date picker popup ──
 let calPickerView = new Date(CAL_TODAY);
@@ -3216,7 +3206,6 @@ renderTradingInfo('BTC-PERP');
 document.getElementById('calendar-tz-label').textContent = fmtTz(calTzOffset);
 renderCalendarWeek();
 renderNextEvent('BTC-PERP');
-renderEventTable('BTC-PERP');
 
 // ── Slider drag ──
 const track=document.getElementById('sldr');
