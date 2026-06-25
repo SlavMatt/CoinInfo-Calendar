@@ -1852,7 +1852,7 @@ const ASSETS = {
     high:'252.80', low:'244.10', change:'+3.40/+1.39%', changePos:true, vol:'12.43 M', oi:'8.02M',
     isTradFi:true, basePrice:245, priceRange:8,
     tradingHours:'NYSE · Mon–Fri  09:30–16:00 ET  (UTC−5)',
-    about:'Tesla, Inc. (TSLA) designs, develops, manufactures, leases, and sells electric vehicles, energy generation and storage systems, and related services. Headquartered in Austin, Texas, Tesla is one of the world\'s most valuable automakers and clean energy companies.',
+    about:'Tesla designs and manufactures electric vehicles, battery energy storage systems, and solar products. The company is a global leader in EV production and autonomous driving technology.',
     marketData:[
       {k:'Market Cap',v:'$793.2B'},{k:'P/E Ratio',v:'65.4'},
       {k:'Sector',v:'Consumer Disc.'},{k:'Exchange',v:'NASDAQ'},
@@ -1886,7 +1886,7 @@ const ASSETS = {
     high:'76.40', low:'73.95', change:'-0.58/-0.77%', changePos:false, vol:'2.14 M', oi:'3.18M',
     isTradFi:true, basePrice:75, priceRange:3,
     tradingHours:'CME Globex · Sun–Fri  18:00–17:00 ET  (23h/day)',
-    about:'West Texas Intermediate (WTI) is a grade of crude oil used as the primary benchmark for oil pricing in the Americas. It is a light sweet crude oil produced mainly in the U.S. and traded on the NYMEX. WTI price movements reflect global energy supply/demand dynamics, geopolitical events, and U.S. inventory data.',
+    about:'WTI serves as a primary global benchmark for oil prices due to its high quality (low density, low sulfur).',
     marketData:[
       {k:'Spot Price',v:'$74.82 / bbl'},{k:'1Y Range',v:'$65.27 – $87.63'},
       {k:'Contract Size',v:'1,000 bbl'},{k:'Sector',v:'Energy / Commodity'},
@@ -1910,6 +1910,105 @@ const ASSETS = {
         {lev:'20X',max:'500K'},{lev:'15X',max:'1.00M'},{lev:'12X',max:'2.00M'},
         {lev:'10X',max:'3.00M'},{lev:'8X',max:'4.00M'},{lev:'5X',max:'6.00M'},
         {lev:'3X',max:'10.00M'},
+      ],
+    },
+  },
+  'SP500-PERP': {
+    name:'SP500-PERP', sub:'S&P 500 Index', category:'Index', icoColor:'#1A3A6B', icoLabel:'S', icoSize:'13px',
+    price:'5,482.87', priceColor:'var(--green)',
+    oracle:'5,480.10', funding:'+0.01%', fundingSign:1,
+    high:'5,510.20', low:'5,455.30', change:'+28.40/+0.52%', changePos:true, vol:'4.82 M', oi:'12.45M',
+    isTradFi:true, basePrice:5450, priceRange:80,
+    tradingHours:'CME · Mon–Fri  09:30–16:15 ET  (UTC−5)',
+    about:'SP500 tracks the performance of 500 leading publicly traded companies listed in the United States. The index represents large capitalization U.S. equities across all major sectors, including technology, healthcare, financials, consumer discretionary, energy, and industrials, and accounts for approximately 80% of total U.S. market capitalization.',
+    marketData:[
+      {k:'Components',v:'503'},{k:'P/E Ratio (TTM)',v:'26.8'},
+      {k:'Sector Coverage',v:'11 Sectors'},{k:'Rebalance',v:'Quarterly'},
+      {k:'Launch Date',v:'Mar 4, 1957'},{k:'Index Sponsor',v:'S&P Global'},
+    ],
+    dataSrc:'Data: S&P Global',
+    fundingRate:'+0.0100%', fundingPos:true, interval:'8h', annualized:'+10.95%', annualizedPos:true,
+    links:[
+      {tip:'S&P Global', href:'https://www.spglobal.com/spdji/en/indices/equity/sp-500/', icon:'globe'},
+    ],
+    contractInfo:{
+      left:[
+        {k:'Symbol',v:'SP500-PERP'},{k:'Margin Asset',v:'USDC'},
+        {k:'Tick Size',v:'0.01 USDC'},{k:'Max Leverage',v:'20X'},
+      ],
+      right:[
+        {k:'IMR',v:'5.00%'},{k:'MMR',v:'1.25%'},
+        {k:'Min Order Qty',v:'0.01'},{k:'Max Market / Limit Qty',v:'100 / 200'},
+      ],
+      tiers:[
+        {lev:'20X',max:'1.00M'},{lev:'15X',max:'2.00M'},{lev:'12X',max:'3.00M'},
+        {lev:'10X',max:'5.00M'},{lev:'8X',max:'8.00M'},{lev:'5X',max:'15.00M'},
+      ],
+    },
+  },
+  'SAMSUNG-PERP': {
+    name:'SAMSUNG-PERP', sub:'Samsung Electronics', category:'KR Stock', icoColor:'#1428A0', icoLabel:'S', icoSize:'11px',
+    price:'42.80', priceColor:'var(--green)',
+    oracle:'42.65', funding:'+0.01%', fundingSign:1,
+    high:'43.20', low:'42.10', change:'+0.55/+1.30%', changePos:true, vol:'890 K', oi:'2.34M',
+    isTradFi:true, basePrice:42, priceRange:3,
+    tradingHours:'KRX · Mon–Fri  09:00–15:30 KST  (UTC+9)',
+    about:'Samsung Electronics Co., Ltd. is a global leader in consumer electronics and semiconductor manufacturing. The oracle converts the underlying Korean stock\'s KRW price to USD at the prevailing USD/KRW FX rate.',
+    marketData:[
+      {k:'Market Cap',v:'~$310B'},{k:'Exchange',v:'KRX'},
+      {k:'Sector',v:'Technology'},{k:'Currency',v:'KRW → USD'},
+      {k:'Ticker (KRX)',v:'005930'},{k:'Ticker (OTC)',v:'SSNLF'},
+    ],
+    dataSrc:'Data: KRX / FX-adjusted',
+    fundingRate:'+0.0100%', fundingPos:true, interval:'8h', annualized:'+10.95%', annualizedPos:true,
+    links:[
+      {tip:'Samsung IR', href:'https://www.samsung.com/global/ir/', icon:'globe'},
+    ],
+    contractInfo:{
+      left:[
+        {k:'Symbol',v:'SAMSUNG-PERP'},{k:'Margin Asset',v:'USDC'},
+        {k:'Tick Size',v:'0.01 USDC'},{k:'Max Leverage',v:'10X'},
+      ],
+      right:[
+        {k:'IMR',v:'10.00%'},{k:'MMR',v:'2.50%'},
+        {k:'Min Order Qty',v:'1 share'},{k:'Max Market / Limit Qty',v:'500 / 1,000'},
+      ],
+      tiers:[
+        {lev:'10X',max:'500K'},{lev:'8X',max:'1.00M'},{lev:'5X',max:'2.00M'},
+        {lev:'3X',max:'5.00M'},
+      ],
+    },
+  },
+  'SKHYNIX-PERP': {
+    name:'SKHYNIX-PERP', sub:'SK Hynix Inc.', category:'KR Stock', icoColor:'#005BAC', icoLabel:'H', icoSize:'12px',
+    price:'134.20', priceColor:'var(--red)',
+    oracle:'133.90', funding:'-0.01%', fundingSign:-1,
+    high:'136.80', low:'132.50', change:'-1.80/-1.32%', changePos:false, vol:'450 K', oi:'1.12M',
+    isTradFi:true, basePrice:133, priceRange:6,
+    tradingHours:'KRX · Mon–Fri  09:00–15:30 KST  (UTC+9)',
+    about:'SK Hynix Inc. provides products and services for the electronics components industries. The company manufactures semiconductors such as dynamic random access memory (DRAM), NAND flash memory, and static random access memory (SRAM) chips.',
+    marketData:[
+      {k:'Market Cap',v:'~$97B'},{k:'Exchange',v:'KRX'},
+      {k:'Sector',v:'Semiconductors'},{k:'Currency',v:'KRW → USD'},
+      {k:'Ticker (KRX)',v:'000660'},{k:'Ticker (OTC)',v:'HXSCL'},
+    ],
+    dataSrc:'Data: KRX / FX-adjusted',
+    fundingRate:'-0.0100%', fundingPos:false, interval:'8h', annualized:'-10.95%', annualizedPos:false,
+    links:[
+      {tip:'SK Hynix IR', href:'https://www.skhynix.com/eng/ir/', icon:'globe'},
+    ],
+    contractInfo:{
+      left:[
+        {k:'Symbol',v:'SKHYNIX-PERP'},{k:'Margin Asset',v:'USDC'},
+        {k:'Tick Size',v:'0.01 USDC'},{k:'Max Leverage',v:'10X'},
+      ],
+      right:[
+        {k:'IMR',v:'10.00%'},{k:'MMR',v:'2.50%'},
+        {k:'Min Order Qty',v:'1 share'},{k:'Max Market / Limit Qty',v:'500 / 1,000'},
+      ],
+      tiers:[
+        {lev:'10X',max:'500K'},{lev:'8X',max:'1.00M'},{lev:'5X',max:'2.00M'},
+        {lev:'3X',max:'5.00M'},
       ],
     },
   },
