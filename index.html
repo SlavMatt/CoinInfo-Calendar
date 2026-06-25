@@ -356,7 +356,7 @@ body{
 .mi-tip-pop::after{content:'';position:absolute;top:100%;left:10px;border:4px solid transparent;border-top-color:#1A1D26}
 .mi-tip-wrap:hover .mi-tip-pop{opacity:1}
 .mi-sec-title{font-size:14px;font-weight:700;color:var(--t1);margin-bottom:0}
-.mi-about-text{font-size:13px;line-height:1.65;color:var(--t2);display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+.mi-about-text{font-size:13px;line-height:1.65;color:var(--t2);display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
 .mi-about-text.exp{display:block;-webkit-line-clamp:unset}
 .mi-exp-btn{font-size:13px;color:var(--green);cursor:pointer;margin-top:4px;display:inline-block}
 .mi-res-row{display:flex;flex-wrap:wrap;gap:8px}
@@ -1933,6 +1933,15 @@ function renderMarketInfo(key) {
   const a = ASSETS[key];
   document.getElementById('mi-content').innerHTML =
     a.isTradFi ? _miTradFi(a, key) : _miCrypto(a, key);
+  if (!a.isTradFi) {
+    requestAnimationFrame(() => {
+      const el = document.getElementById('mi-desc-text');
+      const btn = document.getElementById('mi-exp-btn');
+      if (el && btn && el.scrollHeight > el.clientHeight) {
+        btn.style.display = 'inline-block';
+      }
+    });
+  }
 }
 
 function toggleMiDesc(btn) {
@@ -2004,7 +2013,7 @@ function _miCrypto(a, key) {
         <div style="margin-bottom:16px">
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">${logoHtml}<div class="mi-sec-title">${ticker} 简介</div></div>
           <div class="mi-about-text" id="mi-desc-text">${a.about}</div>
-          <span class="mi-exp-btn" onclick="toggleMiDesc(this)">展开</span>
+          <span class="mi-exp-btn" id="mi-exp-btn" style="display:none" onclick="toggleMiDesc(this)">展开</span>
         </div>
         ${communityHtml?`<div class="mi-lbl" style="margin-bottom:10px">社区</div><div class="mi-res-row" style="margin-bottom:16px">${communityHtml}</div>`:''}
         <div class="mi-lbl" style="margin-bottom:10px">资源</div>
