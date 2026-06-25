@@ -3187,6 +3187,7 @@ async function renderNextEvent(key) {
           ${impactDot}
           <span class="text-text1 text-[11px] truncate flex-1">${ev.title}</span>
           <span class="text-text2 text-[10px] whitespace-nowrap flex-shrink-0">${ev.day} ${ev.month}</span>
+          <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-text2 flex-shrink-0"></i>
         </button>
       </div>`;
   } else {
@@ -3222,6 +3223,9 @@ async function renderNextEvent(key) {
             ${ev.desc ? `<p class="text-text2 text-[10px] mt-1.5 leading-relaxed line-clamp-2">${ev.desc}</p>` : ''}
             ${ev.source ? `<a href="${ev.source}" target="_blank" rel="noopener" class="text-text2 text-[10px] hover:text-text1 transition-colors mt-1 inline-block">Source ↗</a>` : ''}
           </div>
+          <button onclick="toggleNextEvent()" class="flex-shrink-0 px-2.5 pt-2 self-start text-text2 hover:text-text1 transition-colors" title="Collapse">
+            <i data-lucide="chevron-up" class="w-3.5 h-3.5"></i>
+          </button>
         </div>
         ${upcomingHtml}
       </div>`;
