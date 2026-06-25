@@ -2599,15 +2599,16 @@ function calFormatRange(start, end) {
 let calNextEventCache = {};
 
 async function fetchNextEventData(key) {
-  if (key in calNextEventCache) return calNextEventCache[key];
-  const today = new Date().toISOString().slice(0, 10);
+  const today = calDateKey(CAL_TODAY); // use local date, not UTC
+  const ck = `${key}-${today}`;
+  if (ck in calNextEventCache) return calNextEventCache[ck];
   try {
     const res = await fetch(`${CAL_API}/api/next-event?asset=${encodeURIComponent(key)}&after=${today}&upcoming=5`);
-    if (!res.ok) { calNextEventCache[key] = null; return null; }
+    if (!res.ok) { calNextEventCache[ck] = null; return null; }
     const data = await res.json();
-    calNextEventCache[key] = data;
+    calNextEventCache[ck] = data;
     return data;
-  } catch { calNextEventCache[key] = null; return null; }
+  } catch { calNextEventCache[ck] = null; return null; }
 }
 
 let calNextEventOpen = true;
@@ -2864,11 +2865,14 @@ function buildEventWeekHTML(events, start, category) {
     const d = calAddDays(start, i);
     const ds = calDateKey(d);
     const dayEvs = byDate[ds];
-    if (!dayEvs || !dayEvs.length) continue;
     html += `<div class="grid items-center gap-0 mx-4 sm:mx-[42px] py-2 cal-bg2-50 border-b border-line1" data-date="${ds}" style="grid-template-columns:48px 28px 1fr 64px 64px 64px"><span class="text-text1 text-xs font-bold" style="grid-column:1/4">${WEEKDAY_FULL[i]}, ${MONTH_FULL[d.getMonth()]} ${d.getDate()}</span><span class="text-text2 text-[11px] text-right">${hdr[0]}</span><span class="text-text2 text-[11px] text-right">${hdr[1]}</span><span class="text-text2 text-[11px] text-right">${hdr[2]}</span></div>`;
-    for (const ev of dayEvs) html += calEventRow(ev);
+    if (!dayEvs || !dayEvs.length) {
+      html += `<div class="mx-4 sm:mx-[42px] py-4 flex items-center justify-center gap-1.5 text-text2 text-[11px] border-b border-line1"><i data-lucide="circle-off" class="w-3 h-3 opacity-40"></i><span class="opacity-40">No events</span></div>`;
+    } else {
+      for (const ev of dayEvs) html += calEventRow(ev);
+    }
   }
-  return html || calEmptyState(`No ${category} Events`, `No ${category.toLowerCase()} events for ${calFormatRange(start, calAddDays(start, 6))}`);
+  return html;
 }
 
 async function fetchAndRenderTab(start, category) {
@@ -3223,6 +3227,7 @@ async function renderNextEvent(key) {
       </div>`;
   }
   lucide.createIcons();
+  updateNextEventToggle();
 }
 
 function updateNextEventToggle() {
