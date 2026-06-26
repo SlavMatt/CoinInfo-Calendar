@@ -2811,8 +2811,8 @@ function calEventRow(ev) {
     } else {
       v5 = !isNaN(a) && ev.actual!=null ? calFmtNum(a) : '—';
     }
-    v6 = '—';
-    v7 = !isNaN(p) && ev.prior!=null ? calFmtNum(p) : '—';
+    v6 = !isNaN(p) && ev.prior!=null ? calFmtNum(p) : '—'; // Prior in col 2
+    v7 = '—';
   } else if (et==='macro') {
     const a = Number(ev.actual);
     const sym = ev.symbol||'';
@@ -2820,9 +2820,10 @@ function calEventRow(ev) {
     v5 = ev.actual!=null && !isNaN(a)
       ? (Number.isInteger(a)?String(a):a.toFixed(2))+(unit?' '+unit:'')
       : '—';
-    v6 = ev.forecast!=null?String(ev.forecast):'—';
-    v7 = ev.prior!=null?String(ev.prior):'—';
+    v6 = ev.prior!=null?String(ev.prior):'—'; // Prior in col 2 (Forecast always null from FRED)
+    v7 = '—';
   } else {
+    // earnings / dividends / default
     v5 = ev.actual??'—'; v6 = ev.forecast??'—'; v7 = ev.prior??'—';
     if (ev.eps_surprise!=null) c5 = ev.eps_surprise>0?'text-[#42b37f]':ev.eps_surprise<0?'text-[#E84142]':'text-text1';
   }
@@ -2831,12 +2832,12 @@ function calEventRow(ev) {
   if (!detail) {
     if (et==='earnings') detail=`${ev.title} — EPS ${ev.actual??'TBD'} vs. est. ${ev.forecast??'—'}.${ev.timing==='bmo'?' Before market open.':ev.timing==='amc'?' After market close.':''}`;
     else if (et==='dividends') detail=`${ev.symbol} ex-dividend. Amount: ${ev.actual??'—'} USD/share.`;
-    else if (et==='options_expiry') detail=`${ev.underlying} options expire on Deribit at 08:00 UTC. OI: ${ev.oi_usd?'$'+calFmtNum(ev.oi_usd):'N/A'}.`;
+    else if (et==='options_expiry') { const venue=ev.source==='cme-static'?'CME':'Deribit (08:00 UTC)'; const oiText=ev.oi_usd?` OI: ${calFmtNum(ev.oi_usd)} ${ev.symbol||''}.`:''; detail=`${ev.underlying||ev.symbol} options expiry on ${venue}.${oiText}`; }
     else if (et==='etf_flow') { const f=ev.net_flow_usd; detail=`BTC Spot ETF net flow: ${f!=null?(f>=0?'+':'')+'$'+calFmtNum(Math.abs(f)):'N/A'}.`; }
     else if (et==='ipo') detail=`${ev.title} IPO on ${ev.exchange??'—'}. Price range: ${ev.price_range??'—'}, deal size: ${ev.raise_usd?'$'+calFmtNum(ev.raise_usd):'—'}.`;
     else if (et==='trending'||et==='price_update') detail=`${ev.title} — 24h change: ${ev.actual??'—'}%. Current price: ${calFmtPrice(ev.price_range)}.`;
     else if (et==='energy') { const a=Number(ev.actual),p=Number(ev.prior); const chg=!isNaN(a)&&!isNaN(p)&&ev.prior!=null?a-p:null; detail=`EIA crude oil inventories: ${calFmtNum(a)} bbls${chg!==null?` (WoW: ${chg>=0?'+':''}${calFmtNum(Math.abs(chg))} bbls)`:''}. Prior week: ${ev.prior!=null?calFmtNum(p)+' bbls':'—'}. Source: EIA Weekly Petroleum Status Report.`; }
-    else if (et==='macro') { const unit=ev.symbol==='FOMC'?'%':''; detail=ev.actual!=null?`${ev.title}. Value: ${ev.actual}${unit}. Source: FRED / Federal Reserve.`:`${ev.title} — upcoming scheduled release. Actual figure will be available on this date.`; }
+    else if (et==='macro') { const unit=ev.symbol==='FOMC'?'%':''; detail=ev.actual!=null?`${ev.title}. Actual: ${ev.actual}${unit}. Source: FRED / Federal Reserve.`:ev.prior!=null?`${ev.title} — upcoming release. Prior: ${ev.prior}${unit}. Source: FRED / Federal Reserve.`:`${ev.title} — upcoming scheduled release. Source: FRED / Federal Reserve.`; }
     else detail='No additional details available.';
   }
 
@@ -2844,10 +2845,10 @@ function calEventRow(ev) {
 }
 
 const CAL_TAB_HEADERS = {
-  Crypto:      ['OI','Max Pain','—'],
-  Economic:    ['Actual','Forecast','Prior'],
-  Stocks:      ['EPS Act.','EPS Est.','Prior'],
-  Commodities: ['WoW Chg','Prior','—'],
+  Crypto:      ['OI','—','—'],
+  Economic:    ['Actual','Prior','—'],
+  Stocks:      ['Actual','Est.','Prior'],
+  Commodities: ['Change','Prior','—'],
 };
 
 function buildEventWeekHTML(events, start, category) {
