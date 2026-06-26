@@ -3201,18 +3201,16 @@ async function renderNextEvent(key) {
 
   if (!calNextEventOpen) {
     el.innerHTML = `
-      <div class="mx-4 sm:mx-[42px] my-3">
-        <button onclick="toggleNextEvent()" class="w-full flex items-center gap-2 px-3 py-2.5 text-left rounded-lg border border-line1 hover:bg-bg2 transition-colors">
-          <span class="text-[10px] font-semibold text-text2 uppercase tracking-wider whitespace-nowrap flex-shrink-0">Next</span>
-          ${logoHtml}
-          ${impactDot}
-          <span class="text-text1 text-[11px] truncate flex-1">${ev.title}</span>
-          <span class="flex items-center gap-1 text-text2 text-[10px] whitespace-nowrap flex-shrink-0">
-            ${ev.day} ${ev.month}
-            <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
-          </span>
-        </button>
-      </div>`;
+      <button onclick="toggleNextEvent()" class="w-full flex items-center gap-2 px-4 sm:px-[42px] py-2.5 text-left border-t border-b border-line1 hover:bg-bg2 transition-colors">
+        <span class="text-[10px] font-semibold text-text2 uppercase tracking-wider whitespace-nowrap flex-shrink-0">Next</span>
+        ${logoHtml}
+        ${impactDot}
+        <span class="text-text1 text-[11px] truncate flex-1">${ev.title}</span>
+        <span class="flex items-center gap-1 text-text2 text-[10px] whitespace-nowrap flex-shrink-0">
+          ${ev.day} ${ev.month}
+          <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
+        </span>
+      </button>`;
     lucide.createIcons();
     updateNextEventToggle();
     return;
@@ -3236,7 +3234,7 @@ async function renderNextEvent(key) {
       </div>`;
     }).join('');
     el.innerHTML = `
-      <div class="mx-4 sm:mx-[42px] my-3 rounded-lg border border-line1 overflow-hidden">
+      <div class="w-full border-t border-b border-line1 overflow-hidden">
         <div class="flex items-stretch">
           <div class="flex flex-col items-center justify-center bg-bg2 px-4 py-4 min-w-[64px] border-r cal-line1-50 flex-shrink-0">
             <span class="text-text1 text-[26px] font-bold leading-none">${ev.day}</span>
