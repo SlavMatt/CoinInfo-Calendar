@@ -1325,16 +1325,11 @@ body{
     <div class="flex gap-2 px-4 sm:px-[42px] py-3 overflow-x-auto scrollbar-none flex-shrink-0" id="calendar-week-cards"></div>
 
     <!-- Category filter pills (sticky, separates header from scrollable events) -->
-    <div class="flex items-center flex-shrink-0">
-      <div class="flex items-center gap-1.5 px-4 sm:px-[42px] py-2.5 overflow-x-auto scrollbar-none flex-1" id="calendar-tabs">
-        <button onclick="selectCalendarTab(this,'Crypto')" data-cal-tab="Crypto" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-text1 text-bg1">Crypto</button>
-        <button onclick="selectCalendarTab(this,'Economic')" data-cal-tab="Economic" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-bg2 text-text2 hover:text-text1">Economic</button>
-        <button onclick="selectCalendarTab(this,'Stocks')" data-cal-tab="Stocks" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-bg2 text-text2 hover:text-text1">Stocks</button>
-        <button onclick="selectCalendarTab(this,'Commodities')" data-cal-tab="Commodities" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-bg2 text-text2 hover:text-text1">Commodities</button>
-      </div>
-      <button onclick="toggleNextEvent()" id="cal-next-evt-btn" class="flex-shrink-0 pr-4 sm:pr-[42px] pl-2 py-2.5 text-text2 hover:text-text1 transition-colors" title="Toggle upcoming events">
-        <i data-lucide="chevron-down" id="cal-next-evt-icon" class="w-4 h-4 transition-transform duration-200"></i>
-      </button>
+    <div class="flex items-center gap-1.5 px-4 sm:px-[42px] py-2.5 overflow-x-auto scrollbar-none flex-shrink-0" id="calendar-tabs">
+      <button onclick="selectCalendarTab(this,'Crypto')" data-cal-tab="Crypto" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-text1 text-bg1">Crypto</button>
+      <button onclick="selectCalendarTab(this,'Economic')" data-cal-tab="Economic" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-bg2 text-text2 hover:text-text1">Economic</button>
+      <button onclick="selectCalendarTab(this,'Stocks')" data-cal-tab="Stocks" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-bg2 text-text2 hover:text-text1">Stocks</button>
+      <button onclick="selectCalendarTab(this,'Commodities')" data-cal-tab="Commodities" class="px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-bg2 text-text2 hover:text-text1">Commodities</button>
     </div>
     <div class="mx-4 sm:mx-[42px] border-b border-line1"></div>
 
@@ -2467,7 +2462,7 @@ function openCalendar() {
   const d = document.getElementById("calendar-drawer");
   d.classList.remove("translate-x-full");
   d.classList.add("translate-x-0");
-  d.style.boxShadow = '-12px 0 32px rgba(0,0,0,.14), 0 0 0 1px rgba(255,255,255,.04)';
+  d.style.boxShadow = '-12px 0 32px rgba(0,0,0,.22), 0 0 0 1px rgba(255,255,255,.04)';
   document.getElementById("calendar-shadow-edge").classList.remove("invisible");
 }
 function closeCalendar() {
@@ -3275,10 +3270,7 @@ async function renderNextEvent(key) {
 }
 
 function updateNextEventToggle() {
-  const icon = document.getElementById('cal-next-evt-icon');
-  if (icon) icon.style.transform = calNextEventOpen ? 'rotate(180deg)' : 'rotate(0deg)';
-  const btn = document.getElementById('cal-next-evt-btn');
-  if (btn) btn.style.display = calNextEventOpen ? '' : 'none';
+  // External toggle button removed; collapsed row and expanded card ^ handle all toggling.
 }
 
 function toggleNextEvent() {
