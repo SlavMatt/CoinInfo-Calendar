@@ -2844,12 +2844,17 @@ const CAL_TAB_COLUMNS = {
   Stocks:      ['Actual', 'Est.', 'Prior'],
   Commodities: ['Change', 'Prior'],
 };
-function _calColGrid(n) { return '48px 28px 1fr ' + Array(n).fill('64px').join(' '); }
-function _calValGrid(n) { return '1fr ' + Array(n).fill('64px').join(' '); }
+function _calColGrid(n) { return n > 0 ? '48px 28px 1fr ' + Array(n).fill('64px').join(' ') : '48px 28px 1fr'; }
+function _calValGrid(n) { return n > 0 ? '1fr ' + Array(n).fill('64px').join(' ') : '1fr'; }
 
 function buildEventWeekHTML(events, start, category) {
   if (!events || !events.length) return calEmptyState(`No ${category} Events`, `No ${category.toLowerCase()} events for ${calFormatRange(start, calAddDays(start, 6))}`);
-  const cols = CAL_TAB_COLUMNS[category] || ['Actual', 'Est.', 'Prior'];
+  let cols = CAL_TAB_COLUMNS[category] || ['Actual', 'Est.', 'Prior'];
+  // Stocks: hide value columns if no event this week has EPS/forecast/prior data
+  if (category === 'Stocks') {
+    const hasData = events.some(ev => ev.actual != null || ev.forecast != null || ev.prior != null);
+    if (!hasData) cols = [];
+  }
   const byDate = {};
   for (const ev of events) {
     if (ev.event_type === 'price_update' || ev.event_type === 'trending') continue;
