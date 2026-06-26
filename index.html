@@ -3164,7 +3164,7 @@ function resetCalendarState() {
   calMarketFilter = 'all';
   calNextEventOpen = true;
   calNextEventCache = {};
-  document.getElementById('calendar-market-btn').classList.remove('text-text1', 'bg-bg2');
+  document.getElementById('calendar-market-btn')?.classList.remove('text-text1', 'bg-bg2');
   const drawer = document.getElementById('calendar-drawer');
   drawer.style.width = '';
   drawer.style.maxWidth = '';
@@ -3283,8 +3283,8 @@ function closeCalPickerSubmenus() {
 
 function closeCalendarPopups() {
   document.getElementById('calendar-datepicker').classList.add('hidden');
-  document.getElementById('calendar-tzmenu').classList.add('hidden');
-  document.getElementById('calendar-marketmenu').classList.add('hidden');
+  document.getElementById('calendar-tzmenu')?.classList.add('hidden');
+  document.getElementById('calendar-marketmenu')?.classList.add('hidden');
   closeCalPickerSubmenus();
 }
 
@@ -3566,7 +3566,7 @@ function closePanel() {
 buildAssetPanel();
 renderMarketInfo('BTC-PERP');
 renderTradingInfo('BTC-PERP');
-document.getElementById('calendar-tz-label').textContent = fmtTz(calTzOffset);
+document.getElementById('calendar-tz-label')?.textContent && (document.getElementById('calendar-tz-label').textContent = fmtTz(calTzOffset));
 renderCalendarWeek();
 renderNextEvent('BTC-PERP');
 updateNextEventToggle();
