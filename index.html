@@ -3201,18 +3201,16 @@ async function renderNextEvent(key) {
 
   if (!calNextEventOpen) {
     el.innerHTML = `
-      <div class="rounded-lg border cal-line1-50">
-        <button onclick="toggleNextEvent()" class="w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-bg2 transition-colors rounded-lg">
-          <span class="text-[10px] font-semibold text-text2 uppercase tracking-wider whitespace-nowrap flex-shrink-0">Next</span>
-          ${logoHtml}
-          ${impactDot}
-          <span class="text-text1 text-[11px] truncate flex-1">${ev.title}</span>
-          <span class="flex items-center gap-1 text-text2 text-[10px] whitespace-nowrap flex-shrink-0">
-            ${ev.day} ${ev.month}
-            <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
-          </span>
-        </button>
-      </div>`;
+      <button onclick="toggleNextEvent()" class="w-full flex items-center gap-2 px-3 py-2 text-left rounded-lg border cal-line1-50 hover:bg-bg2 transition-colors">
+        <span class="text-[10px] font-semibold text-text2 uppercase tracking-wider whitespace-nowrap flex-shrink-0">Next</span>
+        ${logoHtml}
+        ${impactDot}
+        <span class="text-text1 text-[11px] truncate flex-1">${ev.title}</span>
+        <span class="flex items-center gap-1 text-text2 text-[10px] whitespace-nowrap flex-shrink-0">
+          ${ev.day} ${ev.month}
+          <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
+        </span>
+      </button>`;
     lucide.createIcons();
     updateNextEventToggle();
     return;
@@ -3238,11 +3236,10 @@ async function renderNextEvent(key) {
     el.innerHTML = `
       <div class="rounded-lg border cal-line1-50 overflow-hidden">
         <div class="flex items-stretch">
-          <button onclick="toggleNextEvent()" class="flex flex-col items-center justify-center bg-bg2 px-4 py-4 min-w-[64px] border-r cal-line1-50 flex-shrink-0 hover:opacity-80 transition-opacity" title="Collapse">
+          <div class="flex flex-col items-center justify-center bg-bg2 px-4 py-4 min-w-[64px] border-r cal-line1-50 flex-shrink-0">
             <span class="text-text1 text-[26px] font-bold leading-none">${ev.day}</span>
             <span class="text-text2 text-[12px] mt-2 font-medium leading-none">${ev.month}</span>
-            <i data-lucide="chevron-up" class="w-3.5 h-3.5 text-text2 mt-2"></i>
-          </button>
+          </div>
           <div class="flex-1 px-4 py-3 min-w-0">
             <div class="flex items-center gap-2 min-w-0">
               ${impactDot}
@@ -3252,6 +3249,9 @@ async function renderNextEvent(key) {
             ${ev.desc ? `<p class="text-text2 text-[11px] mt-2 leading-relaxed line-clamp-2">${ev.desc}</p>` : ''}
             ${ev.source ? `<a href="${ev.source}" target="_blank" rel="noopener" class="text-text2 text-[11px] hover:text-text1 transition-colors mt-1.5 inline-block">Source ↗</a>` : ''}
           </div>
+          <button onclick="toggleNextEvent()" class="flex-shrink-0 w-9 self-stretch flex items-start justify-center pt-3.5 text-text2 hover:text-text1 transition-colors border-l cal-line1-30" title="Collapse">
+            <i data-lucide="chevron-up" class="w-4 h-4"></i>
+          </button>
         </div>
         ${upcomingHtml}
       </div>`;
