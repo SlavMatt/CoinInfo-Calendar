@@ -826,6 +826,83 @@ body{
   color:var(--t3);cursor:pointer;border-radius:4px;
 }
 .abar-calendar:hover{color:var(--t1);background:var(--bg2)}
+
+/* ─────────────────────────────────────
+   H5 MOBILE  (≤639px)
+───────────────────────────────────── */
+.h5-hamburger{display:none;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;border:1px solid var(--line1);background:var(--bg1);cursor:pointer;color:var(--t2);flex-shrink:0}
+.h5-hamburger:hover{color:var(--t1);border-color:var(--t2)}
+.h5-bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;height:48px;background:var(--bg1);border-top:1px solid var(--line1);z-index:200;align-items:stretch}
+.h5-bnav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:10px;font-weight:500;color:var(--t2);cursor:pointer;border-top:2px solid transparent}
+.h5-bnav-item.active{color:var(--t1);border-top-color:var(--t1)}
+.h5-bnav-item svg{width:18px;height:18px}
+
+@media (max-width:639px){
+  /* Nav: show hamburger, hide deposit */
+  .deposit-btn{display:none}
+  .h5-hamburger{display:flex}
+
+  /* Asset bar: truncate stats */
+  .abar{height:52px;overflow:hidden}
+  .price-block{padding:0 10px}
+  .price-main{font-size:17px}
+
+  /* Main: hide chart, show ob+of side by side */
+  .main{flex-direction:row;height:480px;gap:0}
+  .kpanel{display:none}
+  .obpanel{display:flex;width:133px;min-width:133px;height:480px;border-right:1px solid var(--line1)}
+  .ofpanel{display:flex;width:auto;min-width:0;flex:1;height:480px}
+
+  /* Compact orderbook for 133px */
+  .ph{height:36px;padding:0 8px}
+  .ph-tab{font-size:11px;padding:0 4px}
+  .ob-view-btns{padding:4px 8px}
+  .obch{font-size:10px;padding:3px 8px;grid-template-columns:1fr 1fr}
+  .obch span:first-child{display:none}
+  .obr{padding:2px 8px;font-size:10px;grid-template-columns:1fr 1fr}
+  .obr>span:nth-child(3){display:none}
+  .ob-mid{font-size:13px;padding:4px 8px;gap:3px}
+  .ob-mid .ob-oracle{display:none}
+  .tsec{display:none}
+  .ob-view-btns .qty-sel{font-size:10px;padding:3px 5px}
+
+  /* Compact order form */
+  .of-isolated{height:34px;padding:0 10px}
+  .of-iso-lbl{font-size:11px}
+  .of-bs-tabs{height:36px}
+  .of-bstab{font-size:13px}
+  .of-ml-wrap{padding:0 10px}
+  .of-avail{padding:4px 10px}
+  .of-avail-key,.of-avail-val{font-size:11px}
+  .of-inputs{padding:0 10px}
+  .inp-box{padding:7px 8px}
+  .inp-lbl-sm{font-size:10px}
+  .inp-val-sm{font-size:13px}
+  .inp-badge-r{font-size:10px}
+  .of-slider-wrap{margin:8px 10px 0}
+  .of-checks{padding:6px 10px}
+  .of-chk{font-size:11px}
+  .of-buybtn-wrap{padding:8px 10px}
+  .of-buy-btn{font-size:13px;height:38px}
+  .of-costs{padding:6px 10px}
+  .cost-key,.cost-val{font-size:11px}
+
+  /* Positions: scroll + bottom nav clearance */
+  .bottom{margin-bottom:48px}
+  .pa-panel{display:none}
+  .pos-panel{width:100%}
+  .pos-ch{font-size:10px}
+  .pos-foot{height:32px}
+
+  /* Footer hidden */
+  .footer{display:none}
+
+  /* Bottom nav visible */
+  .h5-bottom-nav{display:flex}
+
+  /* Calendar drawer: full screen on mobile */
+  #calendar-drawer{max-width:100%}
+}
 </style>
 </head>
 <body>
@@ -922,6 +999,9 @@ body{
     <div class="wallet-btn">
       <div class="wallet-dot">S</div>
       0x8368...384c
+    </div>
+    <div class="h5-hamburger" aria-label="Menu">
+      <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
     </div>
   </div>
 </nav>
@@ -2551,6 +2631,15 @@ const CAL_API = 'https://coininfo-api.vercel.app';
 let calCountsCache = {};  // { 'YYYY-MM-DD': { crypto, stock, commodities, ipo } }
 let calEventsCache = {};  // { 'from-to-cat': Event[] | null }
 
+function hEsc(s) {
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+function hEscUrl(u) {
+  if (!u) return '';
+  const s = String(u);
+  return /^https?:\/\//i.test(s) ? hEsc(s) : '';
+}
+
 function calAddDays(d, n) { const r = new Date(d); r.setDate(r.getDate() + n); return r; }
 function calWeekStart(offset) {
   const dow = (CAL_TODAY.getDay() + 6) % 7; // Mon=0 .. Sun=6
@@ -2752,7 +2841,8 @@ function calFmtPrice(val) {
 }
 
 function calEventRow(ev, numCols) {
-  const timeStr = ev.timing==='bmo'?'BMO':ev.timing==='amc'?'AMC':ev.time_utc?ev.time_utc.slice(0,5):'—';
+  const rawTime = ev.time_utc ? String(ev.time_utc).replace(/[^0-9:]/g,'').slice(0,5) : '';
+  const timeStr = ev.timing==='bmo'?'BMO':ev.timing==='amc'?'AMC':rawTime||'—';
   const COUNTRY_FLAGS = {US:'🇺🇸',EU:'🇪🇺',CN:'🇨🇳',JP:'🇯🇵',GB:'🇬🇧',DE:'🇩🇪',CA:'🇨🇦',AU:'🇦🇺',KR:'🇰🇷'};
   // Per-source icon: crypto sources get symbol icons, others get country flags
   let icon;
@@ -2764,7 +2854,7 @@ function calEventRow(ev, numCols) {
   else icon = COUNTRY_FLAGS[ev.country] || '🌐';
 
   const rawTitle = (ev.title||ev.symbol||'Event');
-  const title = (et==='trending'||et==='price_update' ? rawTitle.replace(/ Trending$/,'') : rawTitle).replace(/</g,'&lt;');
+  const title = hEsc(et==='trending'||et==='price_update' ? rawTitle.replace(/ Trending$/,'') : rawTitle);
 
   let c5='text-text1', v5='—', v6='—', v7='—';
   if (et==='options_expiry') {
@@ -2822,8 +2912,8 @@ function calEventRow(ev, numCols) {
   }
 
   const _n = numCols ?? 3;
-  const _vCells = [v5,v6,v7].slice(0,_n).map((v,i)=>`<span class="${[c5,'text-text2','text-text2'][i]} text-xs text-right self-center">${v}</span>`).join('');
-  return `<div class="mx-4 sm:mx-[42px] border-b cal-line1-30" data-ev-time-utc="${ev.time_utc||''}"><div onclick="toggleEconRow(this)" class="w-full flex items-stretch cursor-pointer"><div class="grid items-center gap-0 py-3.5 flex-shrink-0" style="grid-template-columns:48px 28px"><span class="text-text2 text-[11px]"${ev.time_utc && ev.timing!=='bmo' && ev.timing!=='amc' ? ` data-time-utc="${ev.time_utc.slice(0,5)}"` : ''}>${timeStr}</span><span class="text-sm leading-none text-center">${icon}</span></div><div class="flex-1 grid items-center gap-0 py-3.5 pr-2 sm:pl-2 cal-row-back" style="grid-template-columns:${_calValGrid(_n)}"><div class="flex items-center gap-1 pr-2 min-w-0"><span class="text-text1 text-xs leading-tight truncate" title="${title}">${title}</span><i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i></div>${_vCells}</div></div><div class="econ-detail hidden"><p class="text-text2 text-[11px] leading-relaxed pl-[76px] pr-3 pb-2.5">${detail}</p></div></div>`;
+  const _vCells = [v5,v6,v7].slice(0,_n).map((v,i)=>`<span class="${[c5,'text-text2','text-text2'][i]} text-xs text-right self-center">${hEsc(v)}</span>`).join('');
+  return `<div class="mx-4 sm:mx-[42px] border-b cal-line1-30" data-ev-time-utc="${rawTime}"><div onclick="toggleEconRow(this)" class="w-full flex items-stretch cursor-pointer"><div class="grid items-center gap-0 py-3.5 flex-shrink-0" style="grid-template-columns:48px 28px"><span class="text-text2 text-[11px]"${rawTime && ev.timing!=='bmo' && ev.timing!=='amc' ? ` data-time-utc="${rawTime}"` : ''}>${hEsc(timeStr)}</span><span class="text-sm leading-none text-center">${icon}</span></div><div class="flex-1 grid items-center gap-0 py-3.5 pr-2 sm:pl-2 cal-row-back" style="grid-template-columns:${_calValGrid(_n)}"><div class="flex items-center gap-1 pr-2 min-w-0"><span class="text-text1 text-xs leading-tight truncate" title="${title}">${title}</span><i data-lucide="chevron-down" class="chevron w-3 h-3 text-text2 flex-shrink-0 transition-transform duration-200"></i></div>${_vCells}</div></div><div class="econ-detail hidden"><p class="text-text2 text-[11px] leading-relaxed pl-[76px] pr-3 pb-2.5">${hEsc(detail)}</p></div></div>`;
 }
 
 const CAL_TAB_COLUMNS = {
@@ -2835,6 +2925,25 @@ const CAL_TAB_COLUMNS = {
 function _calColGrid(n) { return n > 0 ? '48px 28px 1fr ' + Array(n).fill('64px').join(' ') : '48px 28px 1fr'; }
 function _calValGrid(n) { return n > 0 ? '1fr ' + Array(n).fill('64px').join(' ') : '1fr'; }
 
+function _evLocalDate(ev) {
+  if (!ev.time_utc) return ev.date;
+  const [hh] = ev.time_utc.split(':').map(Number);
+  const localH = hh + calTzOffset;
+  if (localH >= 24 || localH < 0) {
+    const d = new Date(ev.date + 'T00:00:00Z');
+    d.setUTCDate(d.getUTCDate() + (localH >= 24 ? 1 : -1));
+    return calDateKey(d);
+  }
+  return ev.date;
+}
+function _matchesMarketFilter(ev) {
+  if (calMarketFilter === 'all') return true;
+  if (calMarketFilter === 'us-stock') return ev.category === 'stock' && ev.country !== 'KR';
+  if (calMarketFilter === 'kr-stock') return ev.country === 'KR';
+  if (calMarketFilter === 'crypto') return ev.category === 'crypto';
+  if (calMarketFilter === 'commodities') return ev.category === 'commodities';
+  return true;
+}
 function buildEventWeekHTML(events, start, category) {
   if (!events || !events.length) return calEmptyState(`No ${category} Events`, `No ${category.toLowerCase()} events for ${calFormatRange(start, calAddDays(start, 6))}`);
   let cols = CAL_TAB_COLUMNS[category] || ['Actual', 'Est.', 'Prior'];
@@ -2847,8 +2956,10 @@ function buildEventWeekHTML(events, start, category) {
   for (const ev of events) {
     if (ev.event_type === 'price_update' || ev.event_type === 'trending') continue;
     if (category === 'Economic' && ev.event_type === 'energy') continue;
-    if (!byDate[ev.date]) byDate[ev.date]=[];
-    byDate[ev.date].push(ev);
+    if (!_matchesMarketFilter(ev)) continue;
+    const evDate = _evLocalDate(ev);
+    if (!byDate[evDate]) byDate[evDate]=[];
+    byDate[evDate].push(ev);
   }
   const hdrCells = cols.map(h=>`<span class="text-text2 text-[11px] text-right">${h}</span>`).join('');
   let html = '';
@@ -2888,6 +2999,8 @@ async function fetchAndRenderTab(start, category) {
   const cached = calEventsCache[ck];
   if (cached) {
     el.innerHTML = buildEventWeekHTML(cached, start, category);
+  } else if (cached === null) {
+    el.innerHTML = calEmptyState('Failed to load', 'Could not fetch events. Please try again later.');
   } else {
     el.innerHTML = category==='Crypto' ? calBuildPlaceholderHTML(start) : calBuildCategoryPlaceholderHTML(start, category);
   }
@@ -2999,8 +3112,9 @@ function renderCalendarTabContent(start) {
   if (calEventsCache[ck] !== undefined) {
     if (calEventsCache[ck]) {
       el.innerHTML = buildEventWeekHTML(calEventsCache[ck], start, calActiveTab);
+    } else if (calEventsCache[ck] === null) {
+      el.innerHTML = calEmptyState('Failed to load', 'Could not fetch events. Please try again later.');
     } else {
-      // fetch had failed — show placeholder
       el.innerHTML = calActiveTab === 'Crypto' ? calBuildPlaceholderHTML(start) : calBuildCategoryPlaceholderHTML(start, calActiveTab);
     }
     lucide.createIcons();
@@ -3206,9 +3320,9 @@ async function renderNextEvent(key) {
         <span style="font-size:10px;font-weight:600;color:var(--t2);text-transform:uppercase;letter-spacing:.05em;white-space:nowrap;flex-shrink:0">Next</span>
         ${logoHtml}
         ${impactDot}
-        <span style="color:var(--t1);font-size:11px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${ev.title}</span>
+        <span style="color:var(--t1);font-size:11px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${hEsc(ev.title)}</span>
         <span style="display:flex;align-items:center;gap:4px;color:var(--t2);font-size:10px;white-space:nowrap;flex-shrink:0">
-          ${ev.day} ${ev.month}
+          ${hEsc(ev.day)} ${hEsc(ev.month)}
           <i data-lucide="chevron-down" style="width:14px;height:14px"></i>
         </span>
       </div>`;
@@ -3225,30 +3339,30 @@ async function renderNextEvent(key) {
         : `<span style="width:5px;height:5px;border-radius:50%;background:var(--orange);flex-shrink:0;display:inline-block"></span>`;
       return `<div class="flex items-center gap-2.5 px-4 py-2.5 border-t cal-line1-30 hover:bg-bg2 transition-colors">
         <div class="flex-shrink-0 text-center w-9">
-          <div class="text-text1 text-[13px] font-bold leading-none">${u.day}</div>
-          <div class="text-text2 text-[11px] leading-none mt-[3px]">${u.month}</div>
+          <div class="text-text1 text-[13px] font-bold leading-none">${hEsc(u.day)}</div>
+          <div class="text-text2 text-[11px] leading-none mt-[3px]">${hEsc(u.month)}</div>
         </div>
         ${dot}
-        <span class="text-text1 text-[12px] leading-tight flex-1 truncate">${u.title}</span>
-        <span class="text-text2 text-[11px] flex-shrink-0 whitespace-nowrap px-2 py-1 rounded bg-bg2">${u.categoryLabel || u.category}</span>
-        ${u.source ? `<a href="${u.source}" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="text-text2 text-[11px] hover:text-text1 transition-colors flex-shrink-0 leading-none">↗</a>` : ''}
+        <span class="text-text1 text-[12px] leading-tight flex-1 truncate">${hEsc(u.title)}</span>
+        <span class="text-text2 text-[11px] flex-shrink-0 whitespace-nowrap px-2 py-1 rounded bg-bg2">${hEsc(u.categoryLabel || u.category)}</span>
+        ${u.source ? `<a href="${hEscUrl(u.source)}" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="text-text2 text-[11px] hover:text-text1 transition-colors flex-shrink-0 leading-none">↗</a>` : ''}
       </div>`;
     }).join('');
     el.innerHTML = `
       <div style="margin:12px ${window.innerWidth>=640?'42px':'16px'};border:1px solid var(--line1);border-radius:8px;overflow:hidden">
         <div class="flex items-stretch">
           <div class="flex flex-col items-center justify-center bg-bg2 px-4 py-4 min-w-[64px] border-r cal-line1-50 flex-shrink-0">
-            <span class="text-text1 text-[26px] font-bold leading-none">${ev.day}</span>
-            <span class="text-text2 text-[12px] mt-2 font-medium leading-none">${ev.month}</span>
+            <span class="text-text1 text-[26px] font-bold leading-none">${hEsc(ev.day)}</span>
+            <span class="text-text2 text-[12px] mt-2 font-medium leading-none">${hEsc(ev.month)}</span>
           </div>
           <div class="flex-1 px-4 py-3 min-w-0">
             <div class="flex items-center gap-2 min-w-0">
               ${impactDot}
-              <span class="text-text1 text-[14px] font-semibold leading-tight truncate">${ev.title}</span>
+              <span class="text-text1 text-[14px] font-semibold leading-tight truncate">${hEsc(ev.title)}</span>
             </div>
-            <div class="text-text2 text-[12px] mt-1.5 leading-none">${ev.time}</div>
-            ${ev.desc ? `<p class="text-text2 text-[11px] mt-2 leading-relaxed line-clamp-2">${ev.desc}</p>` : ''}
-            ${ev.source ? `<a href="${ev.source}" target="_blank" rel="noopener" class="text-text2 text-[11px] hover:text-text1 transition-colors mt-1.5 inline-block">Source ↗</a>` : ''}
+            <div class="text-text2 text-[12px] mt-1.5 leading-none">${hEsc(ev.time)}</div>
+            ${ev.desc ? `<p class="text-text2 text-[11px] mt-2 leading-relaxed line-clamp-2">${hEsc(ev.desc)}</p>` : ''}
+            ${ev.source ? `<a href="${hEscUrl(ev.source)}" target="_blank" rel="noopener" class="text-text2 text-[11px] hover:text-text1 transition-colors mt-1.5 inline-block">Source ↗</a>` : ''}
           </div>
           <button onclick="toggleNextEvent()" class="flex-shrink-0 w-9 self-stretch flex items-start justify-center pt-3.5 text-text2 hover:text-text1 transition-colors border-l cal-line1-30" title="Collapse">
             <i data-lucide="chevron-up" class="w-4 h-4"></i>
@@ -3442,7 +3556,7 @@ function calSelectTz(h) {
   calTzOffset = h;
   document.getElementById('calendar-tz-label').textContent = fmtTz(h);
   closeCalendarPopups();
-  refreshCalendarTimes();
+  renderCalendarWeek();
 }
 
 // Recompute the time column (and "next event" badge) for the current calTzOffset,
@@ -3587,5 +3701,21 @@ thumb.addEventListener('mousedown',()=>drag=true);
 document.addEventListener('mousemove',e=>{if(!drag)return;const r=track.getBoundingClientRect();setSl((e.clientX-r.left)/r.width*100)});
 document.addEventListener('mouseup',()=>drag=false);
 </script>
+
+<!-- H5 Bottom Navigation Bar -->
+<div class="h5-bottom-nav">
+  <div class="h5-bnav-item active">
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h7v9H3zM14 3h7v5h-7zM14 12h7v9h-7zM3 16h7v5H3z"/></svg>
+    Perpetual
+  </div>
+  <div class="h5-bnav-item">
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2zM16 3H8a2 2 0 00-2 2v2h12V5a2 2 0 00-2-2z"/></svg>
+    Vault
+  </div>
+  <div class="h5-bnav-item">
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+    Wallet
+  </div>
+</div>
 </body>
 </html>
