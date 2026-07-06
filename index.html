@@ -2528,10 +2528,18 @@ function selectAsset(key) {
 function openCalendar() {
   document.getElementById("calendar-backdrop").classList.remove("hidden");
   const d = document.getElementById("calendar-drawer");
+  // On mobile clear any inline width left by the desktop resize handler
+  if (window.innerWidth <= 639) {
+    d.style.width = '';
+    d.style.maxWidth = '';
+  }
   d.classList.remove("translate-x-full");
   d.classList.add("translate-x-0");
   d.style.boxShadow = '-12px 0 32px rgba(0,0,0,.22), 0 0 0 1px rgba(255,255,255,.04)';
   document.getElementById("calendar-shadow-edge").classList.remove("invisible");
+  // Hide bottom nav so drawer is truly full-screen on mobile
+  const bnav = document.querySelector('.h5-bottom-nav');
+  if (bnav) bnav.style.display = 'none';
 }
 function closeCalendar() {
   document.getElementById("calendar-backdrop").classList.add("hidden");
@@ -2540,6 +2548,9 @@ function closeCalendar() {
   d.classList.remove("translate-x-0");
   d.style.boxShadow = 'none';
   document.getElementById("calendar-shadow-edge").classList.add("invisible");
+  // Restore bottom nav
+  const bnav = document.querySelector('.h5-bottom-nav');
+  if (bnav) bnav.style.display = '';
 }
 function toggleCalendarWeekCards() {
   document.getElementById("calendar-week-cards").classList.toggle("hidden");
