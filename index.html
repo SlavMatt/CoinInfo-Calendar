@@ -832,6 +832,13 @@ body{
 ───────────────────────────────────── */
 .h5-hamburger{display:none;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;border:1px solid var(--line1);background:var(--bg1);cursor:pointer;color:var(--t2);flex-shrink:0}
 .h5-hamburger:hover{color:var(--t1);border-color:var(--t2)}
+/* ── H5 Coin Info Section ── */
+.h5-ci-section{display:none;border-top:1px solid var(--line1);background:var(--bg1)}
+.h5-ci-tabs{display:flex;border-bottom:1px solid var(--line1);padding:0 16px;gap:20px}
+.h5-ci-tab{font-size:13px;font-weight:500;color:var(--t2);padding:10px 0;cursor:pointer;position:relative}
+.h5-ci-tab.on{color:var(--t1);font-weight:600}
+.h5-ci-tab.on::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--t1);border-radius:1px 1px 0 0}
+.h5-ci-panel{padding:16px}
 .h5-bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;height:48px;background:var(--bg1);border-top:1px solid var(--line1);z-index:200;align-items:stretch}
 .h5-bnav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:10px;font-weight:500;color:var(--t2);cursor:pointer;border-top:2px solid transparent}
 .h5-bnav-item.active{color:var(--t1);border-top-color:var(--t1)}
@@ -899,6 +906,16 @@ body{
 
   /* Bottom nav visible */
   .h5-bottom-nav{display:flex}
+  .h5-ci-section{display:block}
+
+  /* H5 Coin Info single-column layout */
+  .h5-ci-section .mi-crypto-wrap{flex-direction:column;padding:12px 0 16px}
+  .h5-ci-section .mi-left{width:100%;min-width:0;padding-right:0;padding-bottom:0}
+  .h5-ci-section .mi-right{padding-left:0;padding-top:16px;border-top:1px solid var(--line1)}
+  .h5-ci-section .mi-right .mi-right-sep{display:none}
+  .h5-ci-section .mi-wrap{padding:12px 0 16px}
+  .h5-ci-section .mi-top-row{flex-direction:column}
+  .h5-ci-section .mi-asset-header{width:auto}
 
   /* Calendar drawer: full screen on mobile */
   #calendar-drawer{max-width:100%}
@@ -1309,6 +1326,20 @@ body{
   </div>
 
 </div><!-- /main -->
+
+<!-- ── H5 COIN INFO SECTION (mobile only) ── -->
+<div class="h5-ci-section">
+  <div class="h5-ci-tabs">
+    <div class="h5-ci-tab on" onclick="switchH5CiTab('info',this)">Coin Info</div>
+    <div class="h5-ci-tab" onclick="switchH5CiTab('trading',this)">Trading Rules</div>
+  </div>
+  <div id="h5-ci-panel-info" class="h5-ci-panel">
+    <div id="mi-content-h5"></div>
+  </div>
+  <div id="h5-ci-panel-trading" class="h5-ci-panel" style="display:none">
+    <div id="h5-trading-content"></div>
+  </div>
+</div>
 
 <!-- ── BOTTOM ── -->
 <div class="bottom">
@@ -2279,8 +2310,10 @@ const LINK_LABEL_CN = {globe:'Website', doc:'Whitepaper', github:'GitHub', grid:
 
 function renderMarketInfo(key) {
   const a = ASSETS[key];
-  document.getElementById('mi-content').innerHTML =
-    a.isTradFi ? _miTradFi(a, key) : _miCrypto(a, key);
+  const html = a.isTradFi ? _miTradFi(a, key) : _miCrypto(a, key);
+  document.getElementById('mi-content').innerHTML = html;
+  const h5 = document.getElementById('mi-content-h5');
+  if (h5) h5.innerHTML = html;
   if (!a.isTradFi) {
     requestAnimationFrame(() => {
       const el = document.getElementById('mi-desc-text');
@@ -2290,6 +2323,14 @@ function renderMarketInfo(key) {
       }
     });
   }
+}
+
+function switchH5CiTab(id, btn) {
+  ['info','trading'].forEach(n => {
+    document.getElementById('h5-ci-panel-'+n).style.display = n===id ? 'block' : 'none';
+  });
+  document.querySelectorAll('.h5-ci-tab').forEach(t => t.classList.remove('on'));
+  btn.classList.add('on');
 }
 
 function toggleMiDesc(btn) {
@@ -2420,12 +2461,12 @@ function rebuildChart(key) {
   chart.timeScale().fitContent();
 }
 
-function renderTradingInfo(key) {
+function _tradingInfoHtml(key) {
   const ci = ASSETS[key].contractInfo;
   const leftRows  = ci.left.map(r=>`<div class="ci-row"><span class="dk">${r.k}</span><span style="font-size:13px;color:var(--t1);font-weight:500">${r.v}</span></div>`).join('');
   const rightRows = ci.right.map(r=>`<div class="ci-row"><span class="dk">${r.k}</span><span style="font-size:13px;color:var(--t1);font-weight:500">${r.v}</span></div>`).join('');
   const tierRows  = ci.tiers.map((t,i)=>`<tr class="ci-tier"><td>${i+1}</td><td>${t.lev}</td><td>${t.max}</td></tr>`).join('');
-  document.getElementById('ti-content').innerHTML = `
+  return `
     <div class="ci-wrap">
       <div style="font-size:16px;font-weight:700;color:var(--t1);margin-bottom:16px">Trading Rules</div>
       <div style="display:grid;grid-template-columns:1fr 1px 1fr;gap:0;margin-bottom:32px">
@@ -2443,6 +2484,13 @@ function renderTradingInfo(key) {
         <tbody>${tierRows}</tbody>
       </table>
     </div>`;
+}
+
+function renderTradingInfo(key) {
+  const html = _tradingInfoHtml(key);
+  document.getElementById('ti-content').innerHTML = html;
+  const h5tr = document.getElementById('h5-trading-content');
+  if (h5tr) h5tr.innerHTML = html;
 }
 
 function selectAsset(key) {
