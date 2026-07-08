@@ -2632,22 +2632,47 @@ function toggleMiDesc(btn) {
 }
 
 function _miTradFi(a, key) {
-  const statsHtml = (a.marketData||[]).map(s =>
-    `<div class="mi-stat-row"><span class="mi-stat-k">${s.k}</span><div class="mi-stat-v">${s.v}</div></div>`
-  ).join('');
+  const tipMap = {
+    'Market Cap':      'Total market value of all outstanding shares (price × shares outstanding)',
+    'P/E Ratio':       'Price-to-earnings ratio: stock price divided by earnings per share',
+    'P/E Ratio (TTM)': 'Trailing twelve-month P/E based on actual reported earnings',
+    'EPS (TTM)':       'Earnings per share over the trailing twelve months',
+    '52W Range':       'Lowest and highest closing price over the past 52 weeks',
+    '1Y Range':        'Lowest and highest price over the past 12 months',
+    'Shares':          'Total number of shares outstanding, including restricted shares',
+    'IPO Date':        'Date when the company first offered shares to the public',
+    'Launch Date':     'Date when this index was first published and began tracking',
+    'Spot Price':      'Current market price for immediate delivery of the underlying commodity',
+    'Contract Size':   'Quantity of the underlying asset controlled by one futures contract',
+    'Components':      'Number of individual securities included in this index',
+    'Sector Coverage': 'Number of distinct industry sectors represented in this index',
+    'Rebalance':       'How frequently the index composition and weightings are reviewed',
+  };
+  const logoHtml = LOGOS[key]
+    ? `<img src="${LOGOS[key]}" width="26" height="26" style="border-radius:50%;display:block;flex-shrink:0">`
+    : `<div style="width:26px;height:26px;border-radius:50%;background:${a.icoColor};display:flex;align-items:center;justify-content:center;font-size:${a.icoSize};font-weight:700;color:#fff;flex-shrink:0">${a.icoLabel}</div>`;
+  const statsHtml = (a.marketData||[]).map(s => {
+    const tip = tipMap[s.k];
+    const kHtml = tip
+      ? `<span class="mi-tip-wrap"><span class="mi-stat-k has-tip">${s.k}</span><div class="mi-tip-pop">${tip}</div></span>`
+      : `<span class="mi-stat-k">${s.k}</span>`;
+    return `<div class="mi-stat-row">${kHtml}<div style="text-align:right"><div class="mi-stat-v">${s.v}</div></div></div>`;
+  }).join('');
   return `
-    <div class="mi-wrap">
-      <div class="mi-top-row">
-        <div class="mi-asset-header">
-          <div class="mi-asset-ico" style="background:${LOGOS[key]?'transparent':a.icoColor};font-size:${a.icoSize}">${LOGOS[key]?`<img src="${LOGOS[key]}" width="40" height="40" style="border-radius:50%;display:block">`:a.icoLabel}</div>
-          <div class="mi-asset-info"><div class="mi-asset-ticker">${a.sub}</div></div>
+    <div class="mi-crypto-wrap">
+      <div class="mi-left">${statsHtml}</div>
+      <div class="mi-right">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+          ${logoHtml}
+          <div>
+            <div class="mi-sec-title" style="margin-bottom:2px">${a.sub}</div>
+            <div style="font-size:11px;color:var(--green)">${a.category||''}</div>
+          </div>
         </div>
-        <div class="mi-about-inline">
-          <div class="mi-lbl">About</div>
-          <p class="about-p" style="margin-bottom:0">${a.about}</p>
-        </div>
+        <div class="mi-about-text" id="mi-desc-text">${a.about||''}</div>
+        <span class="mi-exp-btn" id="mi-exp-btn" style="display:none" onclick="toggleMiDesc(this)">Expand</span>
+        ${a.tradingHours?`<div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--line1);font-size:11px;color:var(--t3);line-height:1.6"><span style="color:var(--t2);font-weight:500">Trading Hours</span><br>${a.tradingHours}</div>`:''}
       </div>
-      ${statsHtml ? `<div class="mi-sec"><div class="mi-lbl">Market Data</div>${statsHtml}</div>` : ''}
     </div>`;
 }
 
