@@ -863,13 +863,19 @@ body{
 .h5-mpanel{min-height:200px}
 
 /* H5 Contract Info */
-.h5-ci-coin-wrap{padding:14px 14px 0}
-.h5-ci-coin-wrap .mi-crypto-wrap{flex-direction:column;padding:0}
-.h5-ci-coin-wrap .mi-left{width:100%;min-width:0;padding:0}
-.h5-ci-coin-wrap .mi-right{padding:14px 0 0;border-top:1px solid var(--line1);margin-top:14px}
+.h5-ci-coin-wrap{padding:12px 14px 0}
+.h5-ci-coin-wrap .mi-crypto-wrap{padding:0}
+.h5-ci-coin-wrap .mi-left{width:152px;min-width:0;padding-right:12px;padding-bottom:0;flex-shrink:0}
+.h5-ci-coin-wrap .mi-left .mi-stat-k{font-size:11px}
+.h5-ci-coin-wrap .mi-left .mi-stat-v{font-size:12px}
+.h5-ci-coin-wrap .mi-left .mi-stat-date{font-size:10px}
+.h5-ci-coin-wrap .mi-left .mi-stat-v{white-space:nowrap}
+.h5-ci-coin-wrap .mi-right{flex:1;min-width:0;padding-left:12px;border-left:1px solid var(--line1);padding-top:0}
 .h5-ci-coin-wrap .mi-wrap{padding:0}
 .h5-ci-coin-wrap .mi-top-row{flex-direction:column}
 .h5-ci-coin-wrap .mi-asset-header{width:auto}
+.h5-ci-coin-wrap .mi-about-text{font-size:12px;-webkit-line-clamp:5}
+.h5-ci-coin-wrap .mi-sec-title{font-size:13px}
 .h5-rules-wrap{padding:14px}
 .h5-sec-hd{font-size:15px;font-weight:700;color:var(--t1);margin:0 0 12px}
 .h5-kv-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--line1);font-size:13px}
@@ -2649,15 +2655,15 @@ function _miCrypto(a, key) {
   const md = {};
   (a.marketData||[]).forEach(({k,v})=>{ md[k]=v; });
   const stats = [
-    {k:'Rank', v: md['Rank']||a.rank||'—', cls:'grn'},
-    {k:'Market Cap', v: md['Market Cap']||'—', tip:'Total market value of all circulating supply'},
-    {k:'Fully Diluted Value', v: md['FDV']||'—', tip:'Total market cap at max supply, reflecting fully diluted valuation'},
-    {k:'Vol / Market Cap', v: md['Vol / MCap']||'—', tip:'24h trading volume divided by market cap, measuring market liquidity'},
-    {k:'Market Dominance', v: md['Market Dominance']||a.dominance||'—', tip:"This asset's share of total crypto market capitalization"},
+    {k:'Rank', v: md['Rank']||a.rank||'—', cls:'grn', tip:'Market cap ranking among all tracked cryptocurrencies'},
+    {k:'Market Cap', v: md['Market Cap']||'—', tip:'Total market value of circulating supply (price × circulating supply)'},
+    {k:'Fully Diluted Value', v: md['FDV']||'—', tip:'Hypothetical market cap if the maximum supply were all in circulation today'},
+    {k:'Vol / Market Cap', v: md['Vol / MCap']||'—', tip:'24h trading volume divided by market cap — higher ratio means greater liquidity'},
+    {k:'Market Dominance', v: md['Market Dominance']||a.dominance||'—', tip:"This asset's percentage share of the total global crypto market cap"},
     'sep',
-    {k:'Launch Date', v: a.launchDate||'—'},
-    {k:'All-Time High', v: a.ath||'—', sub: a.athDate||''},
-    {k:'All-Time Low', v: a.atl||'—', sub: a.atlDate||''},
+    {k:'Launch Date', v: a.launchDate||'—', tip:'Date when this asset first became publicly tradeable'},
+    {k:'All-Time High', v: a.ath||'—', sub: a.athDate||'', tip:'Highest price ever recorded since the asset launched'},
+    {k:'All-Time Low', v: a.atl||'—', sub: a.atlDate||'', tip:'Lowest price ever recorded since the asset launched'},
     {k:'Blockchain', v: a.chain||'—'},
     'sep',
     {k:'Circulating Supply', v: md['Circulating Supply']||'—', tip:'Number of tokens circulating in the market, excluding locked or unissued'},
