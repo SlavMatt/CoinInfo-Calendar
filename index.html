@@ -832,13 +832,67 @@ body{
 ───────────────────────────────────── */
 .h5-hamburger{display:none;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;border:1px solid var(--line1);background:var(--bg1);cursor:pointer;color:var(--t2);flex-shrink:0}
 .h5-hamburger:hover{color:var(--t1);border-color:var(--t2)}
-/* ── H5 Coin Info Section ── */
-.h5-ci-section{display:none;border-top:1px solid var(--line1);background:var(--bg1)}
-.h5-ci-tabs{display:flex;border-bottom:1px solid var(--line1);padding:0 16px;gap:20px}
-.h5-ci-tab{font-size:13px;font-weight:500;color:var(--t2);padding:10px 0;cursor:pointer;position:relative}
-.h5-ci-tab.on{color:var(--t1);font-weight:600}
-.h5-ci-tab.on::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--t1);border-radius:1px 1px 0 0}
-.h5-ci-panel{padding:16px}
+/* ── H5 View Toggle Buttons ── */
+.h5-view-btn{display:none;width:28px;height:28px;align-items:center;justify-content:center;color:var(--t3);cursor:pointer;border-radius:4px;transition:color .15s,background .15s;flex-shrink:0}
+.h5-view-btn.on,.h5-view-btn:hover{color:var(--t1);background:var(--bg2)}
+
+/* ── H5 Market View ── */
+.h5-market-view{display:none;flex-direction:column;background:var(--bg1);padding-bottom:48px}
+
+/* H5 Price Bar */
+.h5-price-bar{display:grid;grid-template-columns:1fr 1fr;padding:10px 14px 12px;border-bottom:1px solid var(--line1)}
+.h5-pb-left{display:flex;flex-direction:column;padding-right:12px;border-right:1px solid var(--line1);min-width:0}
+.h5-pb-label{font-size:10px;color:var(--t3);display:flex;align-items:center;gap:3px;margin-bottom:4px;letter-spacing:.02em}
+.h5-pb-price{font-size:22px;font-weight:700;line-height:1.15;margin-bottom:2px}
+.h5-pb-delta{font-size:11px;margin-bottom:4px}
+.h5-pb-delta.r{color:var(--red)}.h5-pb-delta.g{color:var(--green)}
+.h5-pb-name{font-size:11px;font-weight:600}
+.h5-pb-right{padding-left:12px;display:flex;flex-direction:column;gap:5px;justify-content:center;min-width:0}
+.h5-pb-stat{display:flex;justify-content:space-between;gap:4px;align-items:baseline}
+.h5-pb-stat-k{font-size:10px;color:var(--t3);white-space:nowrap}
+.h5-pb-stat-v{font-size:11px;color:var(--t1);font-weight:500}
+
+/* H5 Market Tabs */
+.h5-mtabs{display:flex;border-bottom:1px solid var(--line1);overflow-x:auto;-webkit-overflow-scrolling:touch}
+.h5-mtabs::-webkit-scrollbar{display:none}
+.h5-mtab{font-size:13px;font-weight:500;color:var(--t3);padding:11px 16px;cursor:pointer;position:relative;white-space:nowrap;flex-shrink:0}
+.h5-mtab.on{color:var(--t1);font-weight:600}
+.h5-mtab.on::after{content:'';position:absolute;bottom:0;left:16px;right:16px;height:2px;background:var(--t1);border-radius:1px 1px 0 0}
+
+/* H5 Panel base */
+.h5-mpanel{min-height:200px}
+
+/* H5 Contract Info */
+.h5-ci-coin-wrap{padding:14px 14px 0}
+.h5-ci-coin-wrap .mi-crypto-wrap{flex-direction:column;padding:0}
+.h5-ci-coin-wrap .mi-left{width:100%;min-width:0;padding:0}
+.h5-ci-coin-wrap .mi-right{padding:14px 0 0;border-top:1px solid var(--line1);margin-top:14px}
+.h5-ci-coin-wrap .mi-wrap{padding:0}
+.h5-ci-coin-wrap .mi-top-row{flex-direction:column}
+.h5-ci-coin-wrap .mi-asset-header{width:auto}
+.h5-rules-wrap{padding:14px}
+.h5-sec-hd{font-size:15px;font-weight:700;color:var(--t1);margin:0 0 12px}
+.h5-kv-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--line1);font-size:13px}
+.h5-kv-k{color:var(--t3)}.h5-kv-v{color:var(--t1);font-weight:500}
+.h5-tiers-tbl{width:100%;border-collapse:collapse;font-size:12px;margin-top:4px}
+.h5-tiers-tbl th{color:var(--t3);font-weight:500;padding:7px 0;border-bottom:1px solid var(--line1);text-align:left}
+.h5-tiers-tbl th:nth-child(2){text-align:center}.h5-tiers-tbl th:last-child{text-align:right}
+.h5-tiers-tbl td{padding:7px 0;border-bottom:1px solid var(--line1);color:var(--t1)}
+.h5-tiers-tbl td:nth-child(2){text-align:center}.h5-tiers-tbl td:last-child{text-align:right}
+
+/* H5 Order Book */
+.h5-ob-hdr{display:grid;grid-template-columns:1fr 1fr 1fr;padding:8px 14px;font-size:11px;color:var(--t3);border-bottom:1px solid var(--line1)}
+.h5-ob-hdr span:nth-child(2){text-align:center}.h5-ob-hdr span:last-child{text-align:right}
+.h5-ob-row{display:grid;grid-template-columns:1fr 1fr 1fr;padding:4px 14px;font-size:12px;position:relative;overflow:hidden}
+.h5-ob-row span:nth-child(2){text-align:center;color:var(--t1)}.h5-ob-row span:last-child{text-align:right;color:var(--t2)}
+.h5-ob-bar{position:absolute;top:0;bottom:0;right:0;opacity:.12;pointer-events:none}
+.h5-ob-mid{padding:5px 14px;font-size:14px;font-weight:700;border-top:1px solid var(--line1);border-bottom:1px solid var(--line1)}
+
+/* H5 Trades */
+.h5-tr-hdr{display:grid;grid-template-columns:1fr 1fr 1fr;padding:8px 14px;font-size:11px;color:var(--t3);border-bottom:1px solid var(--line1)}
+.h5-tr-hdr span:nth-child(2){text-align:center}.h5-tr-hdr span:last-child{text-align:right}
+.h5-tr-row{display:grid;grid-template-columns:1fr 1fr 1fr;padding:5px 14px;font-size:12px}
+.h5-tr-row span:nth-child(2){text-align:center;color:var(--t2)}.h5-tr-row span:last-child{text-align:right;color:var(--t3)}
 .h5-bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;height:48px;background:var(--bg1);border-top:1px solid var(--line1);z-index:200;align-items:stretch}
 .h5-bnav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:10px;font-weight:500;color:var(--t2);cursor:pointer;border-top:2px solid transparent}
 .h5-bnav-item.active{color:var(--t1);border-top-color:var(--t1)}
@@ -906,16 +960,12 @@ body{
 
   /* Bottom nav visible */
   .h5-bottom-nav{display:flex}
-  .h5-ci-section{display:block}
 
-  /* H5 Coin Info single-column layout */
-  .h5-ci-section .mi-crypto-wrap{flex-direction:column;padding:12px 0 16px}
-  .h5-ci-section .mi-left{width:100%;min-width:0;padding-right:0;padding-bottom:0}
-  .h5-ci-section .mi-right{padding-left:0;padding-top:16px;border-top:1px solid var(--line1)}
-  .h5-ci-section .mi-right .mi-right-sep{display:none}
-  .h5-ci-section .mi-wrap{padding:12px 0 16px}
-  .h5-ci-section .mi-top-row{flex-direction:column}
-  .h5-ci-section .mi-asset-header{width:auto}
+  /* H5 View toggle shown on mobile */
+  .h5-view-btn{display:flex}
+
+  /* H5 Market View shown when active */
+  .h5-market-view.active{display:flex}
 
   /* Calendar drawer: full screen on mobile */
   #calendar-drawer{max-width:100%}
@@ -1099,6 +1149,13 @@ body{
     </div>
   </div>
   <div class="abar-right">
+    <!-- H5 only: view toggle buttons -->
+    <div class="h5-view-btn on" id="h5-vbtn-trade" onclick="switchH5View('trade')" title="Trading">
+      <svg width="15" height="15" fill="none" viewBox="0 0 15 15"><rect x="1" y="9" width="3" height="5" rx=".4" fill="currentColor"/><rect x="6" y="5" width="3" height="9" rx=".4" fill="currentColor"/><rect x="11" y="1" width="3" height="13" rx=".4" fill="currentColor"/></svg>
+    </div>
+    <div class="h5-view-btn" id="h5-vbtn-market" onclick="switchH5View('market')" title="Market Info">
+      <svg width="15" height="15" fill="none" viewBox="0 0 15 15"><path d="M1 10.5l4-4 3 3 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
     <div class="abar-calendar" onclick="openCalendar()" title="Calendar">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M15.8333 15.8333H4.16667V6.66658H15.8333M13.3333 0.833252V2.49992H6.66667V0.833252H5V2.49992H4.16667C3.24167 2.49992 2.5 3.24159 2.5 4.16659V15.8333C2.5 16.2753 2.67559 16.6992 2.98816 17.0118C3.30072 17.3243 3.72464 17.4999 4.16667 17.4999H15.8333C16.2754 17.4999 16.6993 17.3243 17.0118 17.0118C17.3244 16.6992 17.5 16.2753 17.5 15.8333V4.16659C17.5 3.72456 17.3244 3.30063 17.0118 2.98807C16.6993 2.67551 16.2754 2.49992 15.8333 2.49992H15V0.833252M14.1667 9.99992H10V14.1666H14.1667V9.99992Z" fill="currentColor"/></svg>
     </div>
@@ -1327,18 +1384,78 @@ body{
 
 </div><!-- /main -->
 
-<!-- ── H5 COIN INFO SECTION (mobile only) ── -->
-<div class="h5-ci-section">
-  <div class="h5-ci-tabs">
-    <div class="h5-ci-tab on" onclick="switchH5CiTab('info',this)">Coin Info</div>
-    <div class="h5-ci-tab" onclick="switchH5CiTab('trading',this)">Trading Rules</div>
+<!-- ── H5 MARKET VIEW (mobile only, shown via switchH5View) ── -->
+<div class="h5-market-view" id="h5-market-view">
+
+  <!-- Price Bar -->
+  <div class="h5-price-bar">
+    <div class="h5-pb-left">
+      <div class="h5-pb-label">
+        Mid-Market
+        <svg width="11" height="11" fill="none" viewBox="0 0 16 16" style="opacity:.6"><path d="M3 8h10M10 5l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 8H3M6 11L3 8l3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="h5-pb-price" id="h5-pb-price">96,789.08</div>
+      <div class="h5-pb-delta r" id="h5-pb-delta">-345.2 (-0.36%)</div>
+      <div class="h5-pb-name" id="h5-pb-name" style="color:#F7931A">Bitcoin</div>
+    </div>
+    <div class="h5-pb-right">
+      <div class="h5-pb-stat"><span class="h5-pb-stat-k">24h High</span><span class="h5-pb-stat-v" id="h5-pb-high">97,250.0</span></div>
+      <div class="h5-pb-stat"><span class="h5-pb-stat-k">24h Low</span><span class="h5-pb-stat-v" id="h5-pb-low">94,810.5</span></div>
+      <div class="h5-pb-stat"><span class="h5-pb-stat-k">Mark Price</span><span class="h5-pb-stat-v" id="h5-pb-mark">96,643.2</span></div>
+      <div class="h5-pb-stat"><span class="h5-pb-stat-k">Index Price</span><span class="h5-pb-stat-v" id="h5-pb-index">96,600.0</span></div>
+      <div class="h5-pb-stat"><span class="h5-pb-stat-k">24h Vol USDC</span><span class="h5-pb-stat-v" id="h5-pb-vol">87.68M</span></div>
+      <div class="h5-pb-stat"><span class="h5-pb-stat-k">Open Interest(USDC)</span><span class="h5-pb-stat-v" id="h5-pb-oi">312.40M</span></div>
+    </div>
   </div>
-  <div id="h5-ci-panel-info" class="h5-ci-panel">
-    <div id="mi-content-h5"></div>
+
+  <!-- Tab Strip -->
+  <div class="h5-mtabs scrollbar-none">
+    <div class="h5-mtab on" onclick="switchH5MarketTab('chart',this)">Chart</div>
+    <div class="h5-mtab" onclick="switchH5MarketTab('contract',this)">Contract Info</div>
+    <div class="h5-mtab" onclick="switchH5MarketTab('ob',this)">Order Book</div>
+    <div class="h5-mtab" onclick="switchH5MarketTab('trades',this)">Trades</div>
   </div>
-  <div id="h5-ci-panel-trading" class="h5-ci-panel" style="display:none">
-    <div id="h5-trading-content"></div>
+
+  <!-- Chart Panel -->
+  <div id="h5-mpanel-chart" class="h5-mpanel" style="padding:0">
+    <div style="display:flex;align-items:center;justify-content:center;height:360px;color:var(--t3)">
+      <div style="text-align:center">
+        <svg width="48" height="48" fill="none" viewBox="0 0 48 48" style="margin-bottom:10px;opacity:.25"><path d="M4 36L16 22l8 8 12-14 8 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div style="font-size:13px">Chart</div>
+      </div>
+    </div>
   </div>
+
+  <!-- Contract Info Panel -->
+  <div id="h5-mpanel-contract" class="h5-mpanel" style="display:none;padding:0">
+    <div class="h5-ci-coin-wrap">
+      <div class="h5-sec-hd">Coin Info</div>
+      <div id="h5-coin-info-content"></div>
+    </div>
+    <div class="h5-rules-wrap" style="border-top:1px solid var(--line1);margin-top:4px">
+      <div class="h5-sec-hd">Trading Rules</div>
+      <div id="h5-rules-content"></div>
+    </div>
+  </div>
+
+  <!-- Order Book Panel -->
+  <div id="h5-mpanel-ob" class="h5-mpanel" style="display:none;padding:0">
+    <div class="h5-ob-hdr"><span>Price</span><span>Quantity(USDC)</span><span>Total(USDC)</span></div>
+    <div id="h5-ob-asks"></div>
+    <div class="h5-ob-mid">
+      <span id="h5-ob-mid-price" style="color:var(--red)">96,789.08</span>
+      <span style="font-size:11px;color:var(--t3);margin-left:6px">▲</span>
+      <span id="h5-ob-mark-price" style="font-size:11px;color:var(--t3);margin-left:8px"></span>
+    </div>
+    <div id="h5-ob-bids"></div>
+  </div>
+
+  <!-- Trades Panel -->
+  <div id="h5-mpanel-trades" class="h5-mpanel" style="display:none;padding:0">
+    <div class="h5-tr-hdr"><span>Price</span><span>Quantity(USDC)</span><span>Time</span></div>
+    <div id="h5-trades-rows"></div>
+  </div>
+
 </div>
 
 <!-- ── BOTTOM ── -->
@@ -2305,32 +2422,200 @@ const ICONS = {
 };
 
 let currentAsset = 'BTC-PERP';
+let h5CurrentView = 'trade';
+let h5CurrentMarketTab = 'chart';
 
 const LINK_LABEL_CN = {globe:'Website', doc:'Whitepaper', github:'GitHub', grid:'Explorer', chart:'TradingView'};
 
+// ── H5 View Toggle ───────────────────────────────────────────────
+function switchH5View(mode) {
+  h5CurrentView = mode;
+  const mv = document.getElementById('h5-market-view');
+  const main = document.querySelector('.main');
+  const bot  = document.querySelector('.bottom');
+  if (mode === 'market') {
+    mv.classList.add('active');
+    if (main) main.style.display = 'none';
+    if (bot)  bot.style.display  = 'none';
+    updateH5PriceBar(currentAsset);
+    _renderH5Tab(currentAsset, h5CurrentMarketTab);
+  } else {
+    mv.classList.remove('active');
+    if (main) main.style.display = '';
+    if (bot)  bot.style.display  = '';
+  }
+  document.querySelectorAll('.h5-view-btn').forEach(b => b.classList.remove('on'));
+  const btn = document.getElementById('h5-vbtn-' + mode);
+  if (btn) btn.classList.add('on');
+}
+
+function switchH5MarketTab(name, btn) {
+  h5CurrentMarketTab = name;
+  ['chart','contract','ob','trades'].forEach(n => {
+    const el = document.getElementById('h5-mpanel-' + n);
+    if (el) el.style.display = n === name ? 'block' : 'none';
+  });
+  document.querySelectorAll('.h5-mtab').forEach(t => t.classList.remove('on'));
+  if (btn) btn.classList.add('on');
+  _renderH5Tab(currentAsset, name);
+}
+
+function _renderH5Tab(key, tab) {
+  if (tab === 'contract') {
+    const a = ASSETS[key];
+    const ci = document.getElementById('h5-coin-info-content');
+    const ri = document.getElementById('h5-rules-content');
+    if (ci) ci.innerHTML = a.isTradFi ? _miTradFi(a, key) : _miCrypto(a, key);
+    if (ri) ri.innerHTML = _h5RulesHtml(key);
+  } else if (tab === 'ob') {
+    _renderH5OB(key);
+  } else if (tab === 'trades') {
+    _renderH5Trades(key);
+  }
+}
+
+function updateH5PriceBar(key) {
+  const a = ASSETS[key];
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  const priceEl = document.getElementById('h5-pb-price');
+  if (priceEl) { priceEl.textContent = a.price; priceEl.style.color = a.priceColor; }
+
+  const deltaEl = document.getElementById('h5-pb-delta');
+  if (deltaEl) {
+    const parts = (a.change || '').split('/');
+    deltaEl.textContent = parts.join(' (').replace(/\/$/, '') + (parts[1] ? ')' : '');
+    deltaEl.className = 'h5-pb-delta ' + (a.changePos ? 'g' : 'r');
+  }
+  const nameEl = document.getElementById('h5-pb-name');
+  if (nameEl) { nameEl.textContent = a.sub; nameEl.style.color = a.isTradFi ? 'var(--green)' : '#F7931A'; }
+
+  set('h5-pb-high',  a.high   || '—');
+  set('h5-pb-low',   a.low    || '—');
+  set('h5-pb-mark',  a.oracle || '—');
+  set('h5-pb-index', a.oracle || '—');
+  set('h5-pb-vol',   a.vol    || '—');
+  set('h5-pb-oi',    a.oi     || '—');
+
+  const midEl = document.getElementById('h5-ob-mid-price');
+  if (midEl) { midEl.textContent = a.price; midEl.style.color = a.priceColor; }
+  set('h5-ob-mark-price', a.oracle || '');
+}
+
+function _h5RulesHtml(key) {
+  const ci = ASSETS[key]?.contractInfo;
+  if (!ci) return '<div style="padding:14px;font-size:13px;color:var(--t3)">No contract info available.</div>';
+  const rows = [...(ci.left||[]), ...(ci.right||[])].map(r =>
+    `<div class="h5-kv-row"><span class="h5-kv-k">${r.k}</span><span class="h5-kv-v">${r.v}</span></div>`
+  ).join('');
+  const tiers = (ci.tiers||[]).map((t, i) =>
+    `<tr><td>${i+1}</td><td>${t.lev}</td><td>${t.max}</td></tr>`
+  ).join('');
+  return `${rows}${tiers ? `
+    <div class="h5-sec-hd" style="margin-top:20px">Open Interest Limits</div>
+    <table class="h5-tiers-tbl">
+      <thead><tr><th>Tier</th><th>Leverage</th><th>Max Position Value (USDC)</th></tr></thead>
+      <tbody>${tiers}</tbody>
+    </table>` : ''}`;
+}
+
+function _h5Rand(seed, i) {
+  const x = Math.sin(seed * 0.1 + i * 127.1) * 43758.5453;
+  return x - Math.floor(x);
+}
+
+function _renderH5OB(key) {
+  const a = ASSETS[key];
+  const mid = parseFloat(a.price.replace(/,/g, ''));
+  const oracle = parseFloat((a.oracle || a.price).replace(/,/g, ''));
+  const tickRow = (a.contractInfo?.left || []).find(r => r.k === 'Tick Size');
+  const tick = tickRow ? parseFloat(tickRow.v) : 0.1;
+  const step = Math.max(tick, mid * 0.0001) * 3;
+
+  function fmtK(n) {
+    return n >= 1e6 ? (n/1e6).toFixed(2)+'M' : n >= 1e3 ? (n/1e3).toFixed(2)+'K' : n.toFixed(0);
+  }
+  function fmtP(p) {
+    if (p >= 100) return p.toLocaleString('en-US', {minimumFractionDigits:1, maximumFractionDigits:1});
+    return p.toFixed(tick < 0.001 ? 4 : tick < 0.1 ? 3 : 2);
+  }
+  const seed = mid;
+  function pr(i) { return _h5Rand(seed, i); }
+
+  let cumA = 0, cumB = 0;
+  const asks = [], bids = [];
+  for (let i = 10; i >= 1; i--) {
+    const qty = Math.round(pr(i+100) * 600000 + 15000);
+    cumA += qty;
+    asks.push({price: fmtP(mid + i * step), qty: fmtK(qty), total: fmtK(cumA), pct: pr(i+200) * .75 + .05});
+  }
+  for (let i = 1; i <= 10; i++) {
+    const qty = Math.round(pr(i+300) * 600000 + 15000);
+    cumB += qty;
+    bids.push({price: fmtP(mid - i * step), qty: fmtK(qty), total: fmtK(cumB), pct: pr(i+400) * .75 + .05});
+  }
+  const row = (r, side) => {
+    const clr = side === 'ask' ? 'var(--red)' : 'var(--green)';
+    return `<div class="h5-ob-row">
+      <span style="color:${clr}">${r.price}</span><span>${r.qty}</span><span>${r.total}</span>
+      <div class="h5-ob-bar" style="width:${(r.pct*100).toFixed(0)}%;background:${clr}"></div>
+    </div>`;
+  };
+  const asksEl = document.getElementById('h5-ob-asks');
+  const bidsEl = document.getElementById('h5-ob-bids');
+  if (asksEl) asksEl.innerHTML = asks.map(r => row(r, 'ask')).join('');
+  if (bidsEl) bidsEl.innerHTML = bids.map(r => row(r, 'bid')).join('');
+  const midEl = document.getElementById('h5-ob-mid-price');
+  if (midEl) { midEl.textContent = a.price; midEl.style.color = a.priceColor; }
+  const markEl = document.getElementById('h5-ob-mark-price');
+  if (markEl) markEl.textContent = oracle.toLocaleString();
+}
+
+function _renderH5Trades(key) {
+  const a = ASSETS[key];
+  const mid = parseFloat(a.price.replace(/,/g, ''));
+  const tickRow = (a.contractInfo?.left || []).find(r => r.k === 'Tick Size');
+  const tick = tickRow ? parseFloat(tickRow.v) : 0.1;
+  const spread = Math.max(mid * 0.0004, tick * 20);
+  const seed = mid;
+  function pr(i) { return _h5Rand(seed, i + 500); }
+  function fmtP(p) {
+    if (p >= 100) return p.toLocaleString('en-US', {minimumFractionDigits:1, maximumFractionDigits:1});
+    return p.toFixed(tick < 0.001 ? 4 : tick < 0.1 ? 3 : 2);
+  }
+  function fmtK(n) {
+    return n >= 1e6 ? (n/1e6).toFixed(2)+'M' : n >= 1e3 ? (n/1e3).toFixed(2)+'K' : n.toFixed(0);
+  }
+  const now = Date.now();
+  const rows = Array.from({length: 20}, (_, i) => {
+    const isBuy = pr(i*7+1) > 0.45;
+    const price = fmtP(mid + (pr(i*3+11) - 0.5) * spread * 2);
+    const qty   = fmtK(Math.round((pr(i*5+17) * 0.9 + 0.05) * 800000 + 4000));
+    const t     = new Date(now - (i * 5 + Math.round(pr(i+10)*4)) * 60000);
+    const time  = [t.getHours(), t.getMinutes(), t.getSeconds()].map(n => n.toString().padStart(2,'0')).join(':');
+    return `<div class="h5-tr-row"><span style="color:${isBuy?'var(--green)':'var(--red)'}">${price}</span><span>${qty}</span><span>${time}</span></div>`;
+  }).join('');
+  const el = document.getElementById('h5-trades-rows');
+  if (el) el.innerHTML = rows;
+}
+
+// ── Desktop Coin Info ────────────────────────────────────────────
 function renderMarketInfo(key) {
   const a = ASSETS[key];
   const html = a.isTradFi ? _miTradFi(a, key) : _miCrypto(a, key);
   document.getElementById('mi-content').innerHTML = html;
-  const h5 = document.getElementById('mi-content-h5');
-  if (h5) h5.innerHTML = html;
+  // Pre-populate H5 contract info panel
+  const ci = document.getElementById('h5-coin-info-content');
+  if (ci) ci.innerHTML = html;
+  const ri = document.getElementById('h5-rules-content');
+  if (ri && ASSETS[key]?.contractInfo) ri.innerHTML = _h5RulesHtml(key);
+  updateH5PriceBar(key);
   if (!a.isTradFi) {
     requestAnimationFrame(() => {
       const el = document.getElementById('mi-desc-text');
       const btn = document.getElementById('mi-exp-btn');
-      if (el && btn && el.scrollHeight > el.clientHeight) {
-        btn.style.display = 'inline-block';
-      }
+      if (el && btn && el.scrollHeight > el.clientHeight) btn.style.display = 'inline-block';
     });
   }
-}
-
-function switchH5CiTab(id, btn) {
-  ['info','trading'].forEach(n => {
-    document.getElementById('h5-ci-panel-'+n).style.display = n===id ? 'block' : 'none';
-  });
-  document.querySelectorAll('.h5-ci-tab').forEach(t => t.classList.remove('on'));
-  btn.classList.add('on');
 }
 
 function toggleMiDesc(btn) {
@@ -2439,6 +2724,7 @@ function updateAssetBar(key) {
   document.getElementById('abar-vol').textContent = a.vol;
   const oi = document.getElementById('abar-oi');
   if(oi) oi.textContent = a.oi || '—';
+  updateH5PriceBar(key);
 }
 
 function rebuildChart(key) {
