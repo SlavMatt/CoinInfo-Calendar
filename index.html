@@ -2718,7 +2718,7 @@ function _miTradFi(a, key) {
   }).join('');
   return `
     <div class="mi-crypto-wrap">
-      <div class="mi-left">${statsHtml}${marketDataMeta(a)}</div>
+      <div class="mi-left">${statsHtml}</div>
       <div class="mi-right">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
           ${logoHtml}
@@ -2729,6 +2729,7 @@ function _miTradFi(a, key) {
         </div>
         <div class="mi-about-text" id="mi-desc-text">${a.about||''}</div>
         <span class="mi-exp-btn" id="mi-exp-btn" style="display:none" onclick="toggleMiDesc(this)">Expand</span>
+        ${marketDataMeta(a)}
         ${a.tradingHours?`<div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--line1);font-size:11px;color:var(--t3);line-height:1.6"><span style="color:var(--t2);font-weight:500">Trading Hours</span><br>${a.tradingHours}</div>`:''}
       </div>
     </div>`;
@@ -2766,12 +2767,13 @@ function _miCrypto(a, key) {
     : `<div style="width:26px;height:26px;border-radius:50%;background:${a.icoColor};display:flex;align-items:center;justify-content:center;font-size:${a.icoSize};font-weight:700;color:#fff;flex-shrink:0">${a.icoLabel}</div>`;
   return `
     <div class="mi-crypto-wrap">
-      <div class="mi-left">${statsHtml}${marketDataMeta(a)}</div>
+      <div class="mi-left">${statsHtml}</div>
       <div class="mi-right">
         <div style="margin-bottom:16px">
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">${logoHtml}<div class="mi-sec-title">${a.sub}</div></div>
           <div class="mi-about-text" id="mi-desc-text">${a.about}</div>
           <span class="mi-exp-btn" id="mi-exp-btn" style="display:none" onclick="toggleMiDesc(this)">Expand</span>
+          ${marketDataMeta(a)}
         </div>
       </div>
     </div>`;
