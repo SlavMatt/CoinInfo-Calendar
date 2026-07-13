@@ -2433,6 +2433,44 @@ let h5CurrentMarketTab = 'chart';
 
 const LINK_LABEL_CN = {globe:'Website', doc:'Whitepaper', github:'GitHub', grid:'Explorer', chart:'TradingView'};
 
+function mergeMarketData(staticRows, liveRows) {
+  if (!Array.isArray(liveRows) || !liveRows.length) return staticRows || [];
+  const liveByKey = new Map(liveRows.filter(r => r && r.k).map(r => [r.k, r]));
+  const merged = (staticRows || []).map(row => {
+    const live = liveByKey.get(row.k);
+    if (!live) return row;
+    liveByKey.delete(row.k);
+    return {...row, ...live};
+  });
+  liveByKey.forEach(row => merged.push(row));
+  return merged;
+}
+
+function applyAssetSnapshot(key, snap) {
+  const asset = ASSETS[key];
+  if (!asset || !snap) return;
+  asset.marketData = mergeMarketData(asset.marketData, snap.market_data);
+  if (snap.fields && typeof snap.fields === 'object') {
+    Object.entries(snap.fields).forEach(([field, value]) => {
+      if (value !== null && value !== undefined && value !== '') asset[field] = value;
+    });
+  }
+  asset.dataSource = snap.source || asset.dataSource;
+  asset.dataAsOf = snap.as_of || asset.dataAsOf;
+}
+
+async function loadAssetSnapshots() {
+  try {
+    const symbols = Object.keys(ASSETS).join(',');
+    const res = await fetch(`${CAL_API}/api/assets?symbols=${encodeURIComponent(symbols)}`);
+    if (!res.ok) return;
+    const data = await res.json();
+    Object.entries(data.assets || {}).forEach(([key, snap]) => applyAssetSnapshot(key, snap));
+    renderMarketInfo(currentAsset);
+    if (h5CurrentMarketTab === 'contract') _renderH5Tab(currentAsset, 'contract');
+  } catch {}
+}
+
 // ── H5 View Toggle ───────────────────────────────────────────────
 function switchH5View(mode) {
   h5CurrentView = mode;
@@ -3992,6 +4030,7 @@ document.getElementById('calendar-tz-label')?.textContent && (document.getElemen
 renderCalendarWeek();
 renderNextEvent('BTC-PERP');
 updateNextEventToggle();
+loadAssetSnapshots();
 
 // ── Slider drag ──
 const track=document.getElementById('sldr');
