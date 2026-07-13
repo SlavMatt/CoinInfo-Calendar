@@ -1771,7 +1771,7 @@ const ASSETS = {
     },
   },
   'TSLA-PERP': {
-    name:'TSLA-PERP', sub:'Tesla, Inc.', category:'Equity', tabCat:'stocks', leverage:'20x', icoColor:'#CC0000', icoLabel:'T', icoSize:'12px',
+    name:'TSLA-PERP', sub:'Tesla, Inc.', category:'US Stock', tabCat:'stocks', leverage:'20x', icoColor:'#CC0000', icoLabel:'T', icoSize:'12px',
     price:'248.50', priceColor:'var(--green)',
     oracle:'248.20', funding:'+0.01%', fundingSign:1,
     high:'252.80', low:'244.10', change:'+3.40/+1.39%', changePos:true, vol:'12.43 M', oi:'8.02M',
@@ -2471,10 +2471,7 @@ function marketDataMeta(a) {
       ? 'Official index methodology'
       : 'Static reference data';
   const source = sourceNames[a.dataSource] || fallback;
-  const updated = a.dataAsOf
-    ? new Date(a.dataAsOf).toLocaleString('en-US', { dateStyle:'medium', timeStyle:'short', timeZone:'UTC' }) + ' UTC'
-    : 'Static reference data';
-  return `<div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--line1);font-size:10px;line-height:1.55;color:var(--t4)"><span style="color:var(--t3)">Market data</span><br>${source}<br>${updated}</div>`;
+  return `<div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--line1);font-size:10px;line-height:1.55;color:var(--t4)"><span style="color:var(--t3)">Market data</span><br>${source}<br><span style="display:inline-block;margin-top:4px">Third-party data. For reference only.</span></div>`;
 }
 
 async function loadAssetSnapshots() {
