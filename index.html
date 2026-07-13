@@ -1810,9 +1810,10 @@ const ASSETS = {
     tradingHours:'CME Globex · Sun–Fri  18:00–17:00 ET  (23h/day)',
     about:'WTI serves as a primary global benchmark for oil prices due to its high quality (low density, low sulfur).',
     marketData:[
-      {k:'Spot Price',v:'$74.82 / bbl'},{k:'1Y Range',v:'$65.27 – $87.63'},
-      {k:'Contract Size',v:'1,000 bbl'},{k:'Sector',v:'Energy / Commodity'},
-      {k:'Market',v:'CME / NYMEX'},{k:'Settlement',v:'USD'},
+      {k:'1Y Range',v:'—'},{k:'Contract Size',v:'1,000 bbl'},
+      {k:'Price Unit',v:'USD / bbl'},{k:'Underlying / Grade',v:'WTI, Cushing, Oklahoma'},
+      {k:'Sector',v:'Energy / Commodity'},{k:'Market',v:'CME / NYMEX'},
+      {k:'Settlement',v:'USD'},
     ],
     fundingRate:'-0.0100%', fundingPos:false, interval:'8h', annualized:'-10.95%', annualizedPos:false,
     contractInfo:{
@@ -1840,9 +1841,9 @@ const ASSETS = {
     tradingHours:'CME · Mon–Fri  09:30–16:15 ET  (UTC−5)',
     about:'S&P 500 is a stock market index tracking the stock performance of 500 leading companies listed on stock exchanges in the United States, representing approximately 80% of total U.S. market capitalization.',
     marketData:[
-      {k:'Components',v:'503'},{k:'P/E Ratio (TTM)',v:'26.8'},
+      {k:'Components',v:'503'},{k:'Weighting Method',v:'Float-Adjusted Cap-Weighted'},
       {k:'Sector Coverage',v:'11 Sectors'},{k:'Rebalance',v:'Quarterly'},
-      {k:'Launch Date',v:'Mar 4, 1957'},{k:'Index Sponsor',v:'S&P Global'},
+      {k:'Launch Date',v:'Mar 4, 1957'},{k:'Index Sponsor',v:'S&P Dow Jones Indices'},
     ],
     fundingRate:'+0.0100%', fundingPos:true, interval:'8h', annualized:'+10.95%', annualizedPos:true,
     contractInfo:{
@@ -1869,9 +1870,9 @@ const ASSETS = {
     tradingHours:'CME · Mon–Fri  09:30–16:15 ET  (UTC−5)',
     about:'The Nasdaq-100 Index® includes 100 of the largest domestic and international non-financial companies listed on The Nasdaq Stock Market based on market capitalization.',
     marketData:[
-      {k:'Components',v:'100'},{k:'Index Type',v:'Modified Cap-Weighted'},
+      {k:'Components',v:'100'},{k:'Weighting Method',v:'Modified Cap-Weighted'},
       {k:'Sector Focus',v:'Technology-heavy'},{k:'Rebalance',v:'Annual'},
-      {k:'Launched',v:'Jan 31, 1985'},{k:'Index Sponsor',v:'Nasdaq'},
+      {k:'Launch Date',v:'Jan 31, 1985'},{k:'Index Sponsor',v:'Nasdaq'},
     ],
     fundingRate:'+0.0100%', fundingPos:true, interval:'8h', annualized:'+10.95%', annualizedPos:true,
     contractInfo:{
@@ -2375,8 +2376,10 @@ const ASSETS = {
     tradingHours:'CME Globex · Sun–Fri  18:00–17:00 ET  (23h/day)',
     about:'XAU-PERP tracks the value of 1 troy ounce of Gold. Gold is the world\'s preeminent store of value and safe-haven asset, widely held by central banks and investors as a hedge against inflation and geopolitical risk.',
     marketData:[
-      {k:'Contract Size',v:'100 troy oz'},{k:'Sector',v:'Precious Metals'},
-      {k:'Market',v:'CME COMEX'},{k:'Settlement',v:'USD'},
+      {k:'1Y Range',v:'—'},{k:'Contract Size',v:'100 troy oz'},
+      {k:'Price Unit',v:'USD / troy oz'},{k:'Underlying / Grade',v:'Gold, min. 99.5% fineness'},
+      {k:'Sector',v:'Precious Metals'},{k:'Market',v:'CME COMEX'},
+      {k:'Settlement',v:'USD'},
     ],
   },
   'BZ-PERP': {
@@ -2389,12 +2392,10 @@ const ASSETS = {
     tradingHours:'ICE · Sun–Fri  20:00–18:00 ET  (22h/day)',
     about:'BZ-PERP tracks the value of 1 barrel of Brent Crude Oil. Brent crude is the primary international benchmark for oil prices, sourced from the North Sea and used as a reference for two-thirds of global oil trading.',
     marketData:[
-      {k:'Contract Size',v:'1,000 bbl'},{k:'Sector',v:'Energy / Commodity'},
-      {k:'Market',v:'ICE'},{k:'Settlement',v:'USD'},
-    ],
-    marketData:[
-      {k:'Contract Size',v:'1,000 bbl'},{k:'Sector',v:'Energy / Commodity'},
-      {k:'Market',v:'ICE'},{k:'Settlement',v:'USD'},
+      {k:'1Y Range',v:'—'},{k:'Contract Size',v:'1,000 bbl'},
+      {k:'Price Unit',v:'USD / bbl'},{k:'Underlying / Grade',v:'Brent Blend crude oil'},
+      {k:'Sector',v:'Energy / Commodity'},{k:'Market',v:'ICE'},
+      {k:'Settlement',v:'USD'},
     ],
   },
   'XAG-PERP': {
@@ -2407,12 +2408,10 @@ const ASSETS = {
     tradingHours:'CME Globex · Sun–Fri  18:00–17:00 ET  (23h/day)',
     about:'XAG-PERP tracks the value of 1 troy ounce of Silver. Silver serves as both a precious metal and an industrial metal with diverse demand across electronics, solar energy, and jewelry.',
     marketData:[
-      {k:'Contract Size',v:'5,000 troy oz'},{k:'Sector',v:'Precious Metals'},
-      {k:'Market',v:'CME COMEX'},{k:'Settlement',v:'USD'},
-    ],
-    marketData:[
-      {k:'Contract Size',v:'5,000 troy oz'},{k:'Sector',v:'Precious Metals'},
-      {k:'Market',v:'CME COMEX'},{k:'Settlement',v:'USD'},
+      {k:'1Y Range',v:'—'},{k:'Contract Size',v:'5,000 troy oz'},
+      {k:'Price Unit',v:'USD / troy oz'},{k:'Underlying / Grade',v:'Silver, min. 99.9% fineness'},
+      {k:'Sector',v:'Precious Metals'},{k:'Market',v:'CME COMEX'},
+      {k:'Settlement',v:'USD'},
     ],
   },
 };
@@ -2457,6 +2456,25 @@ function applyAssetSnapshot(key, snap) {
   }
   asset.dataSource = snap.source || asset.dataSource;
   asset.dataAsOf = snap.as_of || asset.dataAsOf;
+}
+
+function marketDataMeta(a) {
+  const sourceNames = {
+    coingecko: 'CoinGecko',
+    finnhub: 'Finnhub',
+    fred: 'FRED',
+    alpha_vantage: 'Alpha Vantage',
+  };
+  const fallback = a.category === 'Commodity'
+    ? 'Official contract specifications'
+    : a.category === 'Index'
+      ? 'Official index methodology'
+      : 'Static reference data';
+  const source = sourceNames[a.dataSource] || fallback;
+  const updated = a.dataAsOf
+    ? new Date(a.dataAsOf).toLocaleString('en-US', { dateStyle:'medium', timeStyle:'short', timeZone:'UTC' }) + ' UTC'
+    : 'Static reference data';
+  return `<div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--line1);font-size:10px;line-height:1.55;color:var(--t4)"><span style="color:var(--t3)">Market data</span><br>${source}<br>${updated}</div>`;
 }
 
 async function loadAssetSnapshots() {
@@ -2680,10 +2698,12 @@ function _miTradFi(a, key) {
     'Shares':          'Total number of shares outstanding, including restricted shares',
     'IPO Date':        'Date when the company first offered shares to the public',
     'Launch Date':     'Date when this index was first published and began tracking',
-    'Spot Price':      'Current market price for immediate delivery of the underlying commodity',
     'Contract Size':   'Quantity of the underlying asset controlled by one futures contract',
+    'Price Unit':      'Currency and physical quantity used to quote this underlying asset',
+    'Underlying / Grade': 'Physical benchmark or quality specification represented by the contract',
     'Components':      'Number of individual securities included in this index',
     'Sector Coverage': 'Number of distinct industry sectors represented in this index',
+    'Weighting Method':'How constituent weights are calculated within this index',
     'Rebalance':       'How frequently the index composition and weightings are reviewed',
   };
   const logoHtml = LOGOS[key]
@@ -2698,7 +2718,7 @@ function _miTradFi(a, key) {
   }).join('');
   return `
     <div class="mi-crypto-wrap">
-      <div class="mi-left">${statsHtml}</div>
+      <div class="mi-left">${statsHtml}${marketDataMeta(a)}</div>
       <div class="mi-right">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
           ${logoHtml}
@@ -2746,7 +2766,7 @@ function _miCrypto(a, key) {
     : `<div style="width:26px;height:26px;border-radius:50%;background:${a.icoColor};display:flex;align-items:center;justify-content:center;font-size:${a.icoSize};font-weight:700;color:#fff;flex-shrink:0">${a.icoLabel}</div>`;
   return `
     <div class="mi-crypto-wrap">
-      <div class="mi-left">${statsHtml}</div>
+      <div class="mi-left">${statsHtml}${marketDataMeta(a)}</div>
       <div class="mi-right">
         <div style="margin-bottom:16px">
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">${logoHtml}<div class="mi-sec-title">${a.sub}</div></div>
