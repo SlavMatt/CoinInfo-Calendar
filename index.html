@@ -2471,7 +2471,7 @@ function marketDataMeta(a) {
       ? 'Official index methodology'
       : 'Static reference data';
   const source = sourceNames[a.dataSource] || fallback;
-  return `<div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--line1);font-size:10px;line-height:1.55;color:var(--t4)"><span style="color:var(--t3)">Market data</span><br>${source}<br><span style="display:inline-block;margin-top:4px">Third-party data. For reference only.</span></div>`;
+  return `<div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--line1);font-size:10px;line-height:1.55;color:var(--t4)">数据由 CoinMarketCap 及 CoinGecko 提供，不作为投资决策参考。详情见<span style="color:var(--t3);text-decoration:underline;cursor:pointer">风险提示</span>。</div>`;
 }
 
 async function loadAssetSnapshots() {
