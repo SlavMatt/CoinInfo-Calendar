@@ -2459,19 +2459,15 @@ function applyAssetSnapshot(key, snap) {
 }
 
 function marketDataMeta(a) {
-  const sourceNames = {
-    coingecko: 'CoinGecko',
-    finnhub: 'Finnhub',
-    fred: 'FRED',
-    alpha_vantage: 'Alpha Vantage',
+  const disclaimerMap = {
+    'Crypto':    'Data provided by CoinMarketCap and CoinGecko. For reference only, not investment advice.',
+    'US Stock':  'Data provided by Financial Modeling Prep. For reference only, not investment advice.',
+    'KR Stock':  'Data provided by Korea Exchange (KRX). For reference only, not investment advice.',
+    'Index':     'Data provided by S&P Global / Nasdaq. For reference only, not investment advice.',
+    'Commodity': 'Data provided by CME Group. For reference only, not investment advice.',
   };
-  const fallback = a.category === 'Commodity'
-    ? 'Official contract specifications'
-    : a.category === 'Index'
-      ? 'Official index methodology'
-      : 'Static reference data';
-  const source = sourceNames[a.dataSource] || fallback;
-  return `<div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--line1);font-size:10px;line-height:1.55;color:var(--t4)">数据由 CoinMarketCap 及 CoinGecko 提供，不作为投资决策参考。详情见<span style="color:var(--t3);text-decoration:underline;cursor:pointer">风险提示</span>。</div>`;
+  const text = disclaimerMap[a.category] || 'For reference only, not investment advice.';
+  return `<div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--line1);font-size:10px;line-height:1.55;color:var(--t4)">${text}</div>`;
 }
 
 async function loadAssetSnapshots() {
