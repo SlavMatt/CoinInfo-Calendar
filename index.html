@@ -2459,14 +2459,18 @@ function applyAssetSnapshot(key, snap) {
 }
 
 function marketDataMeta(a) {
-  const disclaimerMap = {
-    'Crypto':    'Data provided by CoinMarketCap and CoinGecko. For reference only, not investment advice.',
-    'US Stock':  'Data provided by Financial Modeling Prep. For reference only, not investment advice.',
-    'KR Stock':  'Data provided by Korea Exchange (KRX). For reference only, not investment advice.',
-    'Index':     'Data provided by S&P Global / Nasdaq. For reference only, not investment advice.',
-    'Commodity': 'Data provided by CME Group. For reference only, not investment advice.',
+  const sourceNames = {
+    coingecko:     'CoinGecko',
+    finnhub:       'Finnhub',
+    alpha_vantage: 'Alpha Vantage',
+    fred:          'Federal Reserve Economic Data (FRED)',
+    eia:           'U.S. Energy Information Administration (EIA)',
+    deribit:       'Deribit',
   };
-  const text = disclaimerMap[a.category] || 'For reference only, not investment advice.';
+  const src = sourceNames[a.dataSource];
+  const text = src
+    ? `Data provided by ${src}. For reference only, not investment advice.`
+    : 'For reference only, not investment advice.';
   return `<div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--line1);font-size:10px;line-height:1.55;color:var(--t4)">${text}</div>`;
 }
 
