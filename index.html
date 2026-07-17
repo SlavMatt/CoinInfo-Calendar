@@ -2727,7 +2727,7 @@ function _miTradFi(a, key) {
         </div>
         <div class="mi-about-text" id="mi-desc-text">${a.about||''}</div>
         <span class="mi-exp-btn" id="mi-exp-btn" style="display:none" onclick="toggleMiDesc(this)">Expand</span>
-        ${a.aboutSource==='wikipedia'?`<div style="margin-top:6px;font-size:10px;color:var(--t4)">Description from Wikipedia, CC BY-SA 4.0</div>`:''}
+        ${a.aboutSource==='wikipedia'?`<div style="margin-top:6px;font-size:10px;color:var(--t4)">Source: Wikipedia</div>`:''}
         ${a.tradingHours?`<div style="margin-top:14px;font-size:11px;color:var(--t3);line-height:1.6"><span style="color:var(--t2);font-weight:500">Trading Hours</span><br>${a.tradingHours}</div>`:''}
         ${marketDataMeta(a)}
       </div>
