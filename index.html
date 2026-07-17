@@ -344,17 +344,18 @@ body{
 
 /* ── Market Info — Crypto full layout ── */
 .mi-crypto-wrap{padding:18px 20px 24px;display:flex;gap:0;min-height:0}
-.mi-left{width:248px;min-width:200px;flex-shrink:0;padding-right:20px;padding-bottom:8px}
+.mi-left{width:248px;min-width:200px;flex-shrink:0;padding-right:20px;padding-bottom:8px;position:relative;isolation:isolate}
 .mi-right{flex:1;min-width:0;padding-left:24px}
-.mi-stat-row{display:flex;justify-content:space-between;align-items:flex-start;padding:7px 0;gap:8px}
+.mi-stat-row{display:flex;justify-content:space-between;align-items:flex-start;padding:7px 0;gap:8px;position:relative}
+.mi-stat-row:has(.mi-tip-wrap:hover){z-index:9999}
 .mi-group-sep{height:1px;background:var(--line1);margin:4px 0}
 .mi-stat-k{font-size:12px;color:var(--t2);flex-shrink:0}
 .mi-stat-v{font-size:12px;font-weight:500;color:var(--t1)}
 .mi-stat-v.grn{color:var(--green)}
 .mi-stat-date{font-size:11px;color:var(--t4);text-align:right;margin-top:1px}
 .has-tip{border-bottom:1px dashed var(--t4);cursor:help}
-.mi-tip-wrap{position:relative;display:inline-flex;align-items:center}
-.mi-tip-pop{position:absolute;left:0;bottom:calc(100% + 6px);z-index:200;background:#1A1D26;border:1px solid var(--line1);color:var(--t1);font-size:11px;line-height:1.5;padding:5px 9px;border-radius:6px;width:180px;white-space:normal;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .15s;font-family:var(--font);user-select:none}
+.mi-tip-wrap{display:inline-flex;align-items:center}
+.mi-tip-pop{position:absolute;left:0;right:0;bottom:calc(100% + 6px);z-index:9999;background:#1A1D26;border:1px solid var(--line1);color:var(--t1);font-size:11px;line-height:1.5;padding:5px 9px;border-radius:6px;width:auto;white-space:normal;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .15s;font-family:var(--font);user-select:none;box-shadow:0 8px 24px rgba(0,0,0,.5)}
 .mi-tip-pop::after{content:'';position:absolute;top:100%;left:10px;border:4px solid transparent;border-top-color:#1A1D26}
 .mi-tip-wrap:hover .mi-tip-pop{opacity:1;visibility:visible}
 .mi-sec-title{font-size:14px;font-weight:700;color:var(--t1);margin-bottom:0}
