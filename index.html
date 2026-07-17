@@ -2700,6 +2700,7 @@ function _miTradFi(a, key) {
     'Underlying / Grade': 'Physical benchmark or quality specification represented by the contract',
     'Components':      'Number of individual securities included in this index',
     'Sector Coverage': 'Number of distinct industry sectors represented in this index',
+    'Sector Focus':    'Primary industry concentration represented in this index',
     'Weighting Method':'How constituent weights are calculated within this index',
     'Rebalance':       'How frequently the index composition and weightings are reviewed',
   };
@@ -2726,6 +2727,7 @@ function _miTradFi(a, key) {
         </div>
         <div class="mi-about-text" id="mi-desc-text">${a.about||''}</div>
         <span class="mi-exp-btn" id="mi-exp-btn" style="display:none" onclick="toggleMiDesc(this)">Expand</span>
+        ${a.aboutSource==='wikipedia'?`<div style="margin-top:6px;font-size:10px;color:var(--t4)">Description from <a href="${a.aboutUrl||'#'}" target="_blank" rel="noopener" style="color:var(--t3);text-decoration:underline">Wikipedia</a>, CC BY-SA 4.0</div>`:''}
         ${a.tradingHours?`<div style="margin-top:14px;font-size:11px;color:var(--t3);line-height:1.6"><span style="color:var(--t2);font-weight:500">Trading Hours</span><br>${a.tradingHours}</div>`:''}
         ${marketDataMeta(a)}
       </div>
