@@ -2526,6 +2526,7 @@ function _renderH5Tab(key, tab) {
     const ri = document.getElementById('h5-rules-content');
     if (ci) ci.innerHTML = a.isTradFi ? _miTradFi(a, key) : _miCrypto(a, key);
     if (ri) ri.innerHTML = _h5RulesHtml(key);
+    revealExpandButtons(ci);
   } else if (tab === 'ob') {
     _renderH5OB(key);
   } else if (tab === 'trades') {
@@ -2658,28 +2659,36 @@ function _renderH5Trades(key) {
 }
 
 // ── Desktop Coin Info ────────────────────────────────────────────
+function revealExpandButtons(root) {
+  // Reading scrollHeight forces a synchronous layout, so this is safe to
+  // call right after setting innerHTML/display — no rAF needed. Must run
+  // after the container is actually visible (not display:none), since a
+  // hidden element always reports scrollHeight === clientHeight === 0.
+  (root || document).querySelectorAll('.mi-about-text').forEach(el => {
+    const btn = el.nextElementSibling;
+    if (btn && btn.classList.contains('mi-exp-btn')) {
+      btn.style.display = el.scrollHeight > el.clientHeight ? 'inline-block' : 'none';
+    }
+  });
+}
+
 function renderMarketInfo(key) {
   const a = ASSETS[key];
   const html = a.isTradFi ? _miTradFi(a, key) : _miCrypto(a, key);
-  document.getElementById('mi-content').innerHTML = html;
-  // Pre-populate H5 contract info panel
+  const mi = document.getElementById('mi-content');
+  mi.innerHTML = html;
+  // Pre-populate H5 contract info panel (may be display:none — re-checked on tab activation)
   const ci = document.getElementById('h5-coin-info-content');
   if (ci) ci.innerHTML = html;
   const ri = document.getElementById('h5-rules-content');
   if (ri && ASSETS[key]?.contractInfo) ri.innerHTML = _h5RulesHtml(key);
   updateH5PriceBar(key);
-  if (!a.isTradFi) {
-    requestAnimationFrame(() => {
-      const el = document.getElementById('mi-desc-text');
-      const btn = document.getElementById('mi-exp-btn');
-      if (el && btn && el.scrollHeight > el.clientHeight) btn.style.display = 'inline-block';
-    });
-  }
+  revealExpandButtons(mi);
 }
 
 function toggleMiDesc(btn) {
-  const el = document.getElementById('mi-desc-text');
-  if (!el) return;
+  const el = btn.previousElementSibling;
+  if (!el || !el.classList.contains('mi-about-text')) return;
   el.classList.toggle('exp');
   btn.textContent = el.classList.contains('exp') ? 'Collapse' : 'Expand';
 }
@@ -2725,8 +2734,8 @@ function _miTradFi(a, key) {
             <div style="font-size:11px;color:var(--t3)">${a.category||''}</div>
           </div>
         </div>
-        <div class="mi-about-text" id="mi-desc-text">${a.about||''}</div>
-        <span class="mi-exp-btn" id="mi-exp-btn" style="display:none" onclick="toggleMiDesc(this)">Expand</span>
+        <div class="mi-about-text">${a.about||''}</div>
+        <span class="mi-exp-btn" style="display:none" onclick="toggleMiDesc(this)">Expand</span>
         ${a.aboutSource==='wikipedia'?`<div style="margin-top:6px;font-size:10px;color:var(--t4)">Source: Wikipedia</div>`:''}
         ${a.tradingHours?`<div style="margin-top:14px;font-size:11px;color:var(--t3);line-height:1.6"><span style="color:var(--t2);font-weight:500">Trading Hours</span><br>${a.tradingHours}</div>`:''}
         ${marketDataMeta(a)}
@@ -2770,8 +2779,8 @@ function _miCrypto(a, key) {
       <div class="mi-right">
         <div style="margin-bottom:16px">
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">${logoHtml}<div><div class="mi-sec-title">${a.sub}</div><div style="font-size:11px;color:var(--t3)">${a.category||'Crypto'}</div></div></div>
-          <div class="mi-about-text" id="mi-desc-text">${a.about}</div>
-          <span class="mi-exp-btn" id="mi-exp-btn" style="display:none" onclick="toggleMiDesc(this)">Expand</span>
+          <div class="mi-about-text">${a.about}</div>
+          <span class="mi-exp-btn" style="display:none" onclick="toggleMiDesc(this)">Expand</span>
           ${marketDataMeta(a)}
         </div>
       </div>
