@@ -355,8 +355,8 @@ body{
 .mi-stat-date{font-size:11px;color:var(--t4);text-align:right;margin-top:1px}
 .has-tip{border-bottom:1px dashed var(--t4);cursor:help}
 .mi-tip-wrap{display:inline-flex;align-items:center}
-.mi-tip-pop{position:absolute;left:0;right:0;bottom:calc(100% + 6px);z-index:9999;background:#1A1D26;border:1px solid var(--line1);color:var(--t1);font-size:11px;line-height:1.5;padding:5px 9px;border-radius:6px;width:auto;white-space:normal;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .15s;font-family:var(--font);user-select:none;box-shadow:0 8px 24px rgba(0,0,0,.5)}
-.mi-tip-pop::after{content:'';position:absolute;top:100%;left:10px;border:4px solid transparent;border-top-color:#1A1D26}
+.mi-tip-pop{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:9999;background:#1A1D26;border:1px solid var(--line1);color:var(--t1);font-size:11px;line-height:1.5;padding:5px 9px;border-radius:6px;width:auto;white-space:normal;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .15s;font-family:var(--font);user-select:none;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+.mi-tip-pop::after{content:'';position:absolute;bottom:100%;left:10px;border:4px solid transparent;border-bottom-color:#1A1D26}
 .mi-tip-wrap:hover .mi-tip-pop{opacity:1;visibility:visible}
 .mi-sec-title{font-size:14px;font-weight:700;color:var(--t1);margin-bottom:0}
 .mi-about-text{font-size:13px;line-height:1.65;color:var(--t2);display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
@@ -1971,6 +1971,21 @@ const ASSETS = {
     chain:'Ethereum',
     totalSupply:'120,440,000', circulatingRate:'∞',
     fundingRate:'-0.0057%', fundingPos:false, interval:'8h', annualized:'-2.49%', annualizedPos:false,
+    contractInfo:{
+      left:[
+        {k:'Symbol',v:'ETH-PERP'},{k:'Margin Asset',v:'USDC'},
+        {k:'Tick Size',v:'0.01 USDC'},{k:'Max Leverage',v:'40X'},
+      ],
+      right:[
+        {k:'IMR',v:'2.00%'},{k:'MMR',v:'1.25%'},
+        {k:'Min Order Qty',v:'0.01 ETH'},{k:'Max Market / Limit Qty',v:'300 / 1,000 ETH'},
+      ],
+      tiers:[
+        {lev:'40X',max:'1.00M'},{lev:'35X',max:'1.00M'},{lev:'30X',max:'1.00M'},{lev:'25X',max:'1.00M'},
+        {lev:'20X',max:'1.00M'},{lev:'15X',max:'1.00M'},{lev:'10X',max:'1.00M'},{lev:'7X',max:'1.00M'},
+        {lev:'6X',max:'2.50M'},{lev:'3X',max:'2.50M'},{lev:'2X',max:'5.00M'},{lev:'1X',max:'5.00M'},
+      ],
+    },
   },
   'SOL-PERP': {
     name:'SOL-PERP', sub:'Solana', category:'Crypto', tabCat:'crypto', leverage:'20x',
@@ -1993,6 +2008,20 @@ const ASSETS = {
     chain:'Solana',
     totalSupply:'578,640,000', circulatingRate:'84.54%',
     fundingRate:'-0.0067%', fundingPos:false, interval:'8h', annualized:'-2.92%', annualizedPos:false,
+    contractInfo:{
+      left:[
+        {k:'Symbol',v:'SOL-PERP'},{k:'Margin Asset',v:'USDC'},
+        {k:'Tick Size',v:'0.01 USDC'},{k:'Max Leverage',v:'20X'},
+      ],
+      right:[
+        {k:'IMR',v:'4.50%'},{k:'MMR',v:'2.50%'},
+        {k:'Min Order Qty',v:'0.1 SOL'},{k:'Max Market / Limit Qty',v:'250 / 500 SOL'},
+      ],
+      tiers:[
+        {lev:'20X',max:'1.00M'},{lev:'15X',max:'1.00M'},{lev:'10X',max:'1.00M'},{lev:'7X',max:'1.00M'},
+        {lev:'6X',max:'2.50M'},{lev:'3X',max:'2.50M'},{lev:'2X',max:'5.00M'},{lev:'1X',max:'5.00M'},
+      ],
+    },
   },
   'BNB-PERP': {
     name:'BNB-PERP', sub:'BNB', category:'Crypto', tabCat:'crypto', leverage:'20x',
@@ -2015,6 +2044,20 @@ const ASSETS = {
     chain:'BNB Chain',
     totalSupply:'145,820,000', circulatingRate:'72.91%',
     fundingRate:'-0.0047%', fundingPos:false, interval:'8h', annualized:'-2.05%', annualizedPos:false,
+    contractInfo:{
+      left:[
+        {k:'Symbol',v:'BNB-PERP'},{k:'Margin Asset',v:'USDC'},
+        {k:'Tick Size',v:'0.01 USDC'},{k:'Max Leverage',v:'20X'},
+      ],
+      right:[
+        {k:'IMR',v:'4.50%'},{k:'MMR',v:'2.50%'},
+        {k:'Min Order Qty',v:'0.001 BNB'},{k:'Max Market / Limit Qty',v:'40 / 80 BNB'},
+      ],
+      tiers:[
+        {lev:'20X',max:'1.00M'},{lev:'15X',max:'1.00M'},{lev:'10X',max:'1.00M'},{lev:'7X',max:'1.00M'},
+        {lev:'6X',max:'2.50M'},{lev:'3X',max:'2.50M'},{lev:'2X',max:'5.00M'},{lev:'1X',max:'5.00M'},
+      ],
+    },
   },
   'XRP-PERP': {
     name:'XRP-PERP', sub:'XRP', category:'Crypto', tabCat:'crypto', leverage:'20x',
@@ -2037,6 +2080,20 @@ const ASSETS = {
     chain:'XRP Ledger',
     totalSupply:'99,988,000,000', circulatingRate:'57.05%',
     fundingRate:'-0.0061%', fundingPos:false, interval:'8h', annualized:'-2.66%', annualizedPos:false,
+    contractInfo:{
+      left:[
+        {k:'Symbol',v:'XRP-PERP'},{k:'Margin Asset',v:'USDC'},
+        {k:'Tick Size',v:'0.0001 USDC'},{k:'Max Leverage',v:'20X'},
+      ],
+      right:[
+        {k:'IMR',v:'4.50%'},{k:'MMR',v:'2.50%'},
+        {k:'Min Order Qty',v:'1 XRP'},{k:'Max Market / Limit Qty',v:'20,000 / 40,000 XRP'},
+      ],
+      tiers:[
+        {lev:'20X',max:'1.00M'},{lev:'15X',max:'1.00M'},{lev:'10X',max:'1.00M'},{lev:'7X',max:'1.00M'},
+        {lev:'6X',max:'2.50M'},{lev:'3X',max:'2.50M'},{lev:'2X',max:'5.00M'},{lev:'1X',max:'5.00M'},
+      ],
+    },
   },
   'SUI-PERP': {
     name:'SUI-PERP', sub:'Sui', category:'Crypto', tabCat:'crypto', leverage:'20x',
@@ -2059,6 +2116,20 @@ const ASSETS = {
     chain:'Sui',
     totalSupply:'10,000,000,000', circulatingRate:'33.90%',
     fundingRate:'+0.0012%', fundingPos:true, interval:'8h', annualized:'+0.52%', annualizedPos:true,
+    contractInfo:{
+      left:[
+        {k:'Symbol',v:'SUI-PERP'},{k:'Margin Asset',v:'USDC'},
+        {k:'Tick Size',v:'0.0001 USDC'},{k:'Max Leverage',v:'20X'},
+      ],
+      right:[
+        {k:'IMR',v:'4.50%'},{k:'MMR',v:'2.50%'},
+        {k:'Min Order Qty',v:'1 SUI'},{k:'Max Market / Limit Qty',v:'100,000 / 1,000,000 SUI'},
+      ],
+      tiers:[
+        {lev:'20X',max:'1.00M'},{lev:'15X',max:'1.00M'},{lev:'10X',max:'1.00M'},{lev:'7X',max:'1.00M'},
+        {lev:'6X',max:'2.50M'},{lev:'3X',max:'2.50M'},{lev:'2X',max:'5.00M'},{lev:'1X',max:'5.00M'},
+      ],
+    },
   },
   'HYPE-PERP': {
     name:'HYPE-PERP', sub:'Hyperliquid', category:'Crypto', tabCat:'crypto', leverage:'20x',
@@ -2081,6 +2152,20 @@ const ASSETS = {
     chain:'Hyperliquid L1',
     totalSupply:'1,000,000,000', circulatingRate:'33.30%',
     fundingRate:'-0.0002%', fundingPos:false, interval:'8h', annualized:'-0.09%', annualizedPos:false,
+    contractInfo:{
+      left:[
+        {k:'Symbol',v:'HYPE-PERP'},{k:'Margin Asset',v:'USDC'},
+        {k:'Tick Size',v:'0.001 USDC'},{k:'Max Leverage',v:'20X'},
+      ],
+      right:[
+        {k:'IMR',v:'4.50%'},{k:'MMR',v:'2.50%'},
+        {k:'Min Order Qty',v:'0.1 HYPE'},{k:'Max Market / Limit Qty',v:'2,500 / 5,000 HYPE'},
+      ],
+      tiers:[
+        {lev:'20X',max:'1.00M'},{lev:'15X',max:'1.00M'},{lev:'10X',max:'1.00M'},{lev:'7X',max:'1.00M'},
+        {lev:'6X',max:'2.50M'},{lev:'3X',max:'2.50M'},{lev:'2X',max:'5.00M'},{lev:'1X',max:'5.00M'},
+      ],
+    },
   },
   'LTC-PERP': {
     name:'LTC-PERP', sub:'Litecoin', category:'Crypto', tabCat:'crypto', leverage:'20x',
@@ -2103,6 +2188,20 @@ const ASSETS = {
     chain:'Litecoin',
     totalSupply:'75,050,000', circulatingRate:'89.35%',
     fundingRate:'-0.0023%', fundingPos:false, interval:'8h', annualized:'-1.00%', annualizedPos:false,
+    contractInfo:{
+      left:[
+        {k:'Symbol',v:'LTC-PERP'},{k:'Margin Asset',v:'USDC'},
+        {k:'Tick Size',v:'0.001 USDC'},{k:'Max Leverage',v:'20X'},
+      ],
+      right:[
+        {k:'IMR',v:'4.50%'},{k:'MMR',v:'2.50%'},
+        {k:'Min Order Qty',v:'0.01 LTC'},{k:'Max Market / Limit Qty',v:'1,500 / 3,000 LTC'},
+      ],
+      tiers:[
+        {lev:'20X',max:'1.00M'},{lev:'15X',max:'1.00M'},{lev:'10X',max:'1.00M'},{lev:'7X',max:'1.00M'},
+        {lev:'6X',max:'2.50M'},{lev:'3X',max:'2.50M'},{lev:'2X',max:'5.00M'},{lev:'1X',max:'5.00M'},
+      ],
+    },
   },
   'DOGE-PERP': {
     name:'DOGE-PERP', sub:'Dogecoin', category:'Crypto', tabCat:'crypto', leverage:'20x',
@@ -2125,6 +2224,272 @@ const ASSETS = {
     chain:'Dogecoin',
     totalSupply:'147,180,000,000', circulatingRate:'∞',
     fundingRate:'+0.0012%', fundingPos:true, interval:'8h', annualized:'+0.52%', annualizedPos:true,
+    contractInfo:{
+      left:[
+        {k:'Symbol',v:'DOGE-PERP'},{k:'Margin Asset',v:'USDC'},
+        {k:'Tick Size',v:'0.00001 USDC'},{k:'Max Leverage',v:'20X'},
+      ],
+      right:[
+        {k:'IMR',v:'4.50%'},{k:'MMR',v:'2.50%'},
+        {k:'Min Order Qty',v:'1 DOGE'},{k:'Max Market / Limit Qty',v:'800,000 / 1,600,000 DOGE'},
+      ],
+      tiers:[
+        {lev:'20X',max:'1.00M'},{lev:'15X',max:'1.00M'},{lev:'10X',max:'1.00M'},{lev:'7X',max:'1.00M'},
+        {lev:'6X',max:'2.50M'},{lev:'3X',max:'2.50M'},{lev:'2X',max:'5.00M'},{lev:'1X',max:'5.00M'},
+      ],
+    },
+  },
+  'LINK-PERP': {
+    name:'LINK-PERP', sub:'Chainlink', category:'Crypto', tabCat:'crypto', leverage:'20x',
+    icoColor:'#2A5ADA', icoLabel:'L', icoSize:'12px',
+    price:'8.694', priceColor:'var(--green)',
+    oracle:'8.7165', funding:'+0.00125%', fundingSign:1,
+    high:'8.743', low:'8.293', change:'+0.38/+4.60%', changePos:true, vol:'$230.20M', oi:'594.70K',
+    isTradFi:false, basePrice:8.6, priceRange:0.5,
+    about:'Chainlink is a decentralized oracle network that connects smart contracts to real-world data, APIs, and off-chain computation. Launched in 2017, LINK is used to pay node operators for delivering reliable data feeds that power DeFi, insurance, and gaming applications across multiple blockchains.',
+    marketData:[
+      {k:'Rank',v:'#17'},{k:'24h Volume',v:'$230.20M'},
+      {k:'Market Cap',v:'$6.51B'},{k:'Vol / MCap',v:'3.53%'},
+      {k:'FDV',v:'$8.71B'},{k:'Market Dominance',v:'0.28%'},
+      {k:'Circulating Supply',v:'748,099,970'},{k:'Max Supply',v:'1,000,000,000'},
+    ],
+    rank:'#17', dominance:'0.28%',
+    launchDate:'2017-09-19',
+    ath:'$52.70', athDate:'May 10, 2021',
+    atl:'$0.1482', atlDate:'Nov 29, 2017',
+    chain:'Ethereum',
+    totalSupply:'1,000,000,000', circulatingRate:'74.81%',
+    fundingRate:'+0.00125%', fundingPos:true, interval:'8h', annualized:'+0.55%', annualizedPos:true,
+    contractInfo:{
+      left:[
+        {k:'Symbol',v:'LINK-PERP'},{k:'Margin Asset',v:'USDC'},
+        {k:'Tick Size',v:'0.001 USDC'},{k:'Max Leverage',v:'20X'},
+      ],
+      right:[
+        {k:'IMR',v:'4.50%'},{k:'MMR',v:'2.50%'},
+        {k:'Min Order Qty',v:'0.1 LINK'},{k:'Max Market / Limit Qty',v:'6,000 / 12,000 LINK'},
+      ],
+      tiers:[
+        {lev:'20X',max:'1.00M'},{lev:'15X',max:'1.00M'},{lev:'10X',max:'1.00M'},{lev:'7X',max:'1.00M'},
+        {lev:'6X',max:'2.50M'},{lev:'3X',max:'2.50M'},{lev:'2X',max:'5.00M'},{lev:'1X',max:'5.00M'},
+      ],
+    },
+  },
+  'AAVE-PERP': {
+    name:'AAVE-PERP', sub:'Aave', category:'Crypto', tabCat:'crypto', leverage:'20x',
+    icoColor:'#B6509E', icoLabel:'A', icoSize:'12px',
+    price:'92.92', priceColor:'var(--green)',
+    oracle:'92.962', funding:'+0.00125%', fundingSign:1,
+    high:'92.99', low:'88.27', change:'+3.42/+3.82%', changePos:true, vol:'$181.22M', oi:'0',
+    isTradFi:false, basePrice:91, priceRange:5,
+    about:'Aave is a decentralized liquidity protocol that lets users lend and borrow crypto assets without intermediaries, launched in 2020 as the successor to ETHLend. AAVE token holders can stake for protocol security, earn rewards, and participate in DAO governance.',
+    marketData:[
+      {k:'Rank',v:'#53'},{k:'24h Volume',v:'$181.22M'},
+      {k:'Market Cap',v:'$1.43B'},{k:'Vol / MCap',v:'12.66%'},
+      {k:'FDV',v:'$1.49B'},{k:'Market Dominance',v:'0.06%'},
+      {k:'Circulating Supply',v:'15,416,423'},{k:'Max Supply',v:'16,000,000'},
+    ],
+    rank:'#53', dominance:'0.06%',
+    launchDate:'2020-10-02',
+    ath:'$661.69', athDate:'May 18, 2021',
+    atl:'$26.02', atlDate:'Nov 5, 2020',
+    chain:'Ethereum',
+    totalSupply:'16,000,000', circulatingRate:'96.35%',
+    fundingRate:'+0.00125%', fundingPos:true, interval:'8h', annualized:'+0.55%', annualizedPos:true,
+    contractInfo:{
+      left:[
+        {k:'Symbol',v:'AAVE-PERP'},{k:'Margin Asset',v:'USDC'},
+        {k:'Tick Size',v:'0.01 USDC'},{k:'Max Leverage',v:'20X'},
+      ],
+      right:[
+        {k:'IMR',v:'4.50%'},{k:'MMR',v:'2.50%'},
+        {k:'Min Order Qty',v:'0.01 AAVE'},{k:'Max Market / Limit Qty',v:'500 / 1,000 AAVE'},
+      ],
+      tiers:[
+        {lev:'20X',max:'1.00M'},{lev:'15X',max:'1.00M'},{lev:'10X',max:'1.00M'},{lev:'7X',max:'1.00M'},
+        {lev:'6X',max:'2.50M'},{lev:'3X',max:'2.50M'},{lev:'2X',max:'5.00M'},{lev:'1X',max:'5.00M'},
+      ],
+    },
+  },
+  'ZEC-PERP': {
+    name:'ZEC-PERP', sub:'Zcash', category:'Crypto', tabCat:'crypto', leverage:'20x',
+    icoColor:'#F4B728', icoLabel:'Z', icoSize:'12px',
+    price:'548.17', priceColor:'var(--green)',
+    oracle:'546.571', funding:'+0.00125%', fundingSign:1,
+    high:'557.40', low:'525.57', change:'+14.11/+2.65%', changePos:true, vol:'$393.41M', oi:'0',
+    isTradFi:false, basePrice:540, priceRange:32,
+    about:'Zcash is a privacy-focused cryptocurrency launched in 2016 that uses zero-knowledge proofs (zk-SNARKs) to enable fully shielded, encrypted transactions. Users can choose between transparent addresses similar to Bitcoin or shielded addresses that hide sender, receiver, and amount.',
+    marketData:[
+      {k:'Rank',v:'#14'},{k:'24h Volume',v:'$393.41M'},
+      {k:'Market Cap',v:'$9.18B'},{k:'Vol / MCap',v:'4.29%'},
+      {k:'FDV',v:'$9.18B'},{k:'Market Dominance',v:'0.40%'},
+      {k:'Circulating Supply',v:'16,791,066'},{k:'Max Supply',v:'21,000,000'},
+    ],
+    rank:'#14', dominance:'0.40%',
+    launchDate:'2016-10-28',
+    ath:'$3,191.93', athDate:'Oct 29, 2016',
+    atl:'$16.08', atlDate:'Jul 5, 2024',
+    chain:'Zcash',
+    totalSupply:'16,791,066', circulatingRate:'79.96%',
+    fundingRate:'+0.00125%', fundingPos:true, interval:'8h', annualized:'+0.55%', annualizedPos:true,
+    contractInfo:{
+      left:[
+        {k:'Symbol',v:'ZEC-PERP'},{k:'Margin Asset',v:'USDC'},
+        {k:'Tick Size',v:'0.01 USDC'},{k:'Max Leverage',v:'20X'},
+      ],
+      right:[
+        {k:'IMR',v:'4.50%'},{k:'MMR',v:'2.50%'},
+        {k:'Min Order Qty',v:'0.01 ZEC'},{k:'Max Market / Limit Qty',v:'250 / 500 ZEC'},
+      ],
+      tiers:[
+        {lev:'20X',max:'1.00M'},{lev:'15X',max:'1.00M'},{lev:'10X',max:'1.00M'},{lev:'7X',max:'1.00M'},
+        {lev:'6X',max:'2.50M'},{lev:'3X',max:'2.50M'},{lev:'2X',max:'5.00M'},{lev:'1X',max:'5.00M'},
+      ],
+    },
+  },
+  'TRUMP-PERP': {
+    name:'TRUMP-PERP', sub:'Official Trump', category:'Crypto', tabCat:'crypto', leverage:'20x',
+    icoColor:'#B31942', icoLabel:'T', icoSize:'12px',
+    price:'1.5932', priceColor:'var(--green)',
+    oracle:'1.5945', funding:'+0.00125%', fundingSign:1,
+    high:'1.6186', low:'1.5451', change:'+0.026/+1.65%', changePos:true, vol:'$71.50M', oi:'1.11K',
+    isTradFi:false, basePrice:1.58, priceRange:0.09,
+    about:'Official Trump (TRUMP) is a meme coin launched on Solana in January 2025, associated with U.S. President Donald Trump. The token is largely held for speculative and community purposes and carries the high volatility typical of politically themed meme assets.',
+    marketData:[
+      {k:'Rank',v:'#116'},{k:'24h Volume',v:'$71.50M'},
+      {k:'Market Cap',v:'$378.26M'},{k:'Vol / MCap',v:'18.90%'},
+      {k:'FDV',v:'$1.59B'},{k:'Market Dominance',v:'0.02%'},
+      {k:'Circulating Supply',v:'237,414,040'},{k:'Max Supply',v:'1,000,000,000'},
+    ],
+    rank:'#116', dominance:'0.02%',
+    launchDate:'2025-01-17',
+    ath:'$73.43', athDate:'Jan 19, 2025',
+    atl:'$1.50', atlDate:'Jun 6, 2026',
+    chain:'Solana',
+    totalSupply:'1,000,000,000', circulatingRate:'23.74%',
+    fundingRate:'+0.00125%', fundingPos:true, interval:'8h', annualized:'+0.55%', annualizedPos:true,
+    contractInfo:{
+      left:[
+        {k:'Symbol',v:'TRUMP-PERP'},{k:'Margin Asset',v:'USDC'},
+        {k:'Tick Size',v:'0.0001 USDC'},{k:'Max Leverage',v:'20X'},
+      ],
+      right:[
+        {k:'IMR',v:'4.50%'},{k:'MMR',v:'2.50%'},
+        {k:'Min Order Qty',v:'0.1 TRUMP'},{k:'Max Market / Limit Qty',v:'15,000 / 30,000 TRUMP'},
+      ],
+      tiers:[
+        {lev:'20X',max:'1.00M'},{lev:'15X',max:'1.00M'},{lev:'10X',max:'1.00M'},{lev:'7X',max:'1.00M'},
+        {lev:'6X',max:'2.50M'},{lev:'3X',max:'2.50M'},{lev:'2X',max:'5.00M'},{lev:'1X',max:'5.00M'},
+      ],
+    },
+  },
+  'PAXG-PERP': {
+    name:'PAXG-PERP', sub:'PAX Gold', category:'Crypto', tabCat:'crypto', leverage:'20x',
+    icoColor:'#CFA22C', icoLabel:'Au', icoSize:'11px',
+    price:'4,039.70', priceColor:'var(--green)',
+    oracle:'4,043.31', funding:'+0.000682%', fundingSign:1,
+    high:'4,047.20', low:'3,994.80', change:'+28.21/+0.70%', changePos:true, vol:'$94.33M', oi:'3.13K',
+    isTradFi:false, basePrice:4020, priceRange:60,
+    about:'PAX Gold (PAXG) is a token backed 1:1 by physical gold held in professional vaults, issued by Paxos Trust Company. Each PAXG represents one fine troy ounce of a London Good Delivery gold bar, letting holders own and transfer allocated physical gold on-chain.',
+    marketData:[
+      {k:'Rank',v:'#42'},{k:'24h Volume',v:'$94.33M'},
+      {k:'Market Cap',v:'$1.81B'},{k:'Vol / MCap',v:'5.20%'},
+      {k:'FDV',v:'$1.81B'},{k:'Market Dominance',v:'0.08%'},
+      {k:'Circulating Supply',v:'448,889'},{k:'Max Supply',v:'∞'},
+    ],
+    rank:'#42', dominance:'0.08%',
+    launchDate:'2019-09-17',
+    ath:'$5,619.09', athDate:'Jan 29, 2026',
+    atl:'$1,399.64', atlDate:'Nov 18, 2019',
+    chain:'Ethereum',
+    totalSupply:'448,889', circulatingRate:'∞',
+    fundingRate:'+0.000682%', fundingPos:true, interval:'8h', annualized:'+0.30%', annualizedPos:true,
+    contractInfo:{
+      left:[
+        {k:'Symbol',v:'PAXG-PERP'},{k:'Margin Asset',v:'USDC'},
+        {k:'Tick Size',v:'0.10 USDC'},{k:'Max Leverage',v:'20X'},
+      ],
+      right:[
+        {k:'IMR',v:'4.50%'},{k:'MMR',v:'2.50%'},
+        {k:'Min Order Qty',v:'0.001 PAXG'},{k:'Max Market / Limit Qty',v:'20 / 40 PAXG'},
+      ],
+      tiers:[
+        {lev:'20X',max:'1.00M'},{lev:'15X',max:'1.00M'},{lev:'10X',max:'1.00M'},{lev:'7X',max:'1.00M'},
+        {lev:'6X',max:'2.50M'},{lev:'3X',max:'2.50M'},{lev:'2X',max:'5.00M'},{lev:'1X',max:'5.00M'},
+      ],
+    },
+  },
+  'TRX-PERP': {
+    name:'TRX-PERP', sub:'TRON', category:'Crypto', tabCat:'crypto', leverage:'20x',
+    icoColor:'#EF0027', icoLabel:'T', icoSize:'12px',
+    price:'0.32586', priceColor:'var(--red)',
+    oracle:'0.325852', funding:'+0.00125%', fundingSign:1,
+    high:'0.32706', low:'0.32520', change:'-0.00053/-0.16%', changePos:false, vol:'$338.14M', oi:'0',
+    isTradFi:false, basePrice:0.326, priceRange:0.01,
+    about:'TRON is a high-throughput Layer 1 blockchain launched in 2018, widely used as a settlement layer for USDT and other stablecoins due to its fast, low-cost transactions. The network is governed by a decentralized autonomous organization of elected Super Representatives.',
+    marketData:[
+      {k:'Rank',v:'#8'},{k:'24h Volume',v:'$338.14M'},
+      {k:'Market Cap',v:'$30.90B'},{k:'Vol / MCap',v:'1.09%'},
+      {k:'FDV',v:'$30.90B'},{k:'Market Dominance',v:'1.33%'},
+      {k:'Circulating Supply',v:'94,874,118,297'},{k:'Max Supply',v:'∞'},
+    ],
+    rank:'#8', dominance:'1.33%',
+    launchDate:'2017-09-13',
+    ath:'$0.4313', athDate:'Dec 4, 2024',
+    atl:'$0.001804', atlDate:'Nov 12, 2017',
+    chain:'TRON',
+    totalSupply:'94,874,118,297', circulatingRate:'∞',
+    fundingRate:'+0.00125%', fundingPos:true, interval:'8h', annualized:'+0.55%', annualizedPos:true,
+    contractInfo:{
+      left:[
+        {k:'Symbol',v:'TRX-PERP'},{k:'Margin Asset',v:'USDC'},
+        {k:'Tick Size',v:'0.00001 USDC'},{k:'Max Leverage',v:'20X'},
+      ],
+      right:[
+        {k:'IMR',v:'4.50%'},{k:'MMR',v:'2.50%'},
+        {k:'Min Order Qty',v:'1 TRX'},{k:'Max Market / Limit Qty',v:'300,000 / 600,000 TRX'},
+      ],
+      tiers:[
+        {lev:'20X',max:'1.00M'},{lev:'15X',max:'1.00M'},{lev:'10X',max:'1.00M'},{lev:'7X',max:'1.00M'},
+        {lev:'6X',max:'2.50M'},{lev:'3X',max:'2.50M'},{lev:'2X',max:'5.00M'},{lev:'1X',max:'5.00M'},
+      ],
+    },
+  },
+  'ADA-PERP': {
+    name:'ADA-PERP', sub:'Cardano', category:'Crypto', tabCat:'crypto', leverage:'20x',
+    icoColor:'#0033AD', icoLabel:'A', icoSize:'12px',
+    price:'0.1724', priceColor:'var(--green)',
+    oracle:'0.172508', funding:'+0.00125%', fundingSign:1,
+    high:'0.1731', low:'0.1608', change:'+0.0081/+4.93%', changePos:true, vol:'$363.39M', oi:'0',
+    isTradFi:false, basePrice:0.168, priceRange:0.01,
+    about:'Cardano is a proof-of-stake Layer 1 blockchain built on peer-reviewed academic research, launched in 2017 by IOHK co-founder Charles Hoskinson. ADA is used for staking, transaction fees, and governance across a growing ecosystem of DeFi and identity applications.',
+    marketData:[
+      {k:'Rank',v:'#20'},{k:'24h Volume',v:'$363.39M'},
+      {k:'Market Cap',v:'$6.43B'},{k:'Vol / MCap',v:'5.65%'},
+      {k:'FDV',v:'$7.76B'},{k:'Market Dominance',v:'0.28%'},
+      {k:'Circulating Supply',v:'37,287,684,159'},{k:'Max Supply',v:'45,000,000,000'},
+    ],
+    rank:'#20', dominance:'0.28%',
+    launchDate:'2017-09-29',
+    ath:'$3.09', athDate:'Sep 2, 2021',
+    atl:'$0.01925', atlDate:'Mar 13, 2020',
+    chain:'Cardano',
+    totalSupply:'37,287,684,159', circulatingRate:'82.86%',
+    fundingRate:'+0.00125%', fundingPos:true, interval:'8h', annualized:'+0.55%', annualizedPos:true,
+    contractInfo:{
+      left:[
+        {k:'Symbol',v:'ADA-PERP'},{k:'Margin Asset',v:'USDC'},
+        {k:'Tick Size',v:'0.0001 USDC'},{k:'Max Leverage',v:'20X'},
+      ],
+      right:[
+        {k:'IMR',v:'4.50%'},{k:'MMR',v:'2.50%'},
+        {k:'Min Order Qty',v:'1 ADA'},{k:'Max Market / Limit Qty',v:'250,000 / 500,000 ADA'},
+      ],
+      tiers:[
+        {lev:'20X',max:'1.00M'},{lev:'15X',max:'1.00M'},{lev:'10X',max:'1.00M'},{lev:'7X',max:'1.00M'},
+        {lev:'6X',max:'2.50M'},{lev:'3X',max:'2.50M'},{lev:'2X',max:'5.00M'},{lev:'1X',max:'5.00M'},
+      ],
+    },
   },
   // ── US Stocks ──
   'MU-PERP': {
